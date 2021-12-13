@@ -280,7 +280,8 @@ a:hover {
 							<th class="col-1">닉네임</th>
 							<th class="col-6">내용</th>
 							<th class="col-2">작성일</th>
-							<th class="col-2">제품 코드</th>
+							<th class="col-1">제품 코드</th>
+							<th class="col-1"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -291,6 +292,10 @@ a:hover {
 								<td>${dto.getContent()}</td>
 								<td>${dto.getWritten_comment_date()}</td>
 								<td>${dto.getProduct_code()}</td>
+								<td>
+									<button type="button" class="btn btn-deleteCmt"
+										value="${dto.getSeq_review()}">삭제</button>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -373,7 +378,10 @@ a:hover {
 						onNavbar = 0;
 					}
 				});
-
+				$(".btn-deleteCmt").on("click", function(e) {
+					console.log($(e.target).val());
+					$(location).attr("href", "${pageContext.request.contextPath}/deleteByManager.co?seq_review=" + $(e.target).val());
+				})
 			});
 		</script>
 </body>

@@ -47,11 +47,9 @@ public class CommentController extends HttpServlet {
 			String product_code = request.getParameter("product_code");
 			String comment = request.getParameter("comment");
 
-//			HashMap<String, String> loginSession = (HashMap) session.getAttribute("loginSession");
-//			String nickname = loginSession.get("nickname");
-//			String id = loginSession.get("id"); 로그인 페이지 완성시 추가
-			String nickname = "길동";
-			String id = "abc123";
+			HashMap<String, String> loginSession = (HashMap) session.getAttribute("loginSession");
+			String nickname = loginSession.get("nickname");
+			String id = loginSession.get("id");
 			long sysdate = System.currentTimeMillis();
 
 			System.out.println("product_code : " + product_code);
@@ -93,6 +91,12 @@ public class CommentController extends HttpServlet {
 			} else {
 				response.getWriter().write("fail");
 			}
+		} else if(cmd.equals("/deleteByManager.co")){
+			int seq_review = Integer.parseInt(request.getParameter("seq_review"));
+			System.out.println("삭제할 seq_review : " + seq_review);
+			
+			int rs = dao.deleteBySeq(seq_review);
+			if(rs != -1) response.sendRedirect("/toAllReview.co");
 		} else if (cmd.equals("/toAllReview.co")) {
 			response.sendRedirect("/allReviewProc.co?currentPage=1");
 		} else if (cmd.equals("/allReviewProc.co")) {
