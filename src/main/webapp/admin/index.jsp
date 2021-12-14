@@ -189,7 +189,7 @@ a:hover {
 				<a href="#">회원관리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">블랙리스트</a>
+				<a href="${pageContext.request.contextPath }/toBlacklist.bl?currentPage=1">블랙리스트</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="#">리뷰관리</a>
@@ -198,7 +198,7 @@ a:hover {
 				<a href="#">상품관리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">고객센터</a>
+				<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="#">통계조회</a>
@@ -235,7 +235,7 @@ a:hover {
 			<a href="#">회원관리</a>
 		</div>
 		<div class="col-12">
-			<a href="#">블랙리스트</a>
+			<a href="${pageContext.request.contextPath }/toBlacklist.bl?currentPage=1">블랙리스트</a>
 		</div>
 		<div class="col-12">
 			<a href="#">리뷰관리</a>
@@ -244,7 +244,7 @@ a:hover {
 			<a href="#">상품관리</a>
 		</div>
 		<div class="col-12">
-			<a href="#">고객센터</a>
+			<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 		<div class="col-12">
 			<a href="#">통계조회</a>

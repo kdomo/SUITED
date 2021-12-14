@@ -188,7 +188,7 @@ line-height:8px;
 				<a href="#">스토리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
+				<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
@@ -232,7 +232,7 @@ line-height:8px;
 			<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
 		</div>
 		<div class="col-12">
-			<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
+			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 		<c:choose>
 			<c:when test="${empty loginSession}">
@@ -262,50 +262,109 @@ line-height:8px;
 	</div>
 
 	<div class="main">
-		<form action="${pageContext.request.contextPath}/productProc.pro"
-		method="post">
-		<div class="container btn-container">
-			<button type="button" class="btn btn-dark" id="registerBtn">상품 등록</button>
-			<button type="button" class="btn btn-dark" id="modifyBtn">상품 수정</button>
-			<button type="button" class="btn btn-dark" id="deleteBtn">상품 삭제</button>
-			<button type="button" class="btn btn-dark" id="allReviewBtn">리뷰 모아보기</button>
-			<!-- 원래는 관리자 페이지에 있어야 함 (임시) -->
+	<!-- 여기다가 -->
+	<div class="container">
+        <div class="row">
+            <div class="col-12 mt-4 mb-4" style="text-align: center;">
+                <h4>1대1 맞춤상담</h4>
+                <h6>1대1 맞춤상담 게시판입니다.</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th class="col-1">번호</th>
+                            <th class="col-5">제목</th>
+                            <th class="col-2">작성자</th>
+                            <th class="col-2">작성일</th> 
+                            <th class="col-2">답변</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    	<c:if test="${loginSession.get('admin_yn') eq '1'}">
+                    	<c:choose> 
+	                    	<c:when test="${empty totalList}">
+	                        <tr>
+	                            <td colspan="5" style="text-align: center;">검색 결과가 없습니다.</td>
+	                        </tr>
+	                        </c:when>
+	                        <c:otherwise>
+	                        <c:forEach items="${totalList}" var="dto">
+	                        <tr>
+	                            <td>${dto.getSeq_inquiry()}</td>
+	                            <td>
+	                            <a href="${pageContext.request.contextPath}/toDetailView.in?seq_inquiry=${dto.getSeq_inquiry()}&currentPage=${settingMap.get('currentPage')}">
+	                    			${dto.getTitle()}        
+	                            </a>
+	                            </td>
+	                            <td>${dto.getId()}</td>
+	                            <td>${dto.getInquiry_date()}</td>
+	                            <td>${dto.getAnswer_yn()}</td>
+	                        </tr>
+	                        </c:forEach>
+	                        </c:otherwise>
+	                    </c:choose>
+                    	</c:if>
+                    	<c:if test="${loginSession.get('admin_yn') eq '0'}">
+                    	<c:choose> 
+	                    	<c:when test="${empty list}">
+	                        <tr>
+	                            <td colspan="5" style="text-align: center;">작성한 문의가 없습니다.</td>
+	                        </tr>
+	                        </c:when>
+	                        <c:otherwise>
+	                        <c:forEach items="${list}" var="dto">
+	                        <tr>
+	                            <td>${dto.getSeq_inquiry()}</td>
+	                            <td>
+	                            <a href="${pageContext.request.contextPath}/toDetailView.in?seq_inquiry=${dto.getSeq_inquiry()}&currentPage=${settingMap.get('currentPage')}" style="text-decoration : none; color : black;">
+	                    			${dto.getTitle()}        
+	                            </a>
+	                            </td>
+	                            <td>${dto.getId()}</td>
+	                            <td>${dto.getInquiry_date()}</td>
+	                            <td>${dto.getAnswer_yn()}</td>
+	                        </tr>
+	                        </c:forEach>
+	                        </c:otherwise>
+	                    </c:choose>
+                    	</c:if>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+			<nav class="col" aria-label="Page navigation example">
+			  <ul class="pagination justify-content-center">
+				  <c:if test="${settingMap.get('needPrev') eq true}">
+				  	<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toInquiry.in?currentPage=${settingMap.get('startNavi')-1}">Previous</a></li>
+				  </c:if>
+				  <!--startNavi ->endNavi  -->
+				  <c:forEach var="i" begin="${settingMap.get('startNavi')}" end="${settingMap.get('endNavi')}">
+				  	<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toInquiry.in?currentPage=${i}">${i}</a></li>
+				  </c:forEach>
+				  <c:if test="${settingMap.get('needNext') eq true}">
+				  	<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toInquiry.in?currentPage=${settingMap.get('endNavi')+1}">Next</a></li>
+				  </c:if>			    
+			  </ul>
+			</nav>
 		</div>
-		<div class="container">
-				<div class="row">
-					<div class="col">
-					    <h2>제품 전체 목록</h2>
-					</div>
-				</div>
-				<div class="row">
-				<c:forEach items="${list}" var="dto">
-				    <div class="col-6 product">
-				            <a href="${pageContext.request.contextPath}/toDetailView.pro?product_code=${dto.getProduct_code()}&currentPage=${naviMap.get('currentPage')}&currentPage_cmt=1">
-				                <img alt="" src="${pageContext.request.contextPath}/product_img/${dto.getImg_system_name()}" width="300px" height="300px">
-				            </a><br>
-				            상품명 : ${dto.getProduct_name()}<br>
-				            가격 : ${dto.getPrice()}원<br>
-							<button type="button" class="btn btn-dark">장바구니 추가</button>
-				    </div>
-				</c:forEach>
-				</div>
-				<div class="row">
-				    <nav class="col" aria-label="Page navigation example">
-				        <ul class="pagination justify-content-center">
-				            <c:if test="${naviMap.get('needPrev') eq true}">
-				                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${naviMap.get('startNavi')-1}">Previous</a>
-				            </c:if>
-				            <c:forEach var="i" begin = "${naviMap.get('startNavi')}" end="${naviMap.get('endNavi')}">
-				                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${i}">${i}</a></li>
-				            </c:forEach>
-				            <c:if test="${naviMap.get('needNext') eq true}">
-				                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${naviMap.get('endNavi')+1}">Next</a></li>
-				            </c:if>
-				        </ul>
-				    </nav>
-				</div>
-		</div>
-	</form>
+		<c:if test="${loginSession.get('admin_yn') eq '0'}">
+        <div class="row">
+            <div class="col-12" style="text-align: right;">
+                <button type="button" class="btn btn-secondary" id="btnWrite">문의작성하기</button>
+            </div>
+        </div>
+        </c:if>
+    </div>
+    <script>
+    	// 문의 작성하기 버튼을 눌렀을때 작성하는 페이지로 이동
+    	$("#btnWrite").on("click", function(){
+    		$(location).attr("href", "${pageContext.request.contextPath}/toInquiryProc.in?currentPage=${settingMap.get('currentPage')}");
+    	});
+    </script>
 	</div>
 	<div class="footer">
 		<div class="row footer-top">
@@ -366,25 +425,8 @@ line-height:8px;
 			});
 
 		});
-		// 상품 등록 버튼
-			document.getElementById("registerBtn").addEventListener("click",function() {
-				location.href = "${pageContext.request.contextPath}/toRegister.pro";
-			})
-			
-		// 상품 수정 버튼
-			document.getElementById("modifyBtn").addEventListener("click",function() {
-				location.href = "${pageContext.request.contextPath}/toModify.pro";
-			})
-			
-		// 상품 삭제 버튼
-			document.getElementById("deleteBtn").addEventListener("click",function() {
-				location.href = "${pageContext.request.contextPath}/toDelete.pro";
-			})
-			
-	    // 리뷰 모아보기 버튼
-			document.getElementById("allReviewBtn").addEventListener("click",function() {
-				location.href = "${pageContext.request.contextPath}/toAllReview.co";
-			})
 	</script>
 </body>
 </html>
+
+	
