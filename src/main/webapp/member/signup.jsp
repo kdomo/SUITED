@@ -197,7 +197,7 @@ form>p {
 				<a href="#">스토리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">고객센터</a>
+				<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
@@ -241,7 +241,7 @@ form>p {
 			<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
 		</div>
 		<div class="col-12">
-			<a href="${pageContext.request.contextPath}/toAllReview.co">고객센터</a>
+			<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 		<c:choose>
 			<c:when test="${empty loginSession}">

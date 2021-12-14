@@ -15,6 +15,12 @@ public class ProductDTO {
 	
 	public ProductDTO() {}
 	
+	public ProductDTO(String product_code, String product_name) {
+		super();
+		this.product_code = product_code;
+		this.product_name = product_name;
+	}
+	
 	public String toStringDate(long date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		return sdf.format(date);
