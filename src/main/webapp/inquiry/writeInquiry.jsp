@@ -188,7 +188,7 @@ line-height:8px;
 				<a href="#">스토리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
+				<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
@@ -232,7 +232,7 @@ line-height:8px;
 			<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
 		</div>
 		<div class="col-12">
-			<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
+			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 		<c:choose>
 			<c:when test="${empty loginSession}">
@@ -262,50 +262,94 @@ line-height:8px;
 	</div>
 
 	<div class="main">
-		<form action="${pageContext.request.contextPath}/productProc.pro"
-		method="post">
-		<div class="container btn-container">
-			<button type="button" class="btn btn-dark" id="registerBtn">상품 등록</button>
-			<button type="button" class="btn btn-dark" id="modifyBtn">상품 수정</button>
-			<button type="button" class="btn btn-dark" id="deleteBtn">상품 삭제</button>
-			<button type="button" class="btn btn-dark" id="allReviewBtn">리뷰 모아보기</button>
-			<!-- 원래는 관리자 페이지에 있어야 함 (임시) -->
-		</div>
-		<div class="container">
-				<div class="row">
-					<div class="col">
-					    <h2>제품 전체 목록</h2>
-					</div>
-				</div>
-				<div class="row">
-				<c:forEach items="${list}" var="dto">
-				    <div class="col-6 product">
-				            <a href="${pageContext.request.contextPath}/toDetailView.pro?product_code=${dto.getProduct_code()}&currentPage=${naviMap.get('currentPage')}&currentPage_cmt=1">
-				                <img alt="" src="${pageContext.request.contextPath}/product_img/${dto.getImg_system_name()}" width="300px" height="300px">
-				            </a><br>
-				            상품명 : ${dto.getProduct_name()}<br>
-				            가격 : ${dto.getPrice()}원<br>
-							<button type="button" class="btn btn-dark">장바구니 추가</button>
-				    </div>
-				</c:forEach>
-				</div>
-				<div class="row">
-				    <nav class="col" aria-label="Page navigation example">
-				        <ul class="pagination justify-content-center">
-				            <c:if test="${naviMap.get('needPrev') eq true}">
-				                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${naviMap.get('startNavi')-1}">Previous</a>
-				            </c:if>
-				            <c:forEach var="i" begin = "${naviMap.get('startNavi')}" end="${naviMap.get('endNavi')}">
-				                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${i}">${i}</a></li>
-				            </c:forEach>
-				            <c:if test="${naviMap.get('needNext') eq true}">
-				                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${naviMap.get('endNavi')+1}">Next</a></li>
-				            </c:if>
-				        </ul>
-				    </nav>
-				</div>
-		</div>
-	</form>
+	<!-- 여기다가 -->
+	<div class="title">
+        <div class="col-12 mt-4 mb-4" style="text-align: center;">
+            <h4>1대1 맞춤상담 게시판입니다.</h4>
+        </div>
+    </div>
+    <div class="container" style="width: 80%; padding: 10px;">
+        <form id="boardForm" action="${pageContext.request.contextPath}/writeProc.in" method="post">
+            <table class="table table-bordered">
+                <tr>
+                    <th class="col-2">제목</th>
+                    <td class="col-10" style="text-align: left;">
+                        <select id="title" name="title" style="width: 50%;">
+                            <option selected>제목을 선택하세요.</option>
+                            <option value="[제품]문의 합니다.">[제품]문의 합니다.</option>
+                            <option value="[배송]문의 합니다.">[배송]문의 합니다.</option>
+                            <option value="[결제]문의 합니다.">[결제]문의 합니다.</option>
+                            <option value="[주문]문의 합니다.">[주문]문의 합니다.</option>
+                            <option value="[기타]문의 합니다.">[기타]문의 합니다.</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-2">제품선택</th>
+                    <td class="col-10" style="text-align: left;">
+                        <select id="product_code" name="product_code" style="width: 40%;" disabled>
+                            <option value="X" selected>선택 안함</option>
+                            <!-- 여기에 추 -->
+                            <c:forEach items="${codeList}" var="dto">
+                            <option value="${dto.getProduct_code()}">${dto.getProduct_name()}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-2">작성자</th>
+                    <td class="col-10" style="text-align: left;">
+                        <input type="text" id="id" name="id" value="${loginSession.get('id')}" style="width: 40%;">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-2">내용</th>
+                    <td class="col-10">
+                    	<textarea id="content" name="content" placeholder="내용을 입력하세요." style="width: 100%; height: 500px; resize: none;"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="boxBtn" style="text-align: center;">
+        <button type="button" class="btn btn-secondary" id="btnSave">등록</button>
+        <button type="button" class="btn btn-light" id="btnDelete" style="border: solid 2px lightgray;">취소</button>
+    </div>
+    <script>
+    	
+    
+    	// 등록 버튼을 눌렀을 때
+    	$("#btnSave").on("click", function(){
+	    	if($("#title").val() == "제목을 선택하세요."){
+				alert("제목을 선택하세요.");
+				return;	
+    		}else if($("#content").val() == ""){
+				alert("내용을 입력하세요.");
+				return;
+			}
+			$("#boardForm").submit();
+    	});
+    	
+    	// 취소 버튼을 눌렀을 때
+    	$("#btnDelete").on("click", function(){
+    		$(location).attr("href", "${pageContext.request.contextPath}/toInquiry.in?currentPage=${currentPage}");
+    	});
+    	
+    	// 제목이 [제품]문의 합니다. 가 선택되었을때에만 제품을 선택할 수 있게 한다.
+    	$("#title").change(function(e){
+    		if($(e.target).val() == "[제품]문의 합니다."){
+    			$("#product_code").removeAttr("disabled");
+    		}else {
+    			$("#product_code").attr("disabled", true);
+    		}
+    		
+    	});
+    	$("#product_code").change(function(e){
+    		if($(e.target).val() == "선택 안함"){
+    			$("#product_code").val("없음");
+    		}
+    	});
+    </script>
 	</div>
 	<div class="footer">
 		<div class="row footer-top">
@@ -366,25 +410,6 @@ line-height:8px;
 			});
 
 		});
-		// 상품 등록 버튼
-			document.getElementById("registerBtn").addEventListener("click",function() {
-				location.href = "${pageContext.request.contextPath}/toRegister.pro";
-			})
-			
-		// 상품 수정 버튼
-			document.getElementById("modifyBtn").addEventListener("click",function() {
-				location.href = "${pageContext.request.contextPath}/toModify.pro";
-			})
-			
-		// 상품 삭제 버튼
-			document.getElementById("deleteBtn").addEventListener("click",function() {
-				location.href = "${pageContext.request.contextPath}/toDelete.pro";
-			})
-			
-	    // 리뷰 모아보기 버튼
-			document.getElementById("allReviewBtn").addEventListener("click",function() {
-				location.href = "${pageContext.request.contextPath}/toAllReview.co";
-			})
 	</script>
 </body>
 </html>
