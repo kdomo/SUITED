@@ -277,9 +277,9 @@ line-height:8px;
 					    <h2>제품 전체 목록</h2>
 					</div>
 				</div>
-				<c:forEach items="${list}" var="dto">
 				<div class="row">
-				    <div class="col">
+				<c:forEach items="${list}" var="dto">
+				    <div class="col-6 product">
 				            <a href="${pageContext.request.contextPath}/toDetailView.pro?product_code=${dto.getProduct_code()}&currentPage=${naviMap.get('currentPage')}&currentPage_cmt=1">
 				                <img alt="" src="${pageContext.request.contextPath}/product_img/${dto.getImg_system_name()}" width="300px" height="300px">
 				            </a><br>
@@ -287,8 +287,8 @@ line-height:8px;
 				            가격 : ${dto.getPrice()}원<br>
 							<button type="button" class="btn btn-dark">장바구니 추가</button>
 				    </div>
-				</div>
 				</c:forEach>
+				</div>
 				<div class="row">
 				    <nav class="col" aria-label="Page navigation example">
 				        <ul class="pagination justify-content-center">
