@@ -110,7 +110,7 @@ public class MemberController extends HttpServlet {
 					try {
 							MemberDTO dto = memberDAO.selectByKakaoValue(kakao_value);
 							HashMap<String, String> map = new HashMap<String, String>();
-							map.put("id", id);
+							map.put("id", dto.getId());
 							map.put("nickname", dto.getNickname());
 							map.put("name", dto.getName());
 							map.put("gender", dto.getGender());
@@ -305,6 +305,8 @@ public class MemberController extends HttpServlet {
 				e.printStackTrace();
 			}
 			System.out.println(code);
+		} else if(cmd.equals("/toMypage")) {
+			response.sendRedirect("/member/mypage.jsp");
 		}
 	}
 }

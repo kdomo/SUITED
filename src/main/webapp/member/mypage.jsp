@@ -36,7 +36,7 @@ html {
 }
 
 body {
-	width:100%;
+	width: 1024pw;
 	height: 100%;
 }
 
@@ -104,55 +104,9 @@ line-height:8px;
 
 /* main 영역 */
 .main {
-	padding-top: 92px;
-	width: 40vw;
+	padding-top: 112px;
+	width: 82.6vw;
 	margin: auto;
-	text-align: center;
-}
-
-#btn_login {
-	width: 100%;
-}
-
-#btn_signup {
-	width: 100%;
-	background-color: rgb(248, 203, 53);
-	color: black;
-}
-
-#link_signup {
-	text-align: left;
-}
-
-#link_find {
-	text-align: right;
-}
-
-#kakao_login {
-	width: 100%;
-	height: 38px;
-	background-color: #fee819;
-	border: 0px;
-	border-radius: 5px;
-	color: black
-}
-
-.alert {
-	width: 100%;
-	height: 38px;
-	padding: 0px;
-	border: 0px;
-	border-radius: 5px;
-	color: black
-}
-
-.alert>p {
-	height: 100%;
-	margin: auto;
-	padding: 0px;
-}
-#result{
-	transition-duration:1s;
 }
 
 /* footer 영역 */
@@ -221,7 +175,6 @@ line-height:8px;
 					<div class="col-xl-2 col-5 navi-menu"></div>
 				</c:when>
 			</c:choose>
-			
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="#">영양제추천</a>
 			</div>
@@ -229,7 +182,7 @@ line-height:8px;
 				<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">고객리뷰</a>
+				<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="#">스토리</a>
@@ -242,7 +195,7 @@ line-height:8px;
 				</c:when>
 				<c:when test="${!empty loginSession}">
 					<div class="col-xl-1 d-none d-xl-block navi-menu">
-						<a href="#">${loginSession.nickname} 님</a>
+						<a href="${pageContext.request.contextPath }/toMypage">${loginSession.nickname} 님</a>
 					</div>
 				</c:when>
 			</c:choose>
@@ -276,7 +229,7 @@ line-height:8px;
 			<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
 		</div>
 		<div class="col-12">
-			<a href="#">고객리뷰</a>
+			<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
 		</div>
 		<div class="col-12">
 			<a href="#">고객센터</a>
@@ -286,7 +239,7 @@ line-height:8px;
 			</c:when>
 			<c:when test="${!empty loginSession}">
 				<div class="col-12">
-			<a href="${pageContext.request.contextPath }/toMypage">${loginSession.nickname} 님</a>
+			<a href="#">${loginSession.nickname} 님</a>
 		</div>
 			</c:when>
 		</c:choose>
@@ -309,65 +262,7 @@ line-height:8px;
 	</div>
 
 	<div class="main">
-		<form
-			method="post" id="loginForm">
-			<h1 class="mt-3">로그인</h1>
-			<input type="text" class="form-control mt-3" id="id" name="id"
-				placeholder="아이디"> <input type="password"
-				class="form-control mt-3" id="password" name="password"
-				placeholder="패스워드">
-			<div class="row">
-				<div class="col-6" id="link_signup">
-					<a href="${pageContext.request.contextPath }/toSignup.mem?kakao_value=0">회원가입</a>
-				</div>
-				<div class="col-6" id="link_find">
-					<a href="">아이디 / 비밀번호 찾기</a>
-				</div>
-			</div>
-			<div class="row d-none">
-				<input type="text" name="kakao_value" value="0">
-			</div>
-			<div class="row">
-				<div class="col-12">
-					<button type="button" class="btn btn-dark" id="btn_login">로그인</button>
-				</div>
-				<div class="col-12">
-					<button type="button" class="mt-3" id="kakao_login">카카오
-						로그인</button>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12" id="result">
-				
-				</div>
-			</div>
-<%-- 			<c:if test="${rs eq 'fail'}"> --%>
-<!-- 				<button type="button" class="alert alert-dark mt-3" disabled>아이디 또는 -->
-<!-- 					비밀번호가 일치하지 않습니다.</button> -->
-<%-- 			</c:if> --%>
-<%-- 			<c:if test="${rs eq 'signSuccess'}"> --%>
-<!-- 				<button type="button" class="alert alert-success mt-3" disabled>회원가입에 성공하였습니다. 이메일을 확인해주세요.</button> -->
-<%-- 			</c:if> --%>
-<%-- 			<c:if test="${rs eq 'signFail'}"> --%>
-<!-- 				<button type="button" class="alert alert-danger mt-3" disabled>회원가입에 실패하였습니다.</button> -->
-<%-- 			</c:if> --%>
-<%-- 			<c:if test="${rs eq 'emailSuccess'}"> --%>
-<!-- 				<button type="button" class="alert alert-success mt-3" disabled>이메일 인증에 성공했습니다.</button> -->
-<%-- 			</c:if> --%>
-<%-- 			<c:if test="${rs eq 'emailFail'}"> --%>
-<!-- 				<button type="button" class="alert alert-danger mt-3" disabled>이메일 인증에 실패했습니다.</button> -->
-<%-- 			</c:if> --%>
-<%-- 			<c:if test="${rs eq 'emailIncomplete'}"> --%>
-<!-- 				<button type="button" class="alert alert-danger mt-3" disabled>이메일 인증이 완료되지 않았습니다.</button> -->
-<%-- 			</c:if> --%>
-			
-		</form>
-		<form action="${pageContext.request.contextPath}/toSignup.mem"
-			method="post" class="d-none" id="kakaoForm">
-			<input type="text" id="kakao_value" name="kakao_value" value="0">
-			<input type="text" id="kakao_id" name="kakao_id">
-			<input type="text" id="gender" name="gender">
-		</form>
+	<!-- 여기다가 -->
 	</div>
 	<div class="footer">
 		<div class="row footer-top">
@@ -393,29 +288,9 @@ line-height:8px;
 		</div>
 		ⓒ SUITED Inc. All Rights Reserved.
 	</div>
-	<script src = "https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+
 	<script>
 		$(function() {
-			let rs = "${rs}";
-			if(rs!=null){
-				if(rs=='signSuccess'){
-					$('#result').empty();
-	 				let loginResult = "<button type='button' class='alert alert-success mt-3' disabled>회원가입이 완료되었습니다.</button>";
-					$('#result').append(loginResult);
-	 				setTimeout(resultEmpty, 5000);
-				}else if(rs == 'emailSuccess'){
-					$('#result').empty();
-	 				let loginResult = "<button type='button' class='alert alert-success mt-3' disabled>이메일 인증에 성공하였습니다.</button>";
-					$('#result').append(loginResult);
-	 				setTimeout(resultEmpty, 5000);
-				}else if(rs == 'emailFail'){
-					$('#result').empty();
-	 				let loginResult = "<button type='button' class='alert alert-danger mt-3' disabled>이메일 인증에 실패하였습니다.</button>";
-					$('#result').append(loginResult);
-	 				setTimeout(resultEmpty, 5000);
-				}
-			}
-			
 			let onNavbar = 0; // 네비 햄버거버튼 클릭했는지 아닌지 알기위한 변수
 			$('#btn_navi_menu').on('click', function() { //햄버거버튼 클릭 시
 				if (onNavbar == 0) {
@@ -446,87 +321,7 @@ line-height:8px;
 					onNavbar = 0;
 				}
 			});
-			
-			Kakao.init('40f2b5b7058ed045a9aa804d45255e9b');
-			
-			$('#kakao_login')
-					.on(
-							'click',
-							function() {
-								Kakao.Auth.login({
-							        success: function(authObj) {
-							          //2. 로그인 성공시, API 호출
-							          Kakao.API.request({
-							            url: '/v2/user/me',
-							            data: {
-									        property_keys: ["kakao_account.email","kakao_account.gender"]
-									    },
-							            success: function(response) {
-							              $('#kakao_value').val(response.id);
-							              $('#kakao_id').val(response.kakao_account.email);
-							              $('#gender').val(response.kakao_account.gender);
-										  scope : 'account_email,gender';
-							              
-							             console.log($('#kakao_value').val() + " : " + $('#kakao_id').val() + " : " + $('#gender').val());
-							             $('#kakaoForm').submit();
-							              
-							        }
-							          })
-							          console.log(authObj);
-							          var token = authObj.access_token;
-							        },
-							        fail: function(err) {
-							          alert(JSON.stringify(err));
-							        }
-							      });			
-							});
 
-			$('#btn_login').on('click', function() {
-				if (($('#id').val() == "") || ($('#password').val() == "")) {
-					alert("아이디 혹은 비밀번호를 입력해주세요.");
-					return;
-				} else {
-					let loginForm = $('#loginForm').serialize();
-					login(loginForm);
-				}
-			});
-			function resultEmpty(){
-				$('#result').empty();
-			};
-			function login(loginForm){
-				$.ajax({
-					type:"post",
-					url:"${pageContext.request.contextPath}/loginProc.mem",
-					data:loginForm,
-					dataType:"text"
-				}).done(function(data){
-					console.log(data);
-					if(data == 'loginSuccess'){
-						location.href="/";
-					}else if(data == 'loginFail'){
-						$('#result').empty();
-		 				let loginResult = "<button type='button' class='alert alert-dark mt-3' disabled>아이디 또는 비밀번호가 일치하지 않습니다.</button>";
-						$('#result').append(loginResult);
-		 				setTimeout(resultEmpty, 5000);
-					}
-					else if(data =='emailFail'){
-						$('#result').empty();
-		 				let loginResult = "<button type='button' class='alert alert-danger mt-3' disabled>이메일 인증이 완료되지 않았습니다.</button>";
-						$('#result').append(loginResult);
-		 				setTimeout(resultEmpty, 5000);
-					}
-					else if(data == 'admin'){
-						$('#result').empty();
-		 				let loginResult = "<button type='button' class='alert alert-danger mt-3' disabled>관리자로 로그인해주세요.</button>";
-						$('#result').append(loginResult);
-		 				setTimeout(resultEmpty, 5000);
-		 				location.href = "/admin/login.jsp";
-					}
-				}).fail(function(data){
-					console.log(data);
-				});
-			}
-			
 		});
 	</script>
 </body>

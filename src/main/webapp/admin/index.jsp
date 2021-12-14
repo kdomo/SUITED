@@ -208,7 +208,7 @@ a:hover {
 				</c:when>
 				<c:when test="${!empty loginSession}">
 					<div class="col-xl-1 d-none d-xl-block navi-menu">
-						<a href="#">${loginSession.nickname} 님</a>
+						<a href="${pageContext.request.contextPath }/toMypage">${loginSession.nickname} 님</a>
 					</div>
 				</c:when>
 			</c:choose>
@@ -303,10 +303,10 @@ a:hover {
 		$(function() {
 			let admin_yn = "${loginSession.get('admin_yn')}";
 			if(admin_yn=='0'){
-				alert("접근할 수 없습니다.");
+				alert("일반회원은 접근할 수 없습니다.");
 				location.href="/index.jsp";
 			}else if(admin_yn==''){
-				alert("접근할 수 없습니다.");
+				alert("일반회원은 접근할 수 없습니다.");
 				location.href="/index.jsp";
 			}
 			let onNavbar = 0; // 네비 햄버거버튼 클릭했는지 아닌지 알기위한 변수
