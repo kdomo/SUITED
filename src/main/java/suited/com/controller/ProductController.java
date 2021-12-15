@@ -60,6 +60,20 @@ public class ProductController extends HttpServlet {
 				request.setAttribute("list", list);
 				rd.forward(request, response);
 			}
+		} else if (cmd.equals("/toAdminProduct.pro")) { // 관리자 제품관리
+			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+			System.out.println("currentPage : " + currentPage);
+
+			ProductService service = new ProductService();
+			HashMap<String, Object> naviMap = service.getPageNavi(currentPage);
+			ArrayList<ProductDTO> list = service.getProductList((int) naviMap.get("currentPage"));
+
+			if (list != null) {
+				RequestDispatcher rd = request.getRequestDispatcher("/admin/product.jsp");
+				request.setAttribute("naviMap", naviMap);
+				request.setAttribute("list", list);
+				rd.forward(request, response);
+			}
 		} else if (cmd.equals("/toRegister.pro")) { // 상품 등록 페이지 이동 요청
 			response.sendRedirect("/product/register.jsp");
 		} else if (cmd.equals("/registerProc.pro")) { // 상품 등록 처리 후 이동 요청

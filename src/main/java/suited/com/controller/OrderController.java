@@ -45,12 +45,7 @@ public class OrderController extends HttpServlet {
 		System.out.println(cmd);
 
 		if (cmd.equals("/toOrder.order")) {
-
-			int order_amount =  1000;
-
-			RequestDispatcher rd = request.getRequestDispatcher("/order/order.jsp");
-			request.setAttribute("order_amount", order_amount);
-			rd.forward(request, response);
+			response.sendRedirect("/order/order.jsp");
 		} else if(cmd.equals("/orderProc.order")) {
 			HashMap<String, String> loginSession = (HashMap) session.getAttribute("loginSession");
 			// 장바구니에 있던 상품내역들 받아오기

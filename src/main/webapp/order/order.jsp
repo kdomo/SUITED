@@ -279,10 +279,24 @@ form>p {
 			<div class="row header">
 				<h1 class="col-12 mb-3">주문서 작성</h1>
 			</div>
-			<!-- 
-			상품리스트 나오는곳
-			
-			 -->
+			<div class="row">
+				<div class="col">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th class="col-5">제품 이미지</th>
+								<th class="col-2">제품명</th>
+								<th class="col-2">제품 금액</th>
+								<th class="col-1">합계</th>
+								<th class="col-2">수량</th>
+							</tr>
+						</thead>
+						<tbody id="listDiv">
+							
+						</tbody>
+					</table>
+				</div>
+			</div>
 			<div class="row mb-3">
 				<div class="col-12 col-xl-8">
 					<input type="text" class="form-control" id="address" name="address"
@@ -388,6 +402,7 @@ form>p {
 				})
 			}
 			getCartCount();
+			getCartList();
 			
 			$('#postcode').css({
 				"display" : "none"
@@ -471,6 +486,39 @@ form>p {
 				});
 			});
 		});
+		
+		function getCartList(){
+			$.ajax({
+				type : "post"
+				, url : "${pageContext.request.contextPath}/getCartProc.cart"
+				, dataType : "json"
+			}).done(function(data){
+				$('#listDiv').empty();
+				$('.totalPrice').empty();
+				let total = 0;
+				
+				for(let dto of data){
+						let list = "<tr>"
+					+ "<td><img alt=''"
+					+ "src='${pageContext.request.contextPath}/product_img/" + dto.img_system_name + "'"
+					+ "width='150px' height='150px'></td>"
+					+ "<td>" + dto.product_name + "</td>"
+					+ "<td>" + dto.price + "</td>"
+					+ "<td>" + dto.price * dto.quantity + "</td>"
+					+ "<td>"
+					+ "<button type='button' class='quantityBtn' value='" + dto.quantity + "'id='" + dto.product_code + "-'>-</button>"
+					+ "<span> " + dto.quantity + " </span>"
+					+ "<button type='button' class='quantityBtn' value='" + dto.quantity + "'id='" + dto.product_code + "!'>+</button>"
+					+ "</td>";
+					
+					total += dto.price * dto.quantity;
+					$("#listDiv").append(list);
+				}
+				$('#order_amount').val(total);
+			}).fail(function(e){
+				console.log(e);
+			})
+		}
 		
 		function Postcode() {
 			$('#postcode').css({

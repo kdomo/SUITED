@@ -266,17 +266,6 @@ a:hover {
 	</div>
 
 	<div class="main">
-			<div class="container btn-container">
-				<button type="button" class="btn btn-dark" id="registerBtn">상품
-					등록</button>
-				<button type="button" class="btn btn-dark" id="modifyBtn">상품
-					수정</button>
-				<button type="button" class="btn btn-dark" id="deleteBtn">상품
-					삭제</button>
-				<button type="button" class="btn btn-dark" id="allReviewBtn">리뷰
-					모아보기</button>
-				<!-- 원래는 관리자 페이지에 있어야 함 (임시) -->
-			</div>
 			<div class="container">
 				<div class="row">
 					<div class="col">
@@ -378,42 +367,7 @@ a:hover {
 			});
 
 		});
-		// 상품 등록 버튼
-		document
-				.getElementById("registerBtn")
-				.addEventListener(
-						"click",
-						function() {
-							location.href = "${pageContext.request.contextPath}/toRegister.pro";
-						})
-
-		// 상품 수정 버튼
-		document
-				.getElementById("modifyBtn")
-				.addEventListener(
-						"click",
-						function() {
-							location.href = "${pageContext.request.contextPath}/toModify.pro";
-						})
-
-		// 상품 삭제 버튼
-		document
-				.getElementById("deleteBtn")
-				.addEventListener(
-						"click",
-						function() {
-							location.href = "${pageContext.request.contextPath}/toDelete.pro";
-						})
-
-		// 리뷰 모아보기 버튼
-		document
-				.getElementById("allReviewBtn")
-				.addEventListener(
-						"click",
-						function() {
-							location.href = "${pageContext.request.contextPath}/toAllReview.co";
-						})
-						
+		
 		// 장바구니 수량
 		function getCartCount(){
 			$.ajax({

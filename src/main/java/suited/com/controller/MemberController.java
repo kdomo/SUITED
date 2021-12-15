@@ -227,7 +227,7 @@ public class MemberController extends HttpServlet {
 							rd.forward(request, response);
 						}
 					} else {
-						RequestDispatcher rd = request.getRequestDispatcher("/loginProc.mem");
+						RequestDispatcher rd = request.getRequestDispatcher("/kakaologinProc.mem");
 						request.setAttribute("id", id);
 						request.setAttribute("kakao_value", kakao_value);
 						rd.forward(request, response);

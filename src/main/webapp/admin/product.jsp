@@ -108,7 +108,6 @@ a:hover {
 	padding-top: 112px;
 	width: 82.6vw;
 	margin: auto;
-	text-align: center;
 }
 
 /* footer 영역 */
@@ -191,14 +190,14 @@ a:hover {
 				<a href="#">스토리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
+				<a href="#">고객센터</a>
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
 				</c:when>
 				<c:when test="${!empty loginSession}">
 					<div class="col-xl-1 d-none d-xl-block navi-menu">
-						<a href="#">${loginSession.nickname} 님</a>
+						<a href="${pageContext.request.contextPath }/toMypageConfirm.mem">${loginSession.nickname} 님</a>
 					</div>
 				</c:when>
 			</c:choose>
@@ -237,14 +236,14 @@ a:hover {
 			<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
 		</div>
 		<div class="col-12">
-			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
+			<a href="#">고객센터</a>
 		</div>
 		<c:choose>
 			<c:when test="${empty loginSession}">
 			</c:when>
 			<c:when test="${!empty loginSession}">
 				<div class="col-12">
-					<a href="#">${loginSession.nickname} 님</a>
+					<a href="${pageContext.request.contextPath }/toMypageConfirm.mem">${loginSession.nickname} 님</a>
 				</div>
 			</c:when>
 		</c:choose>
@@ -262,62 +261,69 @@ a:hover {
 			</c:when>
 		</c:choose>
 		<div class="col-12">
-			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
+			<a href="#">고객센터</a>
 		</div>
 	</div>
 
 	<div class="main">
-		<div class="row">
-			<div class="col-12">
-				<h1 class="mt-3">장바구니</h1>
+			<div class="container btn-container">
+				<button type="button" class="btn btn-dark" id="registerBtn">상품
+					등록</button>
+				<button type="button" class="btn btn-dark" id="modifyBtn">상품
+					수정</button>
+				<button type="button" class="btn btn-dark" id="deleteBtn">상품
+					삭제</button>
+				<button type="button" class="btn btn-dark" id="allReviewBtn">리뷰
+					모아보기</button>
+				<!-- 원래는 관리자 페이지에 있어야 함 (임시) -->
 			</div>
-		</div>
-		<div class="empty">
-			<div class="row">
-				<p>장바구니에 추가된 제품이 없습니다.</p>
-				<p>
-					몇가지 건강설문을 통해<br> 나만을 위한 영양성분을 찾아보세요.
-				</p>
-			</div>
-			<button type="button" class="btn btn-dark" id="btn_survey">영양제
-				추천받기</button>
-		</div>
-		<div class="added">
-			<div class="row">
-				<div class="col">
-					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<th class="col-5">제품 이미지</th>
-								<th class="col-2">제품명</th>
-								<th class="col-1">제품 금액</th>
-								<th class="col-1">합계</th>
-								<th class="col-2">수량</th>
-								<th class="col-1"></th>
-							</tr>
-						</thead>
-						<tbody id="listDiv">
-							
-						</tbody>
-					</table>
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<h2>제품 전체 목록</h2>
+					</div>
+				</div>
+				<c:forEach items="${list}" var="dto">
+					<div class="row">
+						<div class="col">
+							<a
+								href="${pageContext.request.contextPath}/toDetailView.pro?product_code=${dto.getProduct_code()}&currentPage=${naviMap.get('currentPage')}&currentPage_cmt=1">
+								<img alt=""
+								src="${pageContext.request.contextPath}/product_img/${dto.getImg_system_name()}"
+								width="300px" height="300px">
+							</a><br> 상품명 : ${dto.getProduct_name()}<br> 가격 :
+							${dto.getPrice()}원<br>
+							     <button type="button" class="btn btn-dark insertCartBtn" value="${dto.getProduct_code()}">장바구니 추가</button>
+						</div>
+					</div>
+				</c:forEach>
+				<div class="row">
+					<nav class="col" aria-label="Page navigation example">
+						<ul class="pagination justify-content-center">
+							<c:if test="${naviMap.get('needPrev') eq true}">
+								<li class="page-item"><a class="page-link"
+									href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${naviMap.get('startNavi')-1}">Previous</a>
+							</c:if>
+							<c:forEach var="i" begin="${naviMap.get('startNavi')}"
+								end="${naviMap.get('endNavi')}">
+								<li class="page-item"><a class="page-link"
+									href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${i}">${i}</a></li>
+							</c:forEach>
+							<c:if test="${naviMap.get('needNext') eq true}">
+								<li class="page-item"><a class="page-link"
+									href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${naviMap.get('endNavi')+1}">Next</a></li>
+							</c:if>
+						</ul>
+					</nav>
 				</div>
 			</div>
-			<div class="totalPrice">
-				
-			</div>
-			<div class="row">
-			     <div class="col">
-			          <button type="button" class="btn btn-dark" id="btn_toPay">주문하기</button>
-			     </div>
-			</div>
-		</div>
 	</div>
 	<div class="footer">
 		<div class="row footer-top">
 			<ul>
 				<li><a href="">이용약관</a></li>
 				<li><a href="">개인정보처리방침</a></li>
-				<li><a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a></li>
+				<li><a href="">고객센터</a></li>
 			</ul>
 		</div>
 		<div class="row footer-body">
@@ -340,14 +346,6 @@ a:hover {
 	<script>
 		$(function() {
 			getCartCount();
-			getCartList();
-			let loginSession = "${loginSession}";
-
-			if (loginSession == '') {
-				alert("로그인 후 이용해주세요.");
-				location.href = "/member/login.jsp";
-			}
-
 			let onNavbar = 0; // 네비 햄버거버튼 클릭했는지 아닌지 알기위한 변수
 			$('#btn_navi_menu').on('click', function() { //햄버거버튼 클릭 시
 				if (onNavbar == 0) {
@@ -378,108 +376,79 @@ a:hover {
 					onNavbar = 0;
 				}
 			});
-			
-			//결제하러가기 버튼
-			$('#btn_toPay').on('click',function(){
-				location.href="${pageContext.request.contextPath}/toOrder.order";
-			})
-			
-			// 장바구니 수량
-			function getCartCount(){
-				$.ajax({
-					type : "get"
-					, url : "${pageContext.request.contextPath}/countCartProc.cart"
-				}).done(function(rs){
-					if(rs != "fail"){
-						$('#cartCount').html(rs);
-						if(rs > 0){
-							$('.empty').css({"display" : "none"});
-						}else if (rs == 0){
-							$('.added').css({"display" : "none"});
-						}
-					} else {
-						alert("오류");
-					}
-				}).fail(function(e){
-					console.log(e);
-				})
-			}
-			
-			// 장바구니 목록 불러오기
-			function getCartList(){
-				$.ajax({
-					type : "post"
-					, url : "${pageContext.request.contextPath}/getCartProc.cart"
-					, dataType : "json"
-				}).done(function(data){
-					$('#listDiv').empty();
-					$('.totalPrice').empty();
-					let total = 0;
-					
-					for(let dto of data){
- 						let list = "<tr>"
-						+ "<td><img alt=''"
-						+ "src='${pageContext.request.contextPath}/product_img/" + dto.img_system_name + "'"
-						+ "width='150px' height='150px'></td>"
-						+ "<td>" + dto.product_name + "</td>"
-						+ "<td>" + dto.price + "</td>"
-						+ "<td>" + dto.price * dto.quantity + "</td>"
-						+ "<td>"
-						+ "<button type='button' class='quantityBtn' value='" + dto.quantity + "'id='" + dto.product_code + "-'>-</button>"
-						+ "<span> " + dto.quantity + " </span>"
-						+ "<button type='button' class='quantityBtn' value='" + dto.quantity + "'id='" + dto.product_code + "!'>+</button>"
-						+ "</td>"
-						+ "<td>"
-						+ "<button type='button' class='btn btn-deleteCart' value='"+ dto.product_code +"'>삭제</button>"
-						+ "</td>"
-						+ "</tr>";
-						
-						total += dto.price * dto.quantity;
-						$("#listDiv").append(list);
-					}
-					let totalPrice = "<div class='col'>"
-					+ "<p>총 결제 금액 : " + total + "</p>"
-					+ "</div>"
-					$('.totalPrice').append(totalPrice);
-				}).fail(function(e){
-					console.log(e);
-				})
-			}
-			
-			// +,- 버튼
-			$(document).on('click', '.quantityBtn', function(e){
-// 				console.log(e.target.id);
-				$.ajax({
-					url : "${pageContext.request.contextPath}/getQuantity.cart?btnId=" + e.target.id + "&quantity=" + $(e.target).val()
-					, type : 'get'
-				}).done(function(rs){
-				    if(rs == "success"){
-				    	getCartList();
-				    }else if(rs == "fail"){
-				    	alert("수량 조절 실패");
-				    }
-				}).fail(function(e){
-					console.log(e);
-				})
-			})
-			
-			// 장바구니 목록 삭제
-			$(document).on("click", ".btn-deleteCart", function(e){
-				$.ajax({
-					url : "${pageContext.request.contextPath}/deleteProc.cart?product_code=" + $(e.target).val()
-					, type : 'get'
-				}).done(function(rs){
-					if(rs == "success"){
-						getCartCount();
-						getCartList();
-					}else if(rs == "fail"){
-						alert("장바구니 목록 삭제에 실패했습니다.");
-					}
-				}).fail(function(e){
-					console.log(e);
-				})
-			})
+
 		});
+		// 상품 등록 버튼
+		document
+				.getElementById("registerBtn")
+				.addEventListener(
+						"click",
+						function() {
+							location.href = "${pageContext.request.contextPath}/toRegister.pro";
+						})
+
+		// 상품 수정 버튼
+		document
+				.getElementById("modifyBtn")
+				.addEventListener(
+						"click",
+						function() {
+							location.href = "${pageContext.request.contextPath}/toModify.pro";
+						})
+
+		// 상품 삭제 버튼
+		document
+				.getElementById("deleteBtn")
+				.addEventListener(
+						"click",
+						function() {
+							location.href = "${pageContext.request.contextPath}/toDelete.pro";
+						})
+
+		// 리뷰 모아보기 버튼
+		document
+				.getElementById("allReviewBtn")
+				.addEventListener(
+						"click",
+						function() {
+							location.href = "${pageContext.request.contextPath}/toAllReview.co";
+						})
+						
+		// 장바구니 수량
+		function getCartCount(){
+			$.ajax({
+				type : "get"
+				, url : "${pageContext.request.contextPath}/countCartProc.cart"
+			}).done(function(rs){
+				if(rs != "fail"){
+					$('#cartCount').html(rs);
+				} else {
+					alert("오류");
+				}
+			}).fail(function(e){
+				console.log(e);
+			})
+		}
+		
+		// 장바구니 추가 버튼
+		$(".insertCartBtn").on("click", function(e) {
+			let product_code = $(e.target).val();
+			console.log(product_code);
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath}/insertCartProc.cart",
+				type : 'get',
+				data : {product_code : product_code}
+			}).done(function(rs) {
+				if (rs == "success") {
+					getCartCount();
+				} else if (rs == "fail") {
+					alert("이미 장바구니에 존재하는 제품입니다.");
+				}
+			}).fail(function(e) {
+				console.log(e);
+			})
+		})
 	</script>
 </body>
 </html>
