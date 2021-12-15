@@ -190,7 +190,7 @@ a:hover {
 				<a href="#">스토리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">고객센터</a>
+				<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
@@ -236,7 +236,7 @@ a:hover {
 			<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
 		</div>
 		<div class="col-12">
-			<a href="#">고객센터</a>
+			<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 		<c:choose>
 			<c:when test="${empty loginSession}">
@@ -266,37 +266,49 @@ a:hover {
 	</div>
 
 	<div class="main">
-			<div class="container btn-container">
-				<button type="button" class="btn btn-dark" id="registerBtn">상품
-					등록</button>
-				<button type="button" class="btn btn-dark" id="modifyBtn">상품
-					수정</button>
-				<button type="button" class="btn btn-dark" id="deleteBtn">상품
-					삭제</button>
-				<button type="button" class="btn btn-dark" id="allReviewBtn">리뷰
-					모아보기</button>
-				<!-- 원래는 관리자 페이지에 있어야 함 (임시) -->
-			</div>
+<!-- 			<div class="container btn-container"> -->
+<!-- 				<button type="button" class="btn btn-dark" id="registerBtn">상품 -->
+<!-- 					등록</button> -->
+<!-- 				<button type="button" class="btn btn-dark" id="modifyBtn">상품 -->
+<!-- 					수정</button> -->
+<!-- 				<button type="button" class="btn btn-dark" id="deleteBtn">상품 -->
+<!-- 					삭제</button> -->
+<!-- 				<button type="button" class="btn btn-dark" id="allReviewBtn">리뷰 -->
+<!-- 					모아보기</button> -->
+<!-- 				원래는 관리자 페이지에 있어야 함 (임시) -->
+<!-- 			</div> -->
 			<div class="container">
 				<div class="row">
 					<div class="col">
 						<h2>제품 전체 목록</h2>
 					</div>
 				</div>
+<%-- 				<c:forEach items="${list}" var="dto"> --%>
+<!-- 					<div class="row"> -->
+<!-- 						<div class="col"> -->
+<!-- 							<a -->
+<%-- 								href="${pageContext.request.contextPath}/toDetailView.pro?product_code=${dto.getProduct_code()}&currentPage=${naviMap.get('currentPage')}&currentPage_cmt=1"> --%>
+<!-- 								<img alt="" -->
+<%-- 								src="${pageContext.request.contextPath}/product_img/${dto.getImg_system_name()}" --%>
+<!-- 								width="300px" height="300px"> -->
+<%-- 							</a><br> 상품명 : ${dto.getProduct_name()}<br> 가격 : --%>
+<%-- 							${dto.getPrice()}원<br> --%>
+<%-- 							     <button type="button" class="btn btn-dark insertCartBtn" value="${dto.getProduct_code()}">장바구니 추가</button> --%>
+<!-- 						</div> -->
+<!-- 					</div> -->
+<%-- 				</c:forEach> --%>
+				<div class="row">
 				<c:forEach items="${list}" var="dto">
-					<div class="row">
-						<div class="col">
-							<a
-								href="${pageContext.request.contextPath}/toDetailView.pro?product_code=${dto.getProduct_code()}&currentPage=${naviMap.get('currentPage')}&currentPage_cmt=1">
-								<img alt=""
-								src="${pageContext.request.contextPath}/product_img/${dto.getImg_system_name()}"
-								width="300px" height="300px">
-							</a><br> 상품명 : ${dto.getProduct_name()}<br> 가격 :
-							${dto.getPrice()}원<br>
-							     <button type="button" class="btn btn-dark insertCartBtn" value="${dto.getProduct_code()}">장바구니 추가</button>
-						</div>
-					</div>
+				    <div class="col-6 product">
+				            <a href="${pageContext.request.contextPath}/toDetailView.pro?product_code=${dto.getProduct_code()}&currentPage=${naviMap.get('currentPage')}&currentPage_cmt=1">
+				                <img alt="" src="${pageContext.request.contextPath}/product_img/${dto.getImg_system_name()}" width="300px" height="300px">
+				            </a><br>
+				            상품명 : ${dto.getProduct_name()}<br>
+				            가격 : ${dto.getPrice()}원<br>
+							<button type="button" class="btn btn-dark">장바구니 추가</button>
+				    </div>
 				</c:forEach>
+				</div>
 				<div class="row">
 					<nav class="col" aria-label="Page navigation example">
 						<ul class="pagination justify-content-center">
