@@ -344,9 +344,9 @@ line-height:8px;
         </form>
     </div>
     <div class="boxBtn" style="text-align: center;">
-        <button type="button" class="btn btn-secondary" id="btnBack">목록으로</button>
+        <button type="button" class="btn btn-dark" id="btnBack">목록으로</button>
         <c:if test="${loginSession.get('admin_yn') eq '1' and answer_yn eq '0'}">
-    	<button type="button" class="btn btn-primary" id="btnSave">저장</button>
+    	<button type="button" class="btn btn-dark" id="btnSave">저장</button>
     	</c:if>
     </div>
     <script>

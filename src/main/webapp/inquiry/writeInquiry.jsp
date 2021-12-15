@@ -299,7 +299,7 @@ line-height:8px;
                 <tr>
                     <th class="col-2">작성자</th>
                     <td class="col-10" style="text-align: left;">
-                        <input type="text" id="id" name="id" value="${loginSession.get('id')}" style="width: 40%;">
+                        <input type="text" id="id" name="id" value="${loginSession.get('id')}" style="width: 40%;" disabled>
                     </td>
                 </tr>
                 <tr>
@@ -312,8 +312,8 @@ line-height:8px;
         </form>
     </div>
     <div class="boxBtn" style="text-align: center;">
-        <button type="button" class="btn btn-secondary" id="btnSave">등록</button>
-        <button type="button" class="btn btn-light" id="btnDelete" style="border: solid 2px lightgray;">취소</button>
+        <button type="button" class="btn btn-dark" id="btnSave">등록</button>
+        <button type="button" class="btn btn-dark" id="btnDelete" style="border: solid 2px lightgray;">취소</button>
     </div>
     <script>
     	
@@ -326,8 +326,9 @@ line-height:8px;
     		}else if($("#content").val() == ""){
 				alert("내용을 입력하세요.");
 				return;
-			}
+    		}
 			$("#boardForm").submit();
+			alert("정상적으로 등록되었습니다.");
     	});
     	
     	// 취소 버튼을 눌렀을 때
