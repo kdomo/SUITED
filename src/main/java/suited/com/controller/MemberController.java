@@ -69,13 +69,14 @@ public class MemberController extends HttpServlet {
 					System.out.println(memberDAO.adminConfirm(id));
 					if(memberDAO.adminConfirm(id)) { // 관리자라고 한다면
 						out.write("admin");
-					}else { 						//관리자가 아니라면
+					}else { 						// 관리자가 아니라면
 						try {
 							String getChecked = certifiedDAO.getChecked(id); // 사용자의 이메일이 인증됐는지 확인
 							if (getChecked.equals("1")) { // 인증됐다면
 								MemberDTO dto = memberDAO.selectById(id);
 								HashMap<String, String> map = new HashMap<String, String>();
 								map.put("id", id);
+								map.put("password", dto.getPassword());
 								map.put("nickname", dto.getNickname());
 								map.put("name", dto.getName());
 								map.put("gender", dto.getGender());
@@ -112,6 +113,7 @@ public class MemberController extends HttpServlet {
 							MemberDTO dto = memberDAO.selectByKakaoValue(kakao_value);
 							HashMap<String, String> map = new HashMap<String, String>();
 							map.put("id", dto.getId());
+							map.put("password", dto.getPassword());
 							map.put("nickname", dto.getNickname());
 							map.put("name", dto.getName());
 							map.put("gender", dto.getGender());
@@ -244,9 +246,9 @@ public class MemberController extends HttpServlet {
 			String name = request.getParameter("name");
 			String idHash = EncryptionUtils.getSHA256(id);
 
-//			String host = "http://3.37.55.164:8080/"; //aws
+			String host = "http://3.37.55.164:8080/"; //aws
 			
-			String host = "www.localhost:8080/";
+//			String host = "www.localhost:8080/";
 
 			String from = "khsuited@gmail.com";
 
@@ -333,20 +335,27 @@ public class MemberController extends HttpServlet {
 				e.printStackTrace();
 			}
 		} else if(cmd.equals("/updateProc.mem")) {
-			if(!(request.getParameter("password")).equals(null)){
-				String password = request.getParameter("password");
-			}
-			if(!(request.getParameter("nickname")).equals(null)){
-				String nickname = request.getParameter("nickname");
-			}
-			if(!(request.getParameter("address")).equals(null)){
-				String address = request.getParameter("address");
-			}
-			if(!(request.getParameter("phone")).equals(null)){
-				String phone = request.getParameter("phone");
-			}
+			HashMap<String, String> loginSession = (HashMap)session.getAttribute("loginSession");
+			String id = loginSession.get("id");
+			String password = request.getParameter("password");
+			String nickname = request.getParameter("nickname");
+			String address = request.getParameter("address");
+			String phone = request.getParameter("phoneDnone");
 			
-//			System.out.println(password + " : " + nickname + " : " + address + " : " + phone);
+			try {
+				int rs = memberDAO.updateById(id,password,nickname,address,phone);
+				if(rs != -1) {
+					out.write("updateSuccess");
+				}else {
+					out.write("updateFail");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(cmd.equals("/getHashPw.mem")) {
+			String password = request.getParameter("password");
+			password = EncryptionUtils.getSHA256(password);
+			out.write(password);
 		}
 	}
 }

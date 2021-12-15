@@ -213,7 +213,7 @@ line-height:8px;
 				</c:when>
 			</c:choose>
 			<div class="col-xl-1 col-3 navi-cart">
-				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span class="badge bg-dark rounded-pill">0</span></a>
+				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span id="cartCount" class="badge bg-dark rounded-pill"></span></a>
 			</div>
 			<div class="col-xl-0 col-2 d-xl-none navi-menu">
 				<a id="btn_navi_menu"><img src="../imgs/menu.png" width="20px"
@@ -257,7 +257,7 @@ line-height:8px;
 			</c:when>
 		</c:choose>
 		<div class="col-12">
-			<a href="#">고객센터</a>
+			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 	</div>
 
@@ -371,7 +371,7 @@ line-height:8px;
 			<ul>
 				<li><a href="">이용약관</a></li>
 				<li><a href="">개인정보처리방침</a></li>
-				<li><a href="">고객센터</a></li>
+				<li><a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a></li>
 			</ul>
 		</div>
 		<div class="row footer-body">
@@ -393,6 +393,22 @@ line-height:8px;
 
 	<script>
 		$(function() {
+			getCartCount();
+			function getCartCount(){
+				$.ajax({
+					type : "get"
+					, url : "${pageContext.request.contextPath}/countCartProc.cart"
+				}).done(function(rs){
+					if(rs != "fail"){
+						$('#cartCount').html(rs);
+					} else {
+						alert("오류");
+					}
+				}).fail(function(e){
+					console.log(e);
+				})
+			}
+			
 			let loginSession = "${loginSession}";
 			if (loginSession == null) {
 				alert("로그인 후 이용가능합니다.");

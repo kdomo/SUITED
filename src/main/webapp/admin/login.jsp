@@ -304,7 +304,7 @@ line-height:8px;
 			</c:when>
 		</c:choose>
 		<div class="col-12">
-			<a href="#">고객센터</a>
+			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 	</div>
 
@@ -337,7 +337,7 @@ line-height:8px;
 			<ul>
 				<li><a href="">이용약관</a></li>
 				<li><a href="">개인정보처리방침</a></li>
-				<li><a href="">고객센터</a></li>
+				<li><a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a></li>
 			</ul>
 		</div>
 		<div class="row footer-body">

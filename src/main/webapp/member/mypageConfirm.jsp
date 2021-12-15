@@ -195,7 +195,7 @@ a:hover {
 				<a href="#">스토리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">고객센터</a>
+				<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
@@ -222,7 +222,7 @@ a:hover {
 			</c:choose>
 			<div class="col-xl-1 col-3 navi-cart">
 				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span
-					class="badge bg-dark rounded-pill">0</span></a>
+					id="cartCount" class="badge bg-dark rounded-pill"></span></a>
 			</div>
 			<div class="col-xl-0 col-2 d-xl-none navi-menu">
 				<a id="btn_navi_menu"><img src="../imgs/menu.png" width="20px"
@@ -242,7 +242,7 @@ a:hover {
 			<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
 		</div>
 		<div class="col-12">
-			<a href="#">고객센터</a>
+			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 		<c:choose>
 			<c:when test="${empty loginSession}">
@@ -267,7 +267,7 @@ a:hover {
 			</c:when>
 		</c:choose>
 		<div class="col-12">
-			<a href="#">고객센터</a>
+			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 	</div>
 
@@ -296,7 +296,7 @@ a:hover {
 			<ul>
 				<li><a href="">이용약관</a></li>
 				<li><a href="">개인정보처리방침</a></li>
-				<li><a href="">고객센터</a></li>
+				<li><a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a></li>
 			</ul>
 		</div>
 		<div class="row footer-body">
@@ -318,6 +318,22 @@ a:hover {
 
 	<script>
 		$(function() {
+			getCartCount();
+			
+			function getCartCount(){
+				$.ajax({
+					type : "get"
+					, url : "${pageContext.request.contextPath}/countCartProc.cart"
+				}).done(function(rs){
+					if(rs != "fail"){
+						$('#cartCount').html(rs);
+					} else {
+						alert("오류");
+					}
+				}).fail(function(e){
+					console.log(e);
+				})
+			}
 			$('#postcode').css({
 				"display" : "none"
 			});

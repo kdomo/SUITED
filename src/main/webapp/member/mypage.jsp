@@ -200,7 +200,7 @@ a:hover {
 				<a href="#">스토리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">고객센터</a>
+				<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
@@ -227,7 +227,7 @@ a:hover {
 			</c:choose>
 			<div class="col-xl-1 col-3 navi-cart">
 				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span
-					class="badge bg-dark rounded-pill">0</span></a>
+					id="cartCount" class="badge bg-dark rounded-pill"></span></a>
 			</div>
 			<div class="col-xl-0 col-2 d-xl-none navi-menu">
 				<a id="btn_navi_menu"><img src="../imgs/menu.png" width="20px"
@@ -247,7 +247,7 @@ a:hover {
 			<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
 		</div>
 		<div class="col-12">
-			<a href="#">고객센터</a>
+			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 		<c:choose>
 			<c:when test="${empty loginSession}">
@@ -272,7 +272,7 @@ a:hover {
 			</c:when>
 		</c:choose>
 		<div class="col-12">
-			<a href="#">고객센터</a>
+			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 	</div>
 
@@ -306,7 +306,7 @@ a:hover {
 					<div class="row mb-3">
 						<div class="col-12 col-xl-8">
 							<input type="password" class="form-control" id="password"
-								name="password" placeholder="비밀번호" value="비밀번호비밀번호비밀번호" disabled>
+								name="password" placeholder="비밀번호" value="${loginSession.get('password')}" disabled>
 						</div>
 						<div class="col-12 col-xl-4">
 							<input type="button" onclick="" value="비밀번호 변경"
@@ -525,7 +525,7 @@ a:hover {
 			<ul>
 				<li><a href="">이용약관</a></li>
 				<li><a href="">개인정보처리방침</a></li>
-				<li><a href="">고객센터</a></li>
+				<li><a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a></li>
 			</ul>
 		</div>
 		<div class="row footer-body">
@@ -549,6 +549,24 @@ a:hover {
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
 		$(function() {
+			function getCartCount(){
+				$.ajax({
+					type : "get"
+					, url : "${pageContext.request.contextPath}/countCartProc.cart"
+				}).done(function(rs){
+					if(rs != "fail"){
+						$('#cartCount').html(rs);
+					} else {
+						alert("오류");
+					}
+				}).fail(function(e){
+					console.log(e);
+				})
+			}
+			
+			getCartCount();
+			
+			
 			let loginSession = "${loginSession}";
 
 			if (loginSession == '') {
@@ -712,21 +730,34 @@ a:hover {
 							modal.hide();
 
 						} else {
-
+							alert("비 정상적인 접근입니다.");
 						}
 					})
 
 			$('#modal_btn_pwUse').on('click', function() {
 				if (passwordRegex == true && passwordNull == true) {
-
+					let password = $('#modal_password').val();
 					let myModalEl = document.getElementById('passwordChange')
 					let modal = bootstrap.Modal.getInstance(myModalEl)
-					$('#password').val($('#modal_password').val());
-					passwordChange = true;
-					modal.hide();
+					$.ajax({
+						type:"post",
+						url:"${pageContext.request.contextPath}/getHashPw.mem",
+						data : {password:password},
+						dataType : "text"
+					}).done(function(data){
+						$('#modal_password').val(data);
+						$('#password').val($('#modal_password').val());
+						passwordChange = true;
+						modal.hide();
+					}).fail(function(data){
+						
+					})
+					
+					
+					
 
 				} else {
-
+					
 				}
 			})
 
@@ -798,23 +829,21 @@ a:hover {
 			$('#btn_submit').on(
 					'click',
 					function() {
-						if(passwordChange==true){$('#password').attr("disabled",false);}
-						if(nicknameChange==true){$('#nickname').attr("disabled",false);}
-						if(addressChange==true){$('#address').attr("disabled",false);}
-						if(phoneChange==true){$('#phone').attr("disabled",false);}
+						$('#password').attr("disabled",false);
+						$('#nickname').attr("disabled",false);
+						$('#address').attr("disabled",false);
+						$('#phoneDnone').attr("disabled",false);
 						let mypageForm = $('#mypageForm').serialize();
-						if(passwordChange==true){$('#password').attr("disabled",true);}
-						if(nicknameChange==true){$('#nickname').attr("disabled",true);}
-						if(addressChange==true){$('#address').attr("disabled",true);}
-						if(phoneChange==true){$('#phone').attr("disabled",true);}
+						$('#password').attr("disabled",true);
+						$('#nickname').attr("disabled",true);
+						$('#address').attr("disabled",true);
+						$('#phoneDnone').attr("disabled",true);
 						
 						if (addressChange == false && passwordChange == false
 								&& phoneChange == false
 								&& nicknameChange == false) {
 							alert("변경된 값이 없습니다.");
 						} else {
-							alert("변경 ok");
-						
 							$.ajax({
 								type : "post",
 								url : "${pageContext.request.contextPath}/updateProc.mem",
@@ -822,21 +851,13 @@ a:hover {
 								dataType : "text"
 							}).done(function(data) {
 										console.log(data);
-// 										if (data == 'nicknameCheckSuccess') {
-// 											$('#modal_btn_Nicknameuse').attr(
-// 													"disabled", false);
-// 											$('#nicknameCheckModalResult').empty();
-// 											let nicknameCheckResult = "<p class='mt-3 mb-0' style='color:green;'>사용이 가능한 닉네임 입니다.</p>"
-// 											$('#nicknameCheckModalResult').append(
-// 													nicknameCheckResult);
-// 										} else if (data == 'nicknameCheckFail') {
-// 											$('#modal_btn_Nicknameuse').attr(
-// 													"disabled", true);
-// 											$('#nicknameCheckModalResult').empty();
-// 											let nicknameCheckResult = "<p class='mt-3 mb-0' style='color:red;'>사용이 불 가능한 닉네임 입니다.</p>"
-// 											$('#nicknameCheckModalResult').append(
-// 													nicknameCheckResult);
-// 										}
+										if(data == 'updateSuccess'){
+											alert("성공적으로 수정되었습니다. 다시 로그인해주세요.");
+											location.href="${pageContext.request.contextPath}/logoutProc.mem";
+										}else if(data == 'updateFail'){
+											alert("수정에 실패하였습니다.");
+											location.href="${pageContext.request.contextPath }/toMypageConfirm.mem";
+										}
 									}).fail(function(data) {
 								console.log(data);
 							console.log($('#password').val());

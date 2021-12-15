@@ -197,7 +197,7 @@ a:hover {
 				</c:when>
 				<c:when test="${!empty loginSession}">
 					<div class="col-xl-1 d-none d-xl-block navi-menu">
-						<a href="#">${loginSession.nickname} 님</a>
+						<a href="${pageContext.request.contextPath }/toMypageConfirm.mem">${loginSession.nickname} 님</a>
 					</div>
 				</c:when>
 			</c:choose>
@@ -243,7 +243,7 @@ a:hover {
 			</c:when>
 			<c:when test="${!empty loginSession}">
 				<div class="col-12">
-					<a href="#">${loginSession.nickname} 님</a>
+					<a href="${pageContext.request.contextPath }/toMypageConfirm.mem">${loginSession.nickname} 님</a>
 				</div>
 			</c:when>
 		</c:choose>

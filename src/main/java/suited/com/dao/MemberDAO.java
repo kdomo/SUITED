@@ -81,6 +81,7 @@ public class MemberDAO {
 			MemberDTO dto = new MemberDTO();
 			if (rs.next()) {
 				dto.setId(rs.getString("id"));
+				dto.setPassword(rs.getString("password"));
 				dto.setNickname(rs.getString("nickname"));
 				dto.setName(rs.getString("name"));
 				dto.setGender(rs.getString("gender"));
@@ -164,6 +165,7 @@ public class MemberDAO {
 			MemberDTO dto = new MemberDTO();
 			if (rs.next()) {
 				dto.setId(rs.getString("id"));
+				dto.setPassword(rs.getString("password"));
 				dto.setNickname(rs.getString("nickname"));
 				dto.setName(rs.getString("name"));
 				dto.setGender(rs.getString("gender"));
@@ -178,7 +180,6 @@ public class MemberDAO {
 		}
 	}
 	
-	// 어드민 부분
 	
 	public boolean adminConfirm(String id) throws Exception {
 		String sql = "select * from tbl_member where id = ? AND admin_yn = ?";
@@ -195,5 +196,23 @@ public class MemberDAO {
 				return false;
 			}
 		}
+	}
+	
+	public int updateById(String id,String password,String nickname,String address,String phone) throws Exception {
+		String sql = "update tbl_member set password=?,nickname=?,address=?,phone=? where id=?";
+
+		try (Connection con = this.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
+
+			pstmt.setString(1, password);
+			pstmt.setString(2, nickname);
+			pstmt.setString(3, address);
+			pstmt.setString(4, phone);
+			pstmt.setString(5, id);
+
+			int rs = pstmt.executeUpdate();
+			if (rs != 0)
+				return rs;
+		} 
+		return -1;
 	}
 }
