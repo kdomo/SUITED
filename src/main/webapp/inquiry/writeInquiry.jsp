@@ -36,7 +36,7 @@ html {
 }
 
 body {
-	width:100%;
+	width: 1024pw;
 	height: 100%;
 }
 
@@ -104,55 +104,9 @@ line-height:8px;
 
 /* main 영역 */
 .main {
-	padding-top: 92px;
-	width: 40vw;
+	padding-top: 112px;
+	width: 82.6vw;
 	margin: auto;
-	text-align: center;
-}
-
-#btn_login {
-	width: 100%;
-}
-
-#btn_signup {
-	width: 100%;
-	background-color: rgb(248, 203, 53);
-	color: black;
-}
-
-#link_signup {
-	text-align: left;
-}
-
-#link_find {
-	text-align: right;
-}
-
-#kakao_login {
-	width: 100%;
-	height: 38px;
-	background-color: #fee819;
-	border: 0px;
-	border-radius: 5px;
-	color: black
-}
-
-.alert {
-	width: 100%;
-	height: 38px;
-	padding: 0px;
-	border: 0px;
-	border-radius: 5px;
-	color: black
-}
-
-.alert>p {
-	height: 100%;
-	margin: auto;
-	padding: 0px;
-}
-#result{
-	transition-duration:1s;
 }
 
 /* footer 영역 */
@@ -221,7 +175,6 @@ line-height:8px;
 					<div class="col-xl-2 col-5 navi-menu"></div>
 				</c:when>
 			</c:choose>
-			
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="#">영양제추천</a>
 			</div>
@@ -229,13 +182,13 @@ line-height:8px;
 				<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">고객리뷰</a>
+				<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="#">스토리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
+				<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
@@ -260,7 +213,7 @@ line-height:8px;
 				</c:when>
 			</c:choose>
 			<div class="col-xl-1 col-3 navi-cart">
-				<a href="#">cart <span class="badge bg-dark rounded-pill">0</span></a>
+				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span class="badge bg-dark rounded-pill">0</span></a>
 			</div>
 			<div class="col-xl-0 col-2 d-xl-none navi-menu">
 				<a id="btn_navi_menu"><img src="../imgs/menu.png" width="20px"
@@ -276,10 +229,10 @@ line-height:8px;
 			<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
 		</div>
 		<div class="col-12">
-			<a href="#">고객리뷰</a>
+			<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
 		</div>
 		<div class="col-12">
-			<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
+			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 		<c:choose>
 			<c:when test="${empty loginSession}">
@@ -309,28 +262,95 @@ line-height:8px;
 	</div>
 
 	<div class="main">
-		<form
-			method="post" id="loginForm">
-			<h1 class="mt-3">관리자 로그인</h1>
-			<input type="text" class="form-control mt-3" id="id" name="id"
-				placeholder="아이디"> <input type="password"
-				class="form-control mt-3" id="password" name="password"
-				placeholder="패스워드">
-			<div class="row d-none">
-				<input type="text" name="kakao_value" value="0">
-			</div>
-			<div class="row">
-				<div class="col-12 mt-3">
-					<button type="button" class="btn btn-dark" id="btn_login">로그인</button>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12" id="result">
-				
-				</div>
-			</div>
-			
-		</form>
+	<!-- 여기다가 -->
+	<div class="title">
+        <div class="col-12 mt-4 mb-4" style="text-align: center;">
+            <h4>1대1 맞춤상담 게시판입니다.</h4>
+        </div>
+    </div>
+    <div class="container" style="width: 80%; padding: 10px;">
+        <form id="boardForm" action="${pageContext.request.contextPath}/writeProc.in" method="post">
+            <table class="table table-bordered">
+                <tr>
+                    <th class="col-2">제목</th>
+                    <td class="col-10" style="text-align: left;">
+                        <select id="title" name="title" style="width: 50%;">
+                            <option selected>제목을 선택하세요.</option>
+                            <option value="[제품]문의 합니다.">[제품]문의 합니다.</option>
+                            <option value="[배송]문의 합니다.">[배송]문의 합니다.</option>
+                            <option value="[결제]문의 합니다.">[결제]문의 합니다.</option>
+                            <option value="[주문]문의 합니다.">[주문]문의 합니다.</option>
+                            <option value="[기타]문의 합니다.">[기타]문의 합니다.</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-2">제품선택</th>
+                    <td class="col-10" style="text-align: left;">
+                        <select id="product_code" name="product_code" style="width: 40%;" disabled>
+                            <option value="X" selected>선택 안함</option>
+                            <!-- 여기에 추 -->
+                            <c:forEach items="${codeList}" var="dto">
+                            <option value="${dto.getProduct_code()}">${dto.getProduct_name()}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-2">작성자</th>
+                    <td class="col-10" style="text-align: left;">
+                        <input type="text" id="id" name="id" value="${loginSession.get('id')}" style="width: 40%;" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-2">내용</th>
+                    <td class="col-10">
+                    	<textarea id="content" name="content" placeholder="내용을 입력하세요." style="width: 100%; height: 500px; resize: none;"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="boxBtn" style="text-align: center;">
+        <button type="button" class="btn btn-dark" id="btnSave">등록</button>
+        <button type="button" class="btn btn-dark" id="btnDelete" style="border: solid 2px lightgray;">취소</button>
+    </div>
+    <script>
+    	
+    
+    	// 등록 버튼을 눌렀을 때
+    	$("#btnSave").on("click", function(){
+	    	if($("#title").val() == "제목을 선택하세요."){
+				alert("제목을 선택하세요.");
+				return;	
+    		}else if($("#content").val() == ""){
+				alert("내용을 입력하세요.");
+				return;
+    		}
+			$("#boardForm").submit();
+			alert("정상적으로 등록되었습니다.");
+    	});
+    	
+    	// 취소 버튼을 눌렀을 때
+    	$("#btnDelete").on("click", function(){
+    		$(location).attr("href", "${pageContext.request.contextPath}/toInquiry.in?currentPage=${currentPage}");
+    	});
+    	
+    	// 제목이 [제품]문의 합니다. 가 선택되었을때에만 제품을 선택할 수 있게 한다.
+    	$("#title").change(function(e){
+    		if($(e.target).val() == "[제품]문의 합니다."){
+    			$("#product_code").removeAttr("disabled");
+    		}else {
+    			$("#product_code").attr("disabled", true);
+    		}
+    		
+    	});
+    	$("#product_code").change(function(e){
+    		if($(e.target).val() == "선택 안함"){
+    			$("#product_code").val("없음");
+    		}
+    	});
+    </script>
 	</div>
 	<div class="footer">
 		<div class="row footer-top">
@@ -356,7 +376,7 @@ line-height:8px;
 		</div>
 		ⓒ SUITED Inc. All Rights Reserved.
 	</div>
-	<script src = "https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+
 	<script>
 		$(function() {
 			let onNavbar = 0; // 네비 햄버거버튼 클릭했는지 아닌지 알기위한 변수
@@ -389,47 +409,7 @@ line-height:8px;
 					onNavbar = 0;
 				}
 			});
-			
 
-			$('#btn_login').on('click', function() {
-				if (($('#id').val() == "") || ($('#password').val() == "")) {
-					alert("아이디 혹은 비밀번호를 입력해주세요.");
-					return;
-				} else {
-					let loginForm = $('#loginForm').serialize();
-					login(loginForm);
-				}
-			});
-			function resultEmpty(){
-				$('#result').empty();
-			};
-			function login(loginForm){
-				$.ajax({
-					type:"post",
-					url:"${pageContext.request.contextPath}/loginProc.admin",
-					data:loginForm,
-					dataType:"text"
-				}).done(function(data){
-					console.log(data);
-					if(data == 'loginSuccess'){
-						location.href="/admin/index.jsp";
-					}else if(data == 'loginFail'){
-						$('#result').empty();
-		 				let loginResult = "<button type='button' class='alert alert-dark mt-3' disabled>아이디 또는 비밀번호가 일치하지 않습니다.</button>";
-						$('#result').append(loginResult);
-		 				setTimeout(resultEmpty, 5000);
-					}
-					else if(data =='notAdmin'){
-						$('#result').empty();
-		 				let loginResult = "<button type='button' class='alert alert-danger mt-3' disabled>관리자가 아닙니다.</button>";
-						$('#result').append(loginResult);
-		 				setTimeout(resultEmpty, 5000);
-					}
-				}).fail(function(data){
-					console.log(data);
-				});
-			}
-			
 		});
 	</script>
 </body>

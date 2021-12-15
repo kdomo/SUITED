@@ -242,8 +242,8 @@ public class MemberController extends HttpServlet {
 			String name = request.getParameter("name");
 			String idHash = EncryptionUtils.getSHA256(id);
 
-			// 3.37.56.164:8080/ aws
-
+//			String host = "http://3.37.55.164:8080/"; //aws
+			
 			String host = "www.localhost:8080/";
 
 			String from = "khsuited@gmail.com";
@@ -257,7 +257,7 @@ public class MemberController extends HttpServlet {
 					+ idHash + "&id=" + id + "'>" + "<img src="
 					+ "'https://i.esdrop.com/d/JPuqbjQkES.jpg' alt='이메일 인증하기' width='156' heigh='24'></a><br>"
 					+ "<br><br>만약 메일 인증을 신청하지 않으셨다면<br>" + "이 메일은 무시해 주시기 바랍니다.<br>" + "궁금하신 사항이 있으시면 운영 팀으로 연락주세요.<br>"
-					+ "<br>감사합니다." + "-SUITED 운영팀-<br>cs@suited.com<br><br></center>";
+					+ "<br>감사합니다." + "<br>-SUITED 운영팀-<br>cs@suited.com<br><br></center>";
 
 			Properties p = new Properties();
 			p.put("mail.smtp.user", from);
@@ -272,7 +272,7 @@ public class MemberController extends HttpServlet {
 				Session ses = Session.getInstance(p, auth);
 				ses.setDebug(true);
 				MimeMessage msg = new MimeMessage(ses);
-				msg.setSubject(subject);
+				msg.setSubject(subject, "UTF-8");
 				Address fromAddr = new InternetAddress(from);
 				msg.setFrom(fromAddr);
 				Address toAddr = new InternetAddress(to);

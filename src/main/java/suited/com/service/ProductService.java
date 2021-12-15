@@ -8,8 +8,8 @@ import suited.com.dto.ProductDTO;
 
 public class ProductService {
 	private ProductDAO dao = new ProductDAO();
-	private int recordCntPerPage = 3; // 하나의 페이지에 보여질 데이터 수
-	private int naviCntPerPage = 3; // 네비게이션 범위를 얼마로 잡아줄지
+	private int recordCntPerPage = 4; // 하나의 페이지에 보여질 데이터 수
+	private int naviCntPerPage = 5; // 네비게이션 범위를 얼마로 잡아줄지
 	
 	public HashMap<String, Object> getPageNavi(int currentPage){
 		int recordTotalCnt = dao.countAll(); // 데이터의 총합 수

@@ -190,7 +190,7 @@ a:hover {
 				<a href="#">스토리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">고객센터</a>
+				<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
@@ -236,7 +236,7 @@ a:hover {
 			<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
 		</div>
 		<div class="col-12">
-			<a href="#">고객센터</a>
+			<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 		<c:choose>
 			<c:when test="${empty loginSession}">
@@ -283,6 +283,7 @@ a:hover {
 						<h2>제품 전체 목록</h2>
 					</div>
 				</div>
+<<<<<<< HEAD
 				<c:forEach items="${list}" var="dto">
 					<div class="row">
 						<div class="col">
@@ -296,7 +297,20 @@ a:hover {
 							     <button type="button" class="btn btn-dark insertCartBtn" value="${dto.getProduct_code()}">장바구니 추가</button>
 						</div>
 					</div>
+=======
+				<div class="row">
+				<c:forEach items="${list}" var="dto">
+				    <div class="col-6 product">
+				            <a href="${pageContext.request.contextPath}/toDetailView.pro?product_code=${dto.getProduct_code()}&currentPage=${naviMap.get('currentPage')}&currentPage_cmt=1">
+				                <img alt="" src="${pageContext.request.contextPath}/product_img/${dto.getImg_system_name()}" width="300px" height="300px">
+				            </a><br>
+				            상품명 : ${dto.getProduct_name()}<br>
+				            가격 : ${dto.getPrice()}원<br>
+							<button type="button" class="btn btn-dark">장바구니 추가</button>
+				    </div>
+>>>>>>> 856a9ef2733c31e965bd0bd79c4080d1d5b1ef46
 				</c:forEach>
+				</div>
 				<div class="row">
 					<nav class="col" aria-label="Page navigation example">
 						<ul class="pagination justify-content-center">

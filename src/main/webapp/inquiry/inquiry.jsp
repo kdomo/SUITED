@@ -36,7 +36,7 @@ html {
 }
 
 body {
-	width:100%;
+	width: 1024pw;
 	height: 100%;
 }
 
@@ -104,55 +104,9 @@ line-height:8px;
 
 /* main 영역 */
 .main {
-	padding-top: 92px;
-	width: 40vw;
+	padding-top: 112px;
+	width: 82.6vw;
 	margin: auto;
-	text-align: center;
-}
-
-#btn_login {
-	width: 100%;
-}
-
-#btn_signup {
-	width: 100%;
-	background-color: rgb(248, 203, 53);
-	color: black;
-}
-
-#link_signup {
-	text-align: left;
-}
-
-#link_find {
-	text-align: right;
-}
-
-#kakao_login {
-	width: 100%;
-	height: 38px;
-	background-color: #fee819;
-	border: 0px;
-	border-radius: 5px;
-	color: black
-}
-
-.alert {
-	width: 100%;
-	height: 38px;
-	padding: 0px;
-	border: 0px;
-	border-radius: 5px;
-	color: black
-}
-
-.alert>p {
-	height: 100%;
-	margin: auto;
-	padding: 0px;
-}
-#result{
-	transition-duration:1s;
 }
 
 /* footer 영역 */
@@ -221,7 +175,6 @@ line-height:8px;
 					<div class="col-xl-2 col-5 navi-menu"></div>
 				</c:when>
 			</c:choose>
-			
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="#">영양제추천</a>
 			</div>
@@ -229,13 +182,13 @@ line-height:8px;
 				<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">고객리뷰</a>
+				<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="#">스토리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
+				<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
@@ -260,7 +213,7 @@ line-height:8px;
 				</c:when>
 			</c:choose>
 			<div class="col-xl-1 col-3 navi-cart">
-				<a href="#">cart <span class="badge bg-dark rounded-pill">0</span></a>
+				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span class="badge bg-dark rounded-pill">0</span></a>
 			</div>
 			<div class="col-xl-0 col-2 d-xl-none navi-menu">
 				<a id="btn_navi_menu"><img src="../imgs/menu.png" width="20px"
@@ -276,10 +229,10 @@ line-height:8px;
 			<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
 		</div>
 		<div class="col-12">
-			<a href="#">고객리뷰</a>
+			<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
 		</div>
 		<div class="col-12">
-			<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
+			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 		<c:choose>
 			<c:when test="${empty loginSession}">
@@ -309,28 +262,109 @@ line-height:8px;
 	</div>
 
 	<div class="main">
-		<form
-			method="post" id="loginForm">
-			<h1 class="mt-3">관리자 로그인</h1>
-			<input type="text" class="form-control mt-3" id="id" name="id"
-				placeholder="아이디"> <input type="password"
-				class="form-control mt-3" id="password" name="password"
-				placeholder="패스워드">
-			<div class="row d-none">
-				<input type="text" name="kakao_value" value="0">
-			</div>
-			<div class="row">
-				<div class="col-12 mt-3">
-					<button type="button" class="btn btn-dark" id="btn_login">로그인</button>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12" id="result">
-				
-				</div>
-			</div>
-			
-		</form>
+	<!-- 여기다가 -->
+	<div class="container">
+        <div class="row">
+            <div class="col-12 mt-4 mb-4" style="text-align: center;">
+                <h4>1대1 맞춤상담</h4>
+                <h6>1대1 맞춤상담 게시판입니다.</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12" style="height: 469px;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th class="col-1">번호</th>
+                            <th class="col-5">제목</th>
+                            <th class="col-2">작성자</th>
+                            <th class="col-2">작성일</th> 
+                            <th class="col-2">답변</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    	<c:if test="${loginSession.get('admin_yn') eq '1'}">
+                    	<c:choose> 
+	                    	<c:when test="${empty totalList}">
+	                        <tr>
+	                            <td colspan="5" style="text-align: center;">검색 결과가 없습니다.</td>
+	                        </tr>
+	                        </c:when>
+	                        <c:otherwise>
+	                        <c:forEach items="${totalList}" var="dto">
+	                        <tr style="text-align: center">
+	                            <td>${dto.getSeq_inquiry()}</td>
+	                            <td style="text-align: left">
+	                            <a href="${pageContext.request.contextPath}/toDetailView.in?seq_inquiry=${dto.getSeq_inquiry()}&currentPage=${settingMap.get('currentPage')}">
+	                    			${dto.getTitle()}        
+	                            </a>
+	                            </td>
+	                            <td>${dto.getId()}</td>
+	                            <td>${dto.getInquiry_date()}</td>
+	                            <td>${dto.getAnswer_yn()}</td>
+	                        </tr>
+	                        </c:forEach>
+	                        </c:otherwise>
+	                    </c:choose>
+                    	</c:if>
+                    	<c:if test="${loginSession.get('admin_yn') eq '0'}">
+                    	<c:choose> 
+	                    	<c:when test="${empty list}">
+	                        <tr>
+	                            <td colspan="5" style="text-align: center;">작성한 문의가 없습니다.</td>
+	                        </tr>
+	                        </c:when>
+	                        <c:otherwise>
+	                        <c:forEach items="${list}" var="dto">
+	                        <tr style="text-align: center">
+	                            <td>${dto.getSeq_inquiry()}</td>
+	                            <td style="text-align: left">
+	                            <a href="${pageContext.request.contextPath}/toDetailView.in?seq_inquiry=${dto.getSeq_inquiry()}&currentPage=${settingMap.get('currentPage')}" style="text-decoration : none; color : black;">
+	                    			${dto.getTitle()}        
+	                            </a>
+	                            </td>
+	                            <td>${dto.getId()}</td>
+	                            <td>${dto.getInquiry_date()}</td>
+	                            <td>${dto.getAnswer_yn()}</td>
+	                        </tr>
+	                        </c:forEach>
+	                        </c:otherwise>
+	                    </c:choose>
+                    	</c:if>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+			<nav class="col" aria-label="Page navigation example">
+			  <ul class="pagination justify-content-center">
+				  <c:if test="${settingMap.get('needPrev') eq true}">
+				  	<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toInquiry.in?currentPage=${settingMap.get('startNavi')-1}">Previous</a></li>
+				  </c:if>
+				  <!--startNavi ->endNavi  -->
+				  <c:forEach var="i" begin="${settingMap.get('startNavi')}" end="${settingMap.get('endNavi')}">
+				  	<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toInquiry.in?currentPage=${i}">${i}</a></li>
+				  </c:forEach>
+				  <c:if test="${settingMap.get('needNext') eq true}">
+				  	<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toInquiry.in?currentPage=${settingMap.get('endNavi')+1}">Next</a></li>
+				  </c:if>			    
+			  </ul>
+			</nav>
+		</div>
+		<c:if test="${loginSession.get('admin_yn') eq '0'}">
+        <div class="row">
+            <div class="col-12" style="text-align: right;">
+                <button type="button" class="btn btn-dark" id="btnWrite">문의작성하기</button>
+            </div>
+        </div>
+        </c:if>
+    </div>
+    <script>
+    	// 문의 작성하기 버튼을 눌렀을때 작성하는 페이지로 이동
+    	$("#btnWrite").on("click", function(){
+    		$(location).attr("href", "${pageContext.request.contextPath}/toInquiryProc.in?currentPage=${settingMap.get('currentPage')}");
+    	});
+    </script>
 	</div>
 	<div class="footer">
 		<div class="row footer-top">
@@ -356,7 +390,7 @@ line-height:8px;
 		</div>
 		ⓒ SUITED Inc. All Rights Reserved.
 	</div>
-	<script src = "https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+
 	<script>
 		$(function() {
 			let onNavbar = 0; // 네비 햄버거버튼 클릭했는지 아닌지 알기위한 변수
@@ -389,48 +423,10 @@ line-height:8px;
 					onNavbar = 0;
 				}
 			});
-			
 
-			$('#btn_login').on('click', function() {
-				if (($('#id').val() == "") || ($('#password').val() == "")) {
-					alert("아이디 혹은 비밀번호를 입력해주세요.");
-					return;
-				} else {
-					let loginForm = $('#loginForm').serialize();
-					login(loginForm);
-				}
-			});
-			function resultEmpty(){
-				$('#result').empty();
-			};
-			function login(loginForm){
-				$.ajax({
-					type:"post",
-					url:"${pageContext.request.contextPath}/loginProc.admin",
-					data:loginForm,
-					dataType:"text"
-				}).done(function(data){
-					console.log(data);
-					if(data == 'loginSuccess'){
-						location.href="/admin/index.jsp";
-					}else if(data == 'loginFail'){
-						$('#result').empty();
-		 				let loginResult = "<button type='button' class='alert alert-dark mt-3' disabled>아이디 또는 비밀번호가 일치하지 않습니다.</button>";
-						$('#result').append(loginResult);
-		 				setTimeout(resultEmpty, 5000);
-					}
-					else if(data =='notAdmin'){
-						$('#result').empty();
-		 				let loginResult = "<button type='button' class='alert alert-danger mt-3' disabled>관리자가 아닙니다.</button>";
-						$('#result').append(loginResult);
-		 				setTimeout(resultEmpty, 5000);
-					}
-				}).fail(function(data){
-					console.log(data);
-				});
-			}
-			
 		});
 	</script>
 </body>
 </html>
+
+	
