@@ -271,7 +271,7 @@ line-height:8px;
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" style="height: 469px;">
                 <table class="table table-bordered">
                     <thead>
                         <tr style="text-align: center;">
@@ -292,9 +292,9 @@ line-height:8px;
 	                        </c:when>
 	                        <c:otherwise>
 	                        <c:forEach items="${totalList}" var="dto">
-	                        <tr>
+	                        <tr style="text-align: center">
 	                            <td>${dto.getSeq_inquiry()}</td>
-	                            <td>
+	                            <td style="text-align: left">
 	                            <a href="${pageContext.request.contextPath}/toDetailView.in?seq_inquiry=${dto.getSeq_inquiry()}&currentPage=${settingMap.get('currentPage')}">
 	                    			${dto.getTitle()}        
 	                            </a>
@@ -316,9 +316,9 @@ line-height:8px;
 	                        </c:when>
 	                        <c:otherwise>
 	                        <c:forEach items="${list}" var="dto">
-	                        <tr>
+	                        <tr style="text-align: center">
 	                            <td>${dto.getSeq_inquiry()}</td>
-	                            <td>
+	                            <td style="text-align: left">
 	                            <a href="${pageContext.request.contextPath}/toDetailView.in?seq_inquiry=${dto.getSeq_inquiry()}&currentPage=${settingMap.get('currentPage')}" style="text-decoration : none; color : black;">
 	                    			${dto.getTitle()}        
 	                            </a>
@@ -354,7 +354,7 @@ line-height:8px;
 		<c:if test="${loginSession.get('admin_yn') eq '0'}">
         <div class="row">
             <div class="col-12" style="text-align: right;">
-                <button type="button" class="btn btn-secondary" id="btnWrite">문의작성하기</button>
+                <button type="button" class="btn btn-dark" id="btnWrite">문의작성하기</button>
             </div>
         </div>
         </c:if>
