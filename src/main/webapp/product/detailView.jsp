@@ -61,10 +61,6 @@ img{
 	</div>
 	<div class="container cmt-container">
 		<div class="cmt-showBox">
-			<label>이 상품의 리뷰</label>
-			<c:forEach items="${commentList}" var="list">
-
-			</c:forEach>
 		</div>
 		<div class="row">
 			<nav class="col" aria-label="Page navigation example">
@@ -177,13 +173,13 @@ img{
 				$(".cmt-showBox").append(comment);
 				
 				// 삭제 버튼 영역
-// 				if("${loginSession.get('id')}" == dto.id){
+				if("${loginSession.get('id')}" == dto.id){
 					let btns = "<div class='col-1 d-flex justify-content-center'>"
 					    + "<button type='button' class='btn btn-deleteCmt' value='" + dto.seq_review + "'>삭제</button>"
 					    + "</div>";
 					    
 					    $(".contentDiv-cmt:last").after(btns);
-// 				}
+				}
 			}
 		}).fail(function(e){
 			console.log(e);

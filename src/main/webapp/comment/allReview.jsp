@@ -216,7 +216,7 @@ a:hover {
 			</c:choose>
 			<div class="col-xl-1 col-3 navi-cart">
 				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span
-					class="badge bg-dark rounded-pill">0</span></a>
+					id="cartCount" class="badge bg-dark rounded-pill"></span></a>
 			</div>
 			<div class="col-xl-0 col-2 d-xl-none navi-menu">
 				<a id="btn_navi_menu"><img src="../imgs/menu.png" width="20px"
@@ -348,6 +348,7 @@ a:hover {
 </div>
 		<script>
 			$(function() {
+				getCartCount()
 				let onNavbar = 0; // 네비 햄버거버튼 클릭했는지 아닌지 알기위한 변수
 				$('#btn_navi_menu').on('click', function() { //햄버거버튼 클릭 시
 					if (onNavbar == 0) {
@@ -378,14 +379,27 @@ a:hover {
 						onNavbar = 0;
 					}
 				});
+				
+				// 관리자에 의한 리뷰 삭제
 				$(".btn-deleteCmt").on("click", function(e) {
-					console.log($(e.target).val());
 					$(location).attr("href", "${pageContext.request.contextPath}/deleteByManager.co?seq_review=" + $(e.target).val());
 				})
+				
+				function getCartCount(){
+					$.ajax({
+						type : "get"
+						, url : "${pageContext.request.contextPath}/countCartProc.cart"
+					}).done(function(rs){
+						if(rs != "fail"){
+							$('#cartCount').html(rs);
+						} else {
+							alert("오류");
+						}
+					}).fail(function(e){
+						console.log(e);
+					})
+				}
 			});
 		</script>
 </body>
 </html>
-
-
-</div>

@@ -97,9 +97,10 @@ a:hover {
 	padding: 10px 0px;
 	text-align: center;
 }
-.badge{
-height:16px;
-line-height:8px;
+
+.badge {
+	height: 16px;
+	line-height: 8px;
 }
 
 /* main 영역 */
@@ -169,7 +170,7 @@ line-height:8px;
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
-				<div class="col-xl-3 col-5 navi-menu"></div>
+					<div class="col-xl-3 col-5 navi-menu"></div>
 				</c:when>
 				<c:when test="${!empty loginSession}">
 					<div class="col-xl-2 col-5 navi-menu"></div>
@@ -179,7 +180,8 @@ line-height:8px;
 				<a href="#">영양제추천</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
+				<a
+					href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
@@ -213,7 +215,8 @@ line-height:8px;
 				</c:when>
 			</c:choose>
 			<div class="col-xl-1 col-3 navi-cart">
-				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span class="badge bg-dark rounded-pill">0</span></a>
+				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span
+					id="cartCount" class="badge bg-dark rounded-pill"></span></a>
 			</div>
 			<div class="col-xl-0 col-2 d-xl-none navi-menu">
 				<a id="btn_navi_menu"><img src="../imgs/menu.png" width="20px"
@@ -226,7 +229,8 @@ line-height:8px;
 			<a href="#">영양제추천</a>
 		</div>
 		<div class="col-12">
-			<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
+			<a
+				href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
 		</div>
 		<div class="col-12">
 			<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
@@ -239,11 +243,11 @@ line-height:8px;
 			</c:when>
 			<c:when test="${!empty loginSession}">
 				<div class="col-12">
-			<a href="#">${loginSession.nickname} 님</a>
-		</div>
+					<a href="#">${loginSession.nickname} 님</a>
+				</div>
 			</c:when>
 		</c:choose>
-		
+
 		<c:choose>
 			<c:when test="${empty loginSession}">
 				<div class="col-12">
@@ -262,50 +266,57 @@ line-height:8px;
 	</div>
 
 	<div class="main">
-		<form action="${pageContext.request.contextPath}/productProc.pro"
-		method="post">
-		<div class="container btn-container">
-			<button type="button" class="btn btn-dark" id="registerBtn">상품 등록</button>
-			<button type="button" class="btn btn-dark" id="modifyBtn">상품 수정</button>
-			<button type="button" class="btn btn-dark" id="deleteBtn">상품 삭제</button>
-			<button type="button" class="btn btn-dark" id="allReviewBtn">리뷰 모아보기</button>
-			<!-- 원래는 관리자 페이지에 있어야 함 (임시) -->
-		</div>
-		<div class="container">
+			<div class="container btn-container">
+				<button type="button" class="btn btn-dark" id="registerBtn">상품
+					등록</button>
+				<button type="button" class="btn btn-dark" id="modifyBtn">상품
+					수정</button>
+				<button type="button" class="btn btn-dark" id="deleteBtn">상품
+					삭제</button>
+				<button type="button" class="btn btn-dark" id="allReviewBtn">리뷰
+					모아보기</button>
+				<!-- 원래는 관리자 페이지에 있어야 함 (임시) -->
+			</div>
+			<div class="container">
 				<div class="row">
 					<div class="col">
-					    <h2>제품 전체 목록</h2>
+						<h2>제품 전체 목록</h2>
 					</div>
 				</div>
 				<c:forEach items="${list}" var="dto">
-				<div class="row">
-				    <div class="col">
-				            <a href="${pageContext.request.contextPath}/toDetailView.pro?product_code=${dto.getProduct_code()}&currentPage=${naviMap.get('currentPage')}&currentPage_cmt=1">
-				                <img alt="" src="${pageContext.request.contextPath}/product_img/${dto.getImg_system_name()}" width="300px" height="300px">
-				            </a><br>
-				            상품명 : ${dto.getProduct_name()}<br>
-				            가격 : ${dto.getPrice()}원<br>
-							<button type="button" class="btn btn-dark">장바구니 추가</button>
-				    </div>
-				</div>
+					<div class="row">
+						<div class="col">
+							<a
+								href="${pageContext.request.contextPath}/toDetailView.pro?product_code=${dto.getProduct_code()}&currentPage=${naviMap.get('currentPage')}&currentPage_cmt=1">
+								<img alt=""
+								src="${pageContext.request.contextPath}/product_img/${dto.getImg_system_name()}"
+								width="300px" height="300px">
+							</a><br> 상품명 : ${dto.getProduct_name()}<br> 가격 :
+							${dto.getPrice()}원<br>
+							     <button type="button" class="btn btn-dark insertCartBtn" value="${dto.getProduct_code()}">장바구니 추가</button>
+						</div>
+					</div>
 				</c:forEach>
 				<div class="row">
-				    <nav class="col" aria-label="Page navigation example">
-				        <ul class="pagination justify-content-center">
-				            <c:if test="${naviMap.get('needPrev') eq true}">
-				                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${naviMap.get('startNavi')-1}">Previous</a>
-				            </c:if>
-				            <c:forEach var="i" begin = "${naviMap.get('startNavi')}" end="${naviMap.get('endNavi')}">
-				                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${i}">${i}</a></li>
-				            </c:forEach>
-				            <c:if test="${naviMap.get('needNext') eq true}">
-				                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${naviMap.get('endNavi')+1}">Next</a></li>
-				            </c:if>
-				        </ul>
-				    </nav>
+					<nav class="col" aria-label="Page navigation example">
+						<ul class="pagination justify-content-center">
+							<c:if test="${naviMap.get('needPrev') eq true}">
+								<li class="page-item"><a class="page-link"
+									href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${naviMap.get('startNavi')-1}">Previous</a>
+							</c:if>
+							<c:forEach var="i" begin="${naviMap.get('startNavi')}"
+								end="${naviMap.get('endNavi')}">
+								<li class="page-item"><a class="page-link"
+									href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${i}">${i}</a></li>
+							</c:forEach>
+							<c:if test="${naviMap.get('needNext') eq true}">
+								<li class="page-item"><a class="page-link"
+									href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${naviMap.get('endNavi')+1}">Next</a></li>
+							</c:if>
+						</ul>
+					</nav>
 				</div>
-		</div>
-	</form>
+			</div>
 	</div>
 	<div class="footer">
 		<div class="row footer-top">
@@ -334,6 +345,7 @@ line-height:8px;
 
 	<script>
 		$(function() {
+			getCartCount();
 			let onNavbar = 0; // 네비 햄버거버튼 클릭했는지 아닌지 알기위한 변수
 			$('#btn_navi_menu').on('click', function() { //햄버거버튼 클릭 시
 				if (onNavbar == 0) {
@@ -343,9 +355,9 @@ line-height:8px;
 					}); // 세로 네비영역 열기
 					onNavbar = 1;
 					$('html, body').animate({
-		                scrollTop : 0
-		            }, 100);
-		            return false;
+						scrollTop : 0
+					}, 100);
+					return false;
 				} else {
 					$('.navi-onButtons').css({
 						"height" : "0",
@@ -367,24 +379,76 @@ line-height:8px;
 
 		});
 		// 상품 등록 버튼
-			document.getElementById("registerBtn").addEventListener("click",function() {
-				location.href = "${pageContext.request.contextPath}/toRegister.pro";
-			})
-			
+		document
+				.getElementById("registerBtn")
+				.addEventListener(
+						"click",
+						function() {
+							location.href = "${pageContext.request.contextPath}/toRegister.pro";
+						})
+
 		// 상품 수정 버튼
-			document.getElementById("modifyBtn").addEventListener("click",function() {
-				location.href = "${pageContext.request.contextPath}/toModify.pro";
-			})
-			
+		document
+				.getElementById("modifyBtn")
+				.addEventListener(
+						"click",
+						function() {
+							location.href = "${pageContext.request.contextPath}/toModify.pro";
+						})
+
 		// 상품 삭제 버튼
-			document.getElementById("deleteBtn").addEventListener("click",function() {
-				location.href = "${pageContext.request.contextPath}/toDelete.pro";
+		document
+				.getElementById("deleteBtn")
+				.addEventListener(
+						"click",
+						function() {
+							location.href = "${pageContext.request.contextPath}/toDelete.pro";
+						})
+
+		// 리뷰 모아보기 버튼
+		document
+				.getElementById("allReviewBtn")
+				.addEventListener(
+						"click",
+						function() {
+							location.href = "${pageContext.request.contextPath}/toAllReview.co";
+						})
+						
+		// 장바구니 수량
+		function getCartCount(){
+			$.ajax({
+				type : "get"
+				, url : "${pageContext.request.contextPath}/countCartProc.cart"
+			}).done(function(rs){
+				if(rs != "fail"){
+					$('#cartCount').html(rs);
+				} else {
+					alert("오류");
+				}
+			}).fail(function(e){
+				console.log(e);
 			})
+		}
+		
+		// 장바구니 추가 버튼
+		$(".insertCartBtn").on("click", function(e) {
+			let product_code = $(e.target).val();
+			console.log(product_code);
 			
-	    // 리뷰 모아보기 버튼
-			document.getElementById("allReviewBtn").addEventListener("click",function() {
-				location.href = "${pageContext.request.contextPath}/toAllReview.co";
+			$.ajax({
+				url : "${pageContext.request.contextPath}/insertCartProc.cart",
+				type : 'get',
+				data : {product_code : product_code}
+			}).done(function(rs) {
+				if (rs == "success") {
+					getCartCount();
+				} else if (rs == "fail") {
+					alert("이미 장바구니에 존재하는 제품입니다.");
+				}
+			}).fail(function(e) {
+				console.log(e);
 			})
+		})
 	</script>
 </body>
 </html>

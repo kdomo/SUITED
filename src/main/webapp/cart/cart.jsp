@@ -216,7 +216,8 @@ a:hover {
 				</c:when>
 			</c:choose>
 			<div class="col-xl-1 col-3 navi-cart">
-				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span class="badge bg-dark rounded-pill">0</span></a>
+				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span
+					id="cartCount" class="badge bg-dark rounded-pill"></span></a>
 			</div>
 			<div class="col-xl-0 col-2 d-xl-none navi-menu">
 				<a id="btn_navi_menu"><img src="../imgs/menu.png" width="20px"
@@ -281,8 +282,52 @@ a:hover {
 			<button type="button" class="btn btn-dark" id="btn_survey">영양제
 				추천받기</button>
 		</div>
-
-
+		<div class="added">
+			<div class="row">
+				<div class="col">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th class="col-5">제품 이미지</th>
+								<th class="col-2">제품명</th>
+								<th class="col-1">제품 금액</th>
+								<th class="col-1">합계</th>
+								<th class="col-2">수량</th>
+								<th class="col-1"></th>
+							</tr>
+						</thead>
+						<tbody id="listDiv">
+							<%-- 							<c:forEach items="${list}" var="dto"> --%>
+							<!-- 								<tr> -->
+							<!-- 								    <td><img alt="" -->
+							<%-- 								src="${pageContext.request.contextPath}/product_img/${dto.getImg_system_name()}" --%>
+							<!-- 								width="150px" height="150px"></td> -->
+							<%-- 									<td>${dto.getProduct_name()}</td> --%>
+							<%-- 									<td>${dto.getPrice()}</td> --%>
+							<!-- 									<td> -->
+							<%-- 									    <button type="button" id="${dto.getProduct_code()}-">-</button> --%>
+							<%-- 									    ${dto.getQuantity()} --%>
+							<%-- 									    <button type="button" id="${dto.getProduct_code()}+">+</button> --%>
+							<!-- 									</td> -->
+							<!-- 									<td> -->
+							<!-- 										<button type="button" class="btn btn-deleteCmt" -->
+							<!-- 											value="">삭제</button> -->
+							<!-- 									</td> -->
+							<!-- 								</tr> -->
+							<%-- 							</c:forEach> --%>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="totalPrice">
+				
+			</div>
+			<div class="row">
+			     <div class="col">
+			          <button type="button" class="btn btn-dark">결제하러 가기</button>
+			     </div>
+			</div>
+		</div>
 	</div>
 	<div class="footer">
 		<div class="row footer-top">
@@ -311,6 +356,8 @@ a:hover {
 
 	<script>
 		$(function() {
+			getCartCount();
+			getCartList();
 			let loginSession = "${loginSession}";
 
 			if (loginSession == '') {
@@ -348,7 +395,102 @@ a:hover {
 					onNavbar = 0;
 				}
 			});
-
+			
+			// 장바구니 수량
+			function getCartCount(){
+				$.ajax({
+					type : "get"
+					, url : "${pageContext.request.contextPath}/countCartProc.cart"
+				}).done(function(rs){
+					if(rs != "fail"){
+						$('#cartCount').html(rs);
+						if(rs > 0){
+							$('.empty').css({"display" : "none"});
+						}else if (rs == 0){
+							$('.added').css({"display" : "none"});
+						}
+					} else {
+						alert("오류");
+					}
+				}).fail(function(e){
+					console.log(e);
+				})
+			}
+			
+			// 장바구니 목록 불러오기
+			function getCartList(){
+				$.ajax({
+					type : "post"
+					, url : "${pageContext.request.contextPath}/getCartProc.cart"
+					, dataType : "json"
+				}).done(function(data){
+					$('#listDiv').empty();
+					$('.totalPrice').empty();
+					let total = 0;
+					
+					for(let dto of data){
+ 						let list = "<tr>"
+						+ "<td><img alt=''"
+						+ "src='${pageContext.request.contextPath}/product_img/" + dto.img_system_name + "'"
+						+ "width='150px' height='150px'></td>"
+						+ "<td>" + dto.product_name + "</td>"
+						+ "<td>" + dto.price + "</td>"
+						+ "<td>" + dto.price * dto.quantity + "</td>"
+						+ "<td>"
+						+ "<button type='button' class='quantityBtn' value='" + dto.quantity + "'id='" + dto.product_code + "-'>-</button>"
+						+ "<span> " + dto.quantity + " </span>"
+						+ "<button type='button' class='quantityBtn' value='" + dto.quantity + "'id='" + dto.product_code + "!'>+</button>"
+						+ "</td>"
+						+ "<td>"
+						+ "<button type='button' class='btn btn-deleteCart' value='"+ dto.product_code +"'>삭제</button>"
+						+ "</td>"
+						+ "</tr>";
+						
+						total += dto.price * dto.quantity;
+						$("#listDiv").append(list);
+					}
+					let totalPrice = "<div class='col'>"
+					+ "<p>총 결제 금액 : " + total + "</p>"
+					+ "</div>"
+					$('.totalPrice').append(totalPrice);
+				}).fail(function(e){
+					console.log(e);
+				})
+			}
+			
+			// +,- 버튼
+			$(document).on('click', '.quantityBtn', function(e){
+// 				console.log(e.target.id);
+				$.ajax({
+					url : "${pageContext.request.contextPath}/getQuantity.cart?btnId=" + e.target.id + "&quantity=" + $(e.target).val()
+					, type : 'get'
+				}).done(function(rs){
+				    if(rs == "success"){
+				    	getCartList();
+				    }else if(rs == "fail"){
+				    	alert("수량 조절 실패");
+				    }
+				}).fail(function(e){
+					console.log(e);
+				})
+			})
+			
+			// 장바구니 목록 삭제
+			$(document).on("click", ".btn-deleteCart", function(e){
+				$.ajax({
+					url : "${pageContext.request.contextPath}/deleteProc.cart?product_code=" + $(e.target).val()
+					, type : 'get'
+				}).done(function(rs){
+					if(rs == "success"){
+						getCartCount();
+						getCartList();
+					}else if(rs == "fail"){
+						alert("장바구니 목록 삭제에 실패했습니다.");
+					}
+				}).fail(function(e){
+					console.log(e);
+				})
+			})
 		});
 	</script>
 </body>

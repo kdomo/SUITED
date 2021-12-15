@@ -63,11 +63,6 @@ public class ProductController extends HttpServlet {
 		} else if (cmd.equals("/toRegister.pro")) { // 상품 등록 페이지 이동 요청
 			response.sendRedirect("/product/register.jsp");
 		} else if (cmd.equals("/registerProc.pro")) { // 상품 등록 처리 후 이동 요청
-			// 아이디 닉네임 가져오기
-//			HashMap<String, String> loginSession = (HashMap) session.getAttribute("loginSession");
-//			String id = loginSession.get("id");
-//			String nickname = loginSession.get("nickname");
-
 			// file 영역
 			String filePath = request.getServletContext().getRealPath("product_img"); // 이미지가 실제 저장된 폴더 : product_img
 			File dir = new File(filePath);
@@ -213,9 +208,9 @@ public class ProductController extends HttpServlet {
 					rd.forward(request, response);
 				} else {
 					if (dto != null) {
-						CommentDAO cdao = new CommentDAO();
+						CommentDAO commentDAO = new CommentDAO();
 						int rs1 = dao.deleteByCode(product_code);
-						int rs2 = cdao.deleteByCode(product_code);
+						int rs2 = commentDAO.deleteByCode(product_code);
 						if (rs1 != -1 && rs2 != -1)
 							response.sendRedirect("/deleteProc.pro?currentPage=1");
 					} else {
