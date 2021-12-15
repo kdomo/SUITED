@@ -12,6 +12,10 @@
 	rel="stylesheet"
 	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+	crossorigin="anonymous"></script>
 <!-- 부트스트랩 CDN -->
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"
@@ -97,16 +101,18 @@ a:hover {
 	padding: 10px 0px;
 	text-align: center;
 }
-.badge{
-height:16px;
-line-height:8px;
+
+.badge {
+	height: 16px;
+	line-height: 8px;
 }
 
 /* main 영역 */
 .main {
-	padding-top: 112px;
-	width: 82.6vw;
+	padding-top: 92px;
+	width: 40vw;
 	margin: auto;
+	text-align: center;
 }
 
 /* footer 영역 */
@@ -169,7 +175,7 @@ line-height:8px;
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
-				<div class="col-xl-3 col-5 navi-menu"></div>
+					<div class="col-xl-3 col-5 navi-menu"></div>
 				</c:when>
 				<c:when test="${!empty loginSession}">
 					<div class="col-xl-2 col-5 navi-menu"></div>
@@ -179,7 +185,8 @@ line-height:8px;
 				<a href="#">영양제추천</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
+				<a
+					href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
@@ -188,14 +195,15 @@ line-height:8px;
 				<a href="#">스토리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
+				<a href="#">고객센터</a>
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
 				</c:when>
 				<c:when test="${!empty loginSession}">
 					<div class="col-xl-1 d-none d-xl-block navi-menu">
-						<a href="#">${loginSession.nickname} 님</a>
+						<a href="${pageContext.request.contextPath }/toMypage">${loginSession.nickname}
+							님</a>
 					</div>
 				</c:when>
 			</c:choose>
@@ -213,7 +221,8 @@ line-height:8px;
 				</c:when>
 			</c:choose>
 			<div class="col-xl-1 col-3 navi-cart">
-				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span class="badge bg-dark rounded-pill">0</span></a>
+				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span
+					class="badge bg-dark rounded-pill">0</span></a>
 			</div>
 			<div class="col-xl-0 col-2 d-xl-none navi-menu">
 				<a id="btn_navi_menu"><img src="../imgs/menu.png" width="20px"
@@ -226,24 +235,25 @@ line-height:8px;
 			<a href="#">영양제추천</a>
 		</div>
 		<div class="col-12">
-			<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
+			<a
+				href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
 		</div>
 		<div class="col-12">
 			<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
 		</div>
 		<div class="col-12">
-			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
+			<a href="#">고객센터</a>
 		</div>
 		<c:choose>
 			<c:when test="${empty loginSession}">
 			</c:when>
 			<c:when test="${!empty loginSession}">
 				<div class="col-12">
-			<a href="#">${loginSession.nickname} 님</a>
-		</div>
+					<a href="#">${loginSession.nickname} 님</a>
+				</div>
 			</c:when>
 		</c:choose>
-		
+
 		<c:choose>
 			<c:when test="${empty loginSession}">
 				<div class="col-12">
@@ -262,109 +272,24 @@ line-height:8px;
 	</div>
 
 	<div class="main">
-	<!-- 여기다가 -->
-	<div class="container">
-        <div class="row">
-            <div class="col-12 mt-4 mb-4" style="text-align: center;">
-                <h4>1대1 맞춤상담</h4>
-                <h6>1대1 맞춤상담 게시판입니다.</h6>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr style="text-align: center;">
-                            <th class="col-1">번호</th>
-                            <th class="col-5">제목</th>
-                            <th class="col-2">작성자</th>
-                            <th class="col-2">작성일</th> 
-                            <th class="col-2">답변</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    	<c:if test="${loginSession.get('admin_yn') eq '1'}">
-                    	<c:choose> 
-	                    	<c:when test="${empty totalList}">
-	                        <tr>
-	                            <td colspan="5" style="text-align: center;">검색 결과가 없습니다.</td>
-	                        </tr>
-	                        </c:when>
-	                        <c:otherwise>
-	                        <c:forEach items="${totalList}" var="dto">
-	                        <tr>
-	                            <td>${dto.getSeq_inquiry()}</td>
-	                            <td>
-	                            <a href="${pageContext.request.contextPath}/toDetailView.in?seq_inquiry=${dto.getSeq_inquiry()}&currentPage=${settingMap.get('currentPage')}">
-	                    			${dto.getTitle()}        
-	                            </a>
-	                            </td>
-	                            <td>${dto.getId()}</td>
-	                            <td>${dto.getInquiry_date()}</td>
-	                            <td>${dto.getAnswer_yn()}</td>
-	                        </tr>
-	                        </c:forEach>
-	                        </c:otherwise>
-	                    </c:choose>
-                    	</c:if>
-                    	<c:if test="${loginSession.get('admin_yn') eq '0'}">
-                    	<c:choose> 
-	                    	<c:when test="${empty list}">
-	                        <tr>
-	                            <td colspan="5" style="text-align: center;">작성한 문의가 없습니다.</td>
-	                        </tr>
-	                        </c:when>
-	                        <c:otherwise>
-	                        <c:forEach items="${list}" var="dto">
-	                        <tr>
-	                            <td>${dto.getSeq_inquiry()}</td>
-	                            <td>
-	                            <a href="${pageContext.request.contextPath}/toDetailView.in?seq_inquiry=${dto.getSeq_inquiry()}&currentPage=${settingMap.get('currentPage')}" style="text-decoration : none; color : black;">
-	                    			${dto.getTitle()}        
-	                            </a>
-	                            </td>
-	                            <td>${dto.getId()}</td>
-	                            <td>${dto.getInquiry_date()}</td>
-	                            <td>${dto.getAnswer_yn()}</td>
-	                        </tr>
-	                        </c:forEach>
-	                        </c:otherwise>
-	                    </c:choose>
-                    	</c:if>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row">
-			<nav class="col" aria-label="Page navigation example">
-			  <ul class="pagination justify-content-center">
-				  <c:if test="${settingMap.get('needPrev') eq true}">
-				  	<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toInquiry.in?currentPage=${settingMap.get('startNavi')-1}">Previous</a></li>
-				  </c:if>
-				  <!--startNavi ->endNavi  -->
-				  <c:forEach var="i" begin="${settingMap.get('startNavi')}" end="${settingMap.get('endNavi')}">
-				  	<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toInquiry.in?currentPage=${i}">${i}</a></li>
-				  </c:forEach>
-				  <c:if test="${settingMap.get('needNext') eq true}">
-				  	<li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/toInquiry.in?currentPage=${settingMap.get('endNavi')+1}">Next</a></li>
-				  </c:if>			    
-			  </ul>
-			</nav>
-		</div>
-		<c:if test="${loginSession.get('admin_yn') eq '0'}">
-        <div class="row">
-            <div class="col-12" style="text-align: right;">
-                <button type="button" class="btn btn-secondary" id="btnWrite">문의작성하기</button>
-            </div>
-        </div>
-        </c:if>
-    </div>
-    <script>
-    	// 문의 작성하기 버튼을 눌렀을때 작성하는 페이지로 이동
-    	$("#btnWrite").on("click", function(){
-    		$(location).attr("href", "${pageContext.request.contextPath}/toInquiryProc.in?currentPage=${settingMap.get('currentPage')}");
-    	});
-    </script>
+		<form method="post" id="mypageConfirmForm" name="mypageConfirmForm">
+			<div class="row header">
+				<h1 class="col-12 mb-3">마이페이지</h1>
+			</div>
+			<p>고객님의 안전을 위하여 비밀번호를 입력해주세요.</p>
+			<div class="row mb-3">
+				<div class="col-12">
+					<input type="password" class="form-control" id="passwordConfirm"
+						name="passwordConfirm" placeholder="비밀번호" value="">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 mb-3">
+					<button type="button" class="btn btn-dark col-12"
+						id="btn_confirmSubmit">확인</button>
+				</div>
+			</div>
+		</form>
 	</div>
 	<div class="footer">
 		<div class="row footer-top">
@@ -393,15 +318,11 @@ line-height:8px;
 
 	<script>
 		$(function() {
-			let loginSession = "${loginSession}";
-			if (loginSession == null) {
-				alert("로그인 후 이용가능합니다.");
-				location.href = "/member/login.jsp";
-			} else if (loginSession == '') {
-				alert("로그인 후 이용가능합니다.");
-				location.href = "/member/login.jsp";
-			}
+			$('#postcode').css({
+				"display" : "none"
+			});
 			
+
 			let onNavbar = 0; // 네비 햄버거버튼 클릭했는지 아닌지 알기위한 변수
 			$('#btn_navi_menu').on('click', function() { //햄버거버튼 클릭 시
 				if (onNavbar == 0) {
@@ -411,9 +332,9 @@ line-height:8px;
 					}); // 세로 네비영역 열기
 					onNavbar = 1;
 					$('html, body').animate({
-		                scrollTop : 0
-		            }, 100);
-		            return false;
+						scrollTop : 0
+					}, 100);
+					return false;
 				} else {
 					$('.navi-onButtons').css({
 						"height" : "0",
@@ -433,9 +354,41 @@ line-height:8px;
 				}
 			});
 
+			
+			
+			
+			$('#btn_confirmSubmit').on('click',function(){
+				if($('#passwordConfirm').val() == ""){
+					alert("비밀번호를 입력해주세요.");
+					return;
+				} else {
+					let mypageConfirmForm = $('#mypageConfirmForm').serialize();
+					passwordConfirm(mypageConfirmForm);
+				}
+				
+				
+				function passwordConfirm(mypageConfirmForm){
+					$.ajax({
+						type : "post",
+						url : "${pageContext.request.contextPath}/passwordConfirm.mem",
+						data : mypageConfirmForm,
+						dataType : "text"
+						}).done(function(data){
+						console.log(data);
+						if(data == 'ConfirmSuccess'){
+							location.href="${pageContext.request.contextPath}/toMypage.mem?token="+data+"&page=1";
+						}else if(data == 'ConfirmFail'){
+							alert("비밀번호가 일치하지 않습니다.");
+							location.href="${pageContext.request.contextPath}/logoutProc.mem";
+						}
+					}).fail(function(data){
+						console.log(data);
+					});
+				}
+			})
+			
 		});
+
 	</script>
 </body>
 </html>
-
-	

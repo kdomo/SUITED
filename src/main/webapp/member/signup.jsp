@@ -571,7 +571,7 @@ form>p {
 								{
 									type : "post",
 									url : "${pageContext.request.contextPath}/idCheckProc.mem",
-									data : value,
+									data : {value:value},
 									dataType : "text"
 								})
 						.done(
@@ -601,7 +601,7 @@ form>p {
 								{
 									type : "post",
 									url : "${pageContext.request.contextPath}/nicknameCheckProc.mem",
-									data : value,
+									data : {value:value},
 									dataType : "text"
 								})
 						.done(
@@ -747,10 +747,7 @@ form>p {
 									idNull = true;
 								}
 							});
-			$('#password')
-					.on(
-							'keyup',
-							function() {
+			$('#password').on('keyup',function() {
 								let regexPw = /^[a-zA-Z0-9~!@#$%^&*+.]{6,20}$/g;
 
 								$('#pwCheckConfirm').html("*비밀번호를 일치시켜주세요.");

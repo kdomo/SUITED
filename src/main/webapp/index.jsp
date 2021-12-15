@@ -219,7 +219,7 @@ a:hover {
 				</c:when>
 				<c:when test="${!empty loginSession}">
 					<div class="col-xl-1 d-none d-xl-block navi-menu">
-						<a href="#">${loginSession.nickname} 님</a>
+						<a href="${pageContext.request.contextPath }/toMypageConfirm.mem">${loginSession.nickname} 님</a>
 					</div>
 				</c:when>
 			</c:choose>
@@ -263,7 +263,7 @@ a:hover {
 			</c:when>
 			<c:when test="${!empty loginSession}">
 				<div class="col-12">
-			<a href="#">${loginSession.nickname} 님</a>
+			<a href="${pageContext.request.contextPath }/toMypageConfirm.mem">${loginSession.nickname} 님</a>
 		</div>
 			</c:when>
 		</c:choose>
@@ -291,8 +291,7 @@ a:hover {
 		<button class="btn btn-dark btn-lg" id="btn_survey">영양제 추천받기</button>
 	</div>
 	<div class="main">
-<!-- 	/toProduct.pro?currentPage=1 -->
-		<h4><a href="">제품보기</a></h4>
+		<h4><a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a></h4>
 		<div class="row">
 			<div class="col-sm-12 col-xl-6">
 				<div class="card" style="width: 18rem;">

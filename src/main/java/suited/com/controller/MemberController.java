@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.mail.Address;
 import javax.mail.Authenticator;
@@ -169,10 +170,10 @@ public class MemberController extends HttpServlet {
 				response.sendRedirect("/member/signup.jsp");
 			}
 		} else if (cmd.equals("/idCheckProc.mem")) {
-			String id = request.getParameter("id");
+			String value = request.getParameter("value");
 			boolean rs;
 			try {
-				rs = memberDAO.idCheck(id);
+				rs = memberDAO.idCheck(value);
 				if (!rs) {
 					out.write("idCheckSuccess");
 				} else {
@@ -182,10 +183,11 @@ public class MemberController extends HttpServlet {
 				e.printStackTrace();
 			}
 		} else if (cmd.equals("/nicknameCheckProc.mem")) {
-			String nickname = request.getParameter("nickname");
+			String value = request.getParameter("value");
+			System.out.println(value);
 			boolean rs;
 			try {
-				rs = memberDAO.nicknameCheck(nickname);
+				rs = memberDAO.nicknameCheck(value);
 				if (!rs) {
 					out.write("nicknameCheckSuccess");
 				} else {
@@ -305,8 +307,46 @@ public class MemberController extends HttpServlet {
 				e.printStackTrace();
 			}
 			System.out.println(code);
-		} else if(cmd.equals("/toMypage")) {
-			response.sendRedirect("/member/mypage.jsp");
+		} else if(cmd.equals("/toMypageConfirm.mem")) {
+			response.sendRedirect("/member/mypageConfirm.jsp");
+		} else if(cmd.equals("/toMypage.mem")) {
+			String token = request.getParameter("token");
+			String page = request.getParameter("page");
+			System.out.println(token + " : " + page);
+			RequestDispatcher rd = request.getRequestDispatcher("/member/mypage.jsp");
+			request.setAttribute("token", token);
+			request.setAttribute("page", page);
+			rd.forward(request, response);
+		} else if(cmd.equals("/passwordConfirm.mem")) {
+			HashMap<String, String> loginSession = (HashMap)session.getAttribute("loginSession");
+			String id = loginSession.get("id");
+			String password = EncryptionUtils.getSHA256(request.getParameter("passwordConfirm"));
+			System.out.println(id + " : " + password);
+			try {
+				boolean rs = memberDAO.login(id, password);
+				if (rs) {// 로그인 성공 시
+						out.write("ConfirmSuccess");
+				}else {
+					out.write("ConfirmFail");
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if(cmd.equals("/updateProc.mem")) {
+			if(!(request.getParameter("password")).equals(null)){
+				String password = request.getParameter("password");
+			}
+			if(!(request.getParameter("nickname")).equals(null)){
+				String nickname = request.getParameter("nickname");
+			}
+			if(!(request.getParameter("address")).equals(null)){
+				String address = request.getParameter("address");
+			}
+			if(!(request.getParameter("phone")).equals(null)){
+				String phone = request.getParameter("phone");
+			}
+			
+//			System.out.println(password + " : " + nickname + " : " + address + " : " + phone);
 		}
 	}
 }

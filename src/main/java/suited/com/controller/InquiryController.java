@@ -56,35 +56,39 @@ public class InquiryController extends HttpServlet {
 			int currentPage = Integer.parseInt(request.getParameter("currentPage"));// 현재 페이지가 1부터 시작하기 때문에 문의 목록페이지로 들어가려면 1의 값을 가지고 있어야한다.
 			System.out.println(currentPage);
 			HashMap<String, String> inquiryMap = (HashMap)session.getAttribute("loginSession");// 로그인세션이라는 키값의 맵안의 값을 가져오기 위해 쓰인다.
-			String id = inquiryMap.get("id"); // 담겨있는 로그인정보를 사용하여 id 값 불러옴
-			String admin_yn = inquiryMap.get("admin_yn");// 담겨있는 로그인 정보의 관리자인지 아닌지 여부를 가져옴
-			try {
-				// InquiryService를 호출해서 객체를 만든다음 getInquiryList를 호출하는 작업
-				InquiryService service = new InquiryService();
-				HashMap<String, Integer> ranges = service.getRange(currentPage);// service에있는 getInquiryList에서 ranges의 값을 가져온다.
-				if(admin_yn.equals("1")) {
-					ArrayList<InquiryDTO> totalList = dao.getInquiryList(ranges); // 가져온 ranges를 사용하여 전체 리스트에서의 값을 계산하여 가져온다.
-					HashMap<String, Object> settingMap = service.getPageNavi(currentPage, inquiryMap); // 페이지를 띄워주는 jsp에서 사용. 시작네비 끝네비, 버튼을 띄워주는 여부, 현재페이지도 담겨있음.
-					
-					if(totalList != null) {
-					RequestDispatcher rd = request.getRequestDispatcher("/inquiry/inquiry.jsp");
-					request.setAttribute("settingMap", settingMap);
-					request.setAttribute("totalList", totalList);
-					rd.forward(request, response);
-				    	}
-				}else if(admin_yn.equals("0")) {
-					ArrayList<InquiryDTO> list = dao.selectListById(ranges, id);  // 가져온 ranges와 로그인한 사용자의 id를 사용하여 그 사용자의 게시글리스트에서의 값을 계산하여 가져온다.
-					HashMap<String, Object> settingMap = service.getPageNavi(currentPage, inquiryMap); // 페이지를 띄워주는 jsp에서 사용. 시작네비 끝네비, 버튼을 띄워주는 여부, 현재페이지도 담겨있음.
-					if(list != null) {
+			if(inquiryMap!=null) {
+				String id = inquiryMap.get("id"); // 담겨있는 로그인정보를 사용하여 id 값 불러옴
+				String admin_yn = inquiryMap.get("admin_yn");// 담겨있는 로그인 정보의 관리자인지 아닌지 여부를 가져옴
+				try {
+					// InquiryService를 호출해서 객체를 만든다음 getInquiryList를 호출하는 작업
+					InquiryService service = new InquiryService();
+					HashMap<String, Integer> ranges = service.getRange(currentPage);// service에있는 getInquiryList에서 ranges의 값을 가져온다.
+					if(admin_yn.equals("1")) {
+						ArrayList<InquiryDTO> totalList = dao.getInquiryList(ranges); // 가져온 ranges를 사용하여 전체 리스트에서의 값을 계산하여 가져온다.
+						HashMap<String, Object> settingMap = service.getPageNavi(currentPage, inquiryMap); // 페이지를 띄워주는 jsp에서 사용. 시작네비 끝네비, 버튼을 띄워주는 여부, 현재페이지도 담겨있음.
+						
+						if(totalList != null) {
 						RequestDispatcher rd = request.getRequestDispatcher("/inquiry/inquiry.jsp");
 						request.setAttribute("settingMap", settingMap);
-						request.setAttribute("list", list);
+						request.setAttribute("totalList", totalList);
 						rd.forward(request, response);
-					    }
+					    	}
+					}else if(admin_yn.equals("0")) {
+						ArrayList<InquiryDTO> list = dao.selectListById(ranges, id);  // 가져온 ranges와 로그인한 사용자의 id를 사용하여 그 사용자의 게시글리스트에서의 값을 계산하여 가져온다.
+						HashMap<String, Object> settingMap = service.getPageNavi(currentPage, inquiryMap); // 페이지를 띄워주는 jsp에서 사용. 시작네비 끝네비, 버튼을 띄워주는 여부, 현재페이지도 담겨있음.
+						if(list != null) {
+							RequestDispatcher rd = request.getRequestDispatcher("/inquiry/inquiry.jsp");
+							request.setAttribute("settingMap", settingMap);
+							request.setAttribute("list", list);
+							rd.forward(request, response);
+						    }
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+					response.sendRedirect("/errorPage.jsp");
 				}
-			}catch(Exception e) {
-				e.printStackTrace();
-				response.sendRedirect("/errorPage.jsp");
+			}else {
+				response.sendRedirect("/member/login.jsp");
 			}
 		}else if(cmd.equals("/toInquiryProc.in")) {// 문의 작성하는 페이지로 이동
 			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
