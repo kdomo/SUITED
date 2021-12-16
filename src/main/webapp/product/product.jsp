@@ -294,7 +294,6 @@ margin:auto;
 							  </div>
 							</div>
 						</div>
-					
 				</c:forEach>
 				</div>
 				<div class="row">

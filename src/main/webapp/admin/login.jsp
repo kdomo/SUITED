@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>나에게 딱 맞는 SUITED</title>
+<title>SUITED 관리자</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -223,45 +223,38 @@ line-height:8px;
 			</c:choose>
 			
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">영양제추천</a>
+				<a href="${pageContext.request.contextPath }/toMemberList.admin">회원조회</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
+				<a href="${pageContext.request.contextPath }/toBlacklist.bl?currentPage=1">블랙리스트</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">고객리뷰</a>
+				<a href="${pageContext.request.contextPath }/toAllReview.admin">리뷰관리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">스토리</a>
+				<a href="${pageContext.request.contextPath }/toAdminProduct.pro?currentPage=1">상품관리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
 			</div>
-			<c:choose>
-				<c:when test="${empty loginSession}">
-				</c:when>
-				<c:when test="${!empty loginSession}">
-					<div class="col-xl-1 d-none d-xl-block navi-menu">
-						<a href="#">${loginSession.nickname} 님</a>
-					</div>
-				</c:when>
-			</c:choose>
-
-			<c:choose>
-				<c:when test="${empty loginSession}">
-					<div class="col-xl-1 d-none d-xl-block navi-menu">
-						<a href="${pageContext.request.contextPath }/toLogin.mem">로그인</a>
-					</div>
-				</c:when>
-				<c:when test="${!empty loginSession}">
-					<div class="col-xl-1 d-none d-xl-block navi-menu">
-						<a href="${pageContext.request.contextPath }/logoutProc.mem">로그아웃</a>
-					</div>
-				</c:when>
-			</c:choose>
-			<div class="col-xl-1 col-3 navi-cart">
-				<a href="#">cart <span class="badge bg-dark rounded-pill">0</span></a>
+			<div class="col-xl-1 d-none d-xl-block navi-menu">
+				<a href="${pageContext.request.contextPath }/toOrderList.admin">주문조회</a>
 			</div>
+			<div class="col-xl-1 d-none d-xl-block navi-menu">
+				<a href="${pageContext.request.contextPath }/toSurveyList.admin">통계조회</a>
+			</div>
+			<c:choose>
+				<c:when test="${empty loginSession}">
+					<div class="col-xl-1 d-none d-xl-block navi-menu">
+						<a href="${pageContext.request.contextPath }/toLogin.admin">로그인</a>
+					</div>
+				</c:when>
+				<c:when test="${!empty loginSession}">
+					<div class="col-xl-1 d-none d-xl-block navi-menu">
+						<a href="${pageContext.request.contextPath }/logoutProc.admin">로그아웃</a>
+					</div>
+				</c:when>
+			</c:choose>
 			<div class="col-xl-0 col-2 d-xl-none navi-menu">
 				<a id="btn_navi_menu"><img src="../imgs/menu.png" width="20px"
 					height="24px"></a>
@@ -270,16 +263,22 @@ line-height:8px;
 	</nav>
 	<div class="row navi-onButtons">
 		<div class="col-12">
-			<a href="#">영양제추천</a>
+			<a href="${pageContext.request.contextPath }/toMemberList.admin">회원조회</a>
 		</div>
 		<div class="col-12">
-			<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
+			<a href="${pageContext.request.contextPath }/toBlacklist.bl?currentPage=1">블랙리스트</a>
 		</div>
 		<div class="col-12">
-			<a href="#">고객리뷰</a>
+			<a href="${pageContext.request.contextPath }/toAllReview.admin">리뷰관리</a>
+		</div>
+		<div class="col-12">
+			<a href="${pageContext.request.contextPath }/toAdminProduct.pro?currentPage=1">상품관리</a>
 		</div>
 		<div class="col-12">
 			<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
+		</div>
+		<div class="col-12">
+			<a href="${pageContext.request.contextPath }/toSurveyList.admin">통계조회</a>
 		</div>
 		<c:choose>
 			<c:when test="${empty loginSession}">
@@ -294,7 +293,7 @@ line-height:8px;
 		<c:choose>
 			<c:when test="${empty loginSession}">
 				<div class="col-12">
-					<a href="${pageContext.request.contextPath }/toLogin.mem">로그인</a>
+					<a href="${pageContext.request.contextPath }/toLogin.admin">로그인</a>
 				</div>
 			</c:when>
 			<c:when test="${!empty loginSession}">
@@ -303,9 +302,6 @@ line-height:8px;
 				</div>
 			</c:when>
 		</c:choose>
-		<div class="col-12">
-			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
-		</div>
 	</div>
 
 	<div class="main">

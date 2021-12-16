@@ -268,6 +268,7 @@ a:hover {
 			</c:when>
 		</c:choose>
 	</div>
+	
 	<div class="main">
 	<h1>관리자페이지</h1>
 	</div>

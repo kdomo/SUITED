@@ -111,7 +111,7 @@ public class OrderDAO {
 	         
 	         while(rs.next()) {
 	            int order_no = rs.getInt("order_no");
-	            String id2 = rs.getString("id2");
+	            String id = rs.getString("id");
 	            String order_date = rs.getString("order_date");
 	            int order_amount = rs.getInt("order_amount");
 	            String order_status = rs.getString("order_status");
@@ -123,7 +123,7 @@ public class OrderDAO {
 	            String order_message = rs.getString("order_message");
 	            String delivery_message = rs.getString("delivery_message");
 	            int seq_pay = rs.getInt("seq_pay");
-	            list.add(new OrderDTO(order_date, id2, order_no, order_amount, 
+	            list.add(new OrderDTO(order_date, id, order_no, order_amount, 
 	                  order_status, pay_yn, delivery_no, order_address, order_phone,
 	                  order_name, order_message, delivery_message, seq_pay));
 	         }
@@ -144,7 +144,7 @@ public class OrderDAO {
 	         
 	         if(rs.next()) {
 	            dto.setOrder_no(rs.getString("order_no"));
-	            dto.setId(rs.getString("id2"));
+	            dto.setId(rs.getString("id"));
 	            dto.setOrder_date(rs.getString("order_date"));
 	            dto.setOrder_amount(rs.getInt("order_amount"));
 	            dto.setOrder_status(rs.getString("order_status"));

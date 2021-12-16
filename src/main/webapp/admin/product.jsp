@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>나에게 딱 맞는 SUITED</title>
+<title>SUITED 관리자</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -178,13 +178,13 @@ a:hover {
 			</c:choose>
 			
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">회원관리</a>
+				<a href="${pageContext.request.contextPath }/toMemberList.admin">회원조회</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="${pageContext.request.contextPath }/toBlacklist.bl?currentPage=1">블랙리스트</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">리뷰관리</a>
+				<a href="${pageContext.request.contextPath }/toAllReview.admin">리뷰관리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="${pageContext.request.contextPath }/toAdminProduct.pro?currentPage=1">상품관리</a>
@@ -193,17 +193,11 @@ a:hover {
 				<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">통계조회</a>
+				<a href="${pageContext.request.contextPath }/toOrderList.admin">주문조회</a>
 			</div>
-			<c:choose>
-				<c:when test="${empty loginSession}">
-				</c:when>
-				<c:when test="${!empty loginSession}">
-					<div class="col-xl-1 d-none d-xl-block navi-menu">
-						<a href="${pageContext.request.contextPath }/toMypage">${loginSession.nickname} 님</a>
-					</div>
-				</c:when>
-			</c:choose>
+			<div class="col-xl-1 d-none d-xl-block navi-menu">
+				<a href="${pageContext.request.contextPath }/toSurveyList.admin">통계조회</a>
+			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
 					<div class="col-xl-1 d-none d-xl-block navi-menu">
@@ -224,22 +218,22 @@ a:hover {
 	</nav>
 	<div class="row navi-onButtons">
 		<div class="col-12">
-			<a href="#">회원관리</a>
+			<a href="${pageContext.request.contextPath }/toMemberList.admin">회원조회</a>
 		</div>
 		<div class="col-12">
 			<a href="${pageContext.request.contextPath }/toBlacklist.bl?currentPage=1">블랙리스트</a>
 		</div>
 		<div class="col-12">
-			<a href="#">리뷰관리</a>
+			<a href="${pageContext.request.contextPath }/toAllReview.admin">리뷰관리</a>
 		</div>
 		<div class="col-12">
-			<a href="#">상품관리</a>
+			<a href="${pageContext.request.contextPath }/toAdminProduct.pro?currentPage=1">상품관리</a>
 		</div>
 		<div class="col-12">
 			<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 		<div class="col-12">
-			<a href="#">통계조회</a>
+			<a href="${pageContext.request.contextPath }/toSurveyList.admin">통계조회</a>
 		</div>
 		<c:choose>
 			<c:when test="${empty loginSession}">
@@ -266,57 +260,68 @@ a:hover {
 	</div>
 
 	<div class="main">
-			<div class="container btn-container">
+		<div class="row">
+			<div class="col-3" style="margin:auto;">
 				<button type="button" class="btn btn-dark" id="registerBtn">상품
 					등록</button>
-				<button type="button" class="btn btn-dark" id="modifyBtn">상품
-					수정</button>
+					<button type="button" class="btn btn-dark" id="modifyBtn">상품
+				수정</button>
 				<button type="button" class="btn btn-dark" id="deleteBtn">상품
-					삭제</button>
-				<button type="button" class="btn btn-dark" id="allReviewBtn">리뷰
-					모아보기</button>
-				<!-- 원래는 관리자 페이지에 있어야 함 (임시) -->
+				삭제</button>
 			</div>
-			<div class="container">
-				<div class="row">
-					<div class="col">
-						<h2>제품 전체 목록</h2>
-					</div>
+<!-- 			</div> -->
+<!-- 			</div> -->
+<!-- 			<div class="col"> -->
+			
+<!-- 			<div class="col"> -->
+			
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<h2>제품 전체 목록</h2>
 				</div>
+			</div>
+
+			<div class="row">
 				<c:forEach items="${list}" var="dto">
-					<div class="row">
-						<div class="col">
+					<div class="col-12 col-xl-4 product">
+						<div class="card" style="width: 18rem; border: 0px;">
 							<a
 								href="${pageContext.request.contextPath}/toDetailView.pro?product_code=${dto.getProduct_code()}&currentPage=${naviMap.get('currentPage')}&currentPage_cmt=1">
-								<img alt=""
+								<img alt="" class="card-img-top"
 								src="${pageContext.request.contextPath}/product_img/${dto.getImg_system_name()}"
-								width="300px" height="300px">
-							</a><br> 상품명 : ${dto.getProduct_name()}<br> 가격 :
-							${dto.getPrice()}원<br>
-							     <button type="button" class="btn btn-dark insertCartBtn" value="${dto.getProduct_code()}">장바구니 추가</button>
+								width="300px;" height="300px;">
+							</a>
+							<div class="card-body">
+								<h4 class="card-title">${dto.getProduct_name()}</h4>
+								<p class="card-text">${dto.getPrice()}원</p>
+								<p class="card-text">${dto.getSimple_content()}</p>
+							</div>
 						</div>
 					</div>
 				</c:forEach>
-				<div class="row">
-					<nav class="col" aria-label="Page navigation example">
-						<ul class="pagination justify-content-center">
-							<c:if test="${naviMap.get('needPrev') eq true}">
-								<li class="page-item"><a class="page-link"
-									href="${pageContext.request.contextPath}/toAdminProduct.pro?currentPage=${naviMap.get('startNavi')-1}">Previous</a>
-							</c:if>
-							<c:forEach var="i" begin="${naviMap.get('startNavi')}"
-								end="${naviMap.get('endNavi')}">
-								<li class="page-item"><a class="page-link"
-									href="${pageContext.request.contextPath}/toAdminProduct.pro?currentPage=${i}">${i}</a></li>
-							</c:forEach>
-							<c:if test="${naviMap.get('needNext') eq true}">
-								<li class="page-item"><a class="page-link"
-									href="${pageContext.request.contextPath}/toAdminProduct.pro?currentPage=${naviMap.get('endNavi')+1}">Next</a></li>
-							</c:if>
-						</ul>
-					</nav>
-				</div>
 			</div>
+			<div class="row">
+				<nav class="col" aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+						<c:if test="${naviMap.get('needPrev') eq true}">
+							<li class="page-item"><a class="page-link"
+								href="${pageContext.request.contextPath}/toAdminProduct.pro?currentPage=${naviMap.get('startNavi')-1}">Previous</a>
+						</c:if>
+						<c:forEach var="i" begin="${naviMap.get('startNavi')}"
+							end="${naviMap.get('endNavi')}">
+							<li class="page-item"><a class="page-link"
+								href="${pageContext.request.contextPath}/toAdminProduct.pro?currentPage=${i}">${i}</a></li>
+						</c:forEach>
+						<c:if test="${naviMap.get('needNext') eq true}">
+							<li class="page-item"><a class="page-link"
+								href="${pageContext.request.contextPath}/toAdminProduct.pro?currentPage=${naviMap.get('endNavi')+1}">Next</a></li>
+						</c:if>
+					</ul>
+				</nav>
+			</div>
+		</div>
 	</div>
 	<div class="footer">
 		<div class="row footer-top">
@@ -405,40 +410,33 @@ a:hover {
 							location.href = "${pageContext.request.contextPath}/toDelete.pro";
 						})
 
-		// 리뷰 모아보기 버튼
-		document
-				.getElementById("allReviewBtn")
-				.addEventListener(
-						"click",
-						function() {
-							location.href = "${pageContext.request.contextPath}/toAllReview.co";
-						})
-						
 		// 장바구니 수량
-		function getCartCount(){
+		function getCartCount() {
 			$.ajax({
-				type : "get"
-				, url : "${pageContext.request.contextPath}/countCartProc.cart"
-			}).done(function(rs){
-				if(rs != "fail"){
+				type : "get",
+				url : "${pageContext.request.contextPath}/countCartProc.cart"
+			}).done(function(rs) {
+				if (rs != "fail") {
 					$('#cartCount').html(rs);
 				} else {
 					alert("오류");
 				}
-			}).fail(function(e){
+			}).fail(function(e) {
 				console.log(e);
 			})
 		}
-		
+
 		// 장바구니 추가 버튼
 		$(".insertCartBtn").on("click", function(e) {
 			let product_code = $(e.target).val();
 			console.log(product_code);
-			
+
 			$.ajax({
 				url : "${pageContext.request.contextPath}/insertCartProc.cart",
 				type : 'get',
-				data : {product_code : product_code}
+				data : {
+					product_code : product_code
+				}
 			}).done(function(rs) {
 				if (rs == "success") {
 					getCartCount();

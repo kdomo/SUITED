@@ -22,7 +22,7 @@
 					value="${product_codeInput}">
 			</div>
 			<div class="col-4 mb-4">
-				<button type="button" id="btnCheck" class="btn btn-warning w-100">제품 코드 확인</button>
+				<button type="button" id="btnCheck" class="btn btn-dark w-100">제품 코드 확인</button>
 			</div>
 		</div>
 		<div class="row p-4">
@@ -45,7 +45,7 @@
 				<button type="button" id="btnCancel" class="btn btn-secondary">창닫기</button>
 			</div>
 			<div class="col-4 d-flex justify-content-start">
-				<button type="button" id="btnSubmit" class="btn btn-primary">사용</button>
+				<button type="button" id="btnSubmit" class="btn btn-dark">사용</button>
 			</div>
 		</div>
 	</form>

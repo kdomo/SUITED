@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>관리자 페이지</title>
+<title>SUITED 관리자</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -173,7 +173,7 @@ a:hover {
 	<nav class="navber">
 		<div class="row nav-items d-flex justify-content-center">
 			<div class="col-2 col-xl-2 navi-logo">
-				<a href="${pageContext.request.contextPath }/admin/index.jsp"><img
+				<a href="${pageContext.request.contextPath }/toAdminIndex.admin"><img
 					src="../imgs/logo.png" width="80px"></a>
 			</div>
 			<c:choose>
@@ -186,32 +186,26 @@ a:hover {
 			</c:choose>
 			
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">회원관리</a>
+				<a href="${pageContext.request.contextPath }/toMemberList.admin">회원조회</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="${pageContext.request.contextPath }/toBlacklist.bl?currentPage=1">블랙리스트</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">리뷰관리</a>
+				<a href="${pageContext.request.contextPath }/toAllReview.admin">리뷰관리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">상품관리</a>
+				<a href="${pageContext.request.contextPath }/toAdminProduct.pro?currentPage=1">상품관리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">통계조회</a>
+				<a href="${pageContext.request.contextPath }/toOrderList.admin">주문조회</a>
 			</div>
-			<c:choose>
-				<c:when test="${empty loginSession}">
-				</c:when>
-				<c:when test="${!empty loginSession}">
-					<div class="col-xl-1 d-none d-xl-block navi-menu">
-						<a href="#">${loginSession.nickname} 님</a>
-					</div>
-				</c:when>
-			</c:choose>
+			<div class="col-xl-1 d-none d-xl-block navi-menu">
+				<a href="${pageContext.request.contextPath }/toSurveyList.admin">통계조회</a>
+			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
 					<div class="col-xl-1 d-none d-xl-block navi-menu">
@@ -232,22 +226,22 @@ a:hover {
 	</nav>
 	<div class="row navi-onButtons">
 		<div class="col-12">
-			<a href="#">회원관리</a>
+			<a href="${pageContext.request.contextPath }/toMemberList.admin">회원조회</a>
 		</div>
 		<div class="col-12">
 			<a href="${pageContext.request.contextPath }/toBlacklist.bl?currentPage=1">블랙리스트</a>
 		</div>
 		<div class="col-12">
-			<a href="#">리뷰관리</a>
+			<a href="${pageContext.request.contextPath }/toAllReview.admin">리뷰관리</a>
 		</div>
 		<div class="col-12">
-			<a href="#">상품관리</a>
+			<a href="${pageContext.request.contextPath }/toAdminProduct.pro?currentPage=1">상품관리</a>
 		</div>
 		<div class="col-12">
 			<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 		<div class="col-12">
-			<a href="#">통계조회</a>
+			<a href="${pageContext.request.contextPath }/toSurveyList.admin">통계조회</a>
 		</div>
 		<c:choose>
 			<c:when test="${empty loginSession}">
@@ -272,8 +266,8 @@ a:hover {
 			</c:when>
 		</c:choose>
 	</div>
+	
 	<div class="main">
-	<div class="container">
         <div class="row mt-4">
             <div class="col-12 main_title_div">
                 <h3>블랙리스트 관리</h3>
@@ -313,11 +307,6 @@ a:hover {
 	                    </button>
 	                </div>
                 </div>
-            <!--     <div class="row">
-                     <div class="col-12 warning_div">
-                        <p class="m-0">※ 블랙리스트는 ......이러한 기능들이 차단됩니다.</p>
-                    </div>
-                </div>-->
             </div>
         </div>
         <form id="blackForm" action="${pageContext.request.contextPath}/deleteProc.bl" method="post">
@@ -384,7 +373,6 @@ a:hover {
             <div class="col-5" style="text-align: right; margin: auto; padding-right: 0;">
                 <select>
                     <option selected>ID</option>
-                    <!--  <option value="name">이름</option> -->
                 </select>
             </div>
             <div class="col-2" style="text-align: center; margin: auto;">

@@ -130,7 +130,7 @@ public class AdminController extends HttpServlet {
 				}
 			} else {
 				try {
-					OrderDTO list = orderDAO.selectById("");
+					OrderDTO list = orderDAO.selectById(id);
 					if (list != null) {
 						RequestDispatcher rd = request.getRequestDispatcher("/admin/orderList.jsp");
 						request.setAttribute("list", list);
