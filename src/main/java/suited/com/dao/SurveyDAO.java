@@ -29,7 +29,7 @@ public class SurveyDAO {
 		return bds.getConnection();
 	}
    
-   public int countAll() {
+   public int countAll() throws Exception {
       String sql = "select count(*) from tbl_survey";
       
       try(Connection conn = this.getConnection();
@@ -40,14 +40,12 @@ public class SurveyDAO {
          if(rs.next()) {
             return rs.getInt(1);
          }
-      }catch(Exception e) {
-         e.printStackTrace();
       }
       return -1;
    }
    
    // 설문 제출
-   public int insert(SurveyDTO dto) {
+   public int insert(SurveyDTO dto) throws Exception {
       String sql = "insert into tbl_survey values(seq_survey.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       
       try(Connection con = this.getConnection();
@@ -74,14 +72,12 @@ public class SurveyDAO {
          
          int rs = pstmt.executeUpdate();
          if(rs != -1) return rs;         
-      }catch(Exception e) {
-         e.printStackTrace();
       }
       return -1;
    }
    
    // 설문 조회
-   public ArrayList<SurveyDTO> selectAll() {
+   public ArrayList<SurveyDTO> selectAll() throws Exception {
       String sql = "select * from tbl_survey";
       
       try(Connection con = this.getConnection();
@@ -117,13 +113,10 @@ public class SurveyDAO {
                   supplements, sources, email, bmi));
          }
          return list;
-      }catch(Exception e) {
-         e.printStackTrace();
       }
-      return null;
    }
    
-   public int getSeq() {
+   public int getSeq() throws Exception {
       String sql = "select seq_survey.currval from dual";
       
       try(Connection con = this.getConnection();
@@ -134,13 +127,11 @@ public class SurveyDAO {
             int seq_survey = rs.getInt("currval");
             return seq_survey;
          }
-      } catch(Exception e) {
-         e.printStackTrace();
-      }
+      } 
       return -1;
    }
    
-   public SurveyDTO selectBySeq(int seq_survey) {
+   public SurveyDTO selectBySeq(int seq_survey) throws Exception {
       String sql = "select * from tbl_survey where seq_survey = ?";
       
       try(Connection con = this.getConnection();
@@ -171,9 +162,7 @@ public class SurveyDAO {
             dto.setBMI(rs.getInt("bmi"));
             return dto;
          }
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
+      } 
       return null;
    }
 }

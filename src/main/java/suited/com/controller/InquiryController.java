@@ -85,7 +85,7 @@ public class InquiryController extends HttpServlet {
 					}
 				}catch(Exception e) {
 					e.printStackTrace();
-					response.sendRedirect("/errorPage.jsp");
+					response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 				}
 			}else {
 				response.sendRedirect("/member/login.jsp");
@@ -105,7 +105,7 @@ public class InquiryController extends HttpServlet {
 				rd.forward(request, response);
 			}catch(Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("/errorPage.jsp");
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
 			
 		}else if(cmd.equals("/writeProc.in")) { // 문의 작성후에 여기로 와서 저장메서드 실행
@@ -122,7 +122,7 @@ public class InquiryController extends HttpServlet {
 				}
 			}catch(Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("/errorPage.jsp");
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
 		}else if(cmd.equals("/toDetailView.in")) {// 작성글 상세보기 페이지로 이동
 			int seq_inquiry = Integer.parseInt(request.getParameter("seq_inquiry"));
@@ -140,7 +140,7 @@ public class InquiryController extends HttpServlet {
 				}
 			}catch(Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("/errorPage.jsp");
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
 		}else if (cmd.equals("/sendAnswerProc.in")) {
 			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -155,7 +155,7 @@ public class InquiryController extends HttpServlet {
 				}
 			}catch(Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("/errorPage.jsp");
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
 		}
 	}

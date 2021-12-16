@@ -73,6 +73,7 @@ public class AdminController extends HttpServlet {
 					out.write("notAdmin");
 				}
 			} catch (Exception e) {
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 				e.printStackTrace();
 			}
 		} else if (cmd.equals("/logoutProc.admin"))

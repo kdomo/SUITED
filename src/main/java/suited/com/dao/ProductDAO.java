@@ -29,7 +29,7 @@ public class ProductDAO {
 		return bds.getConnection();
 	}
 	
-	public int countAll() {
+	public int countAll() throws Exception{
 		String sql = "select count(*) from tbl_product";
 		
 		try(Connection con = this.getConnection();
@@ -37,13 +37,11 @@ public class ProductDAO {
 			ResultSet rs = pstmt.executeQuery();
 			
 			if(rs.next()) return rs.getInt(1);
-		}catch(Exception e) {
-			e.printStackTrace();
 		}
 		return -1;
 	}
 	
-	public ArrayList<ProductDTO> getProductList(int startRange, int endRange){
+	public ArrayList<ProductDTO> getProductList(int startRange, int endRange) throws Exception{
 		String sql = "select * from "
 				+ "(select row_number() over(order by product_code desc) 순위,"
 				+ "a.* from tbl_product a) "
@@ -66,13 +64,10 @@ public class ProductDAO {
 				list.add(new ProductDTO(product_code, product_name, price, null, null, written_product_date, img_origin_name, img_system_name));
 			}
 			return list;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		} 
 	}
 	
-	public ArrayList<ProductDTO> selectAll(){
+	public ArrayList<ProductDTO> selectAll() throws Exception{
 		String sql = "select * from tbl_product";
 		
 		try(Connection con = this.getConnection();
@@ -93,13 +88,10 @@ public class ProductDAO {
 				list.add(new ProductDTO(product_code, product_name, price, simple_content, main_content, written_product_date, img_origin_name, img_system_name));
 			}
 			return list;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		} 
 	}
 	
-	public ProductDTO selectByCode(String product_code) {
+	public ProductDTO selectByCode(String product_code) throws Exception{
 		String sql = "select * from tbl_product where product_code = ?";
 		
 		try(Connection con = this.getConnection();
@@ -119,13 +111,11 @@ public class ProductDAO {
 				dto.setImg_system_name(rs.getString("img_system_name"));
 				return dto;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} 
 		return null;
 	}
 	
-	public int insert(ProductDTO dto) {
+	public int insert(ProductDTO dto) throws Exception{
 		String sql = "insert into tbl_product values(?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try(Connection con =this.getConnection();
@@ -147,13 +137,11 @@ public class ProductDAO {
 			
 			int rs = pstmt.executeUpdate();
 			if(rs != -1) return rs;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} 
 		return -1;
 	}
 	
-	public int modfifyByCode(String product_code, String product_name, int price, String simple_content, String main_content, String img_origin_name, String img_system_name) {
+	public int modfifyByCode(String product_code, String product_name, int price, String simple_content, String main_content, String img_origin_name, String img_system_name) throws Exception{
 		String sql = "update tbl_product set product_name = ?, price = ?, simple_content =?, main_content = ?, img_origin_name = ?, img_system_name = ? where product_code = ?";
 		
 		try(Connection con = this.getConnection();
@@ -168,13 +156,11 @@ public class ProductDAO {
 			
 			int rs = pstmt.executeUpdate();
 			if(rs != -1) return rs;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} 
 		return -1;
 	}
 	
-	public int deleteByCode(String product_code) {
+	public int deleteByCode(String product_code) throws Exception{
 		String sql = "delete from tbl_product where product_code = ?";
 		
 		try(Connection con = this.getConnection();
@@ -183,13 +169,11 @@ public class ProductDAO {
 			int rs = pstmt.executeUpdate();
 			
 			if(rs != -1) return rs;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} 
 		return -1;
 	}
 	
-	public boolean checkProduct_code(String product_code) {
+	public boolean checkProduct_code(String product_code) throws Exception{
 		String sql = "select * from tbl_product where product_code = ?";
 		
 		try(Connection con = this.getConnection();
@@ -199,9 +183,7 @@ public class ProductDAO {
 			
 			// 입력된 product_code와 일치하는 값이 있으면 true, 없으면 false 반환
 			if(rs.next()) return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} 
 		return false;
 	}
 }

@@ -31,7 +31,7 @@ public class BasketDAO {
 		return bds.getConnection();
 	}
 
-	public int insert(BasketDTO dto){
+	public int insert(BasketDTO dto) throws Exception{
 		String sql = "insert into tbl_basket values(?, ?, ?)";
 
 		try (Connection con = this.getConnection();
@@ -44,13 +44,11 @@ public class BasketDAO {
 			int rs = pstmt.executeUpdate();
 			if (rs != -1)
 				return rs;
-		} catch(Exception e) {
-			e.printStackTrace();
 		}
 		return -1;
 	}
 	
-	public ArrayList<MyBasketDTO> selectCartById(String id) {
+	public ArrayList<MyBasketDTO> selectCartById(String id) throws Exception{
 	String sql = "select * from tbl_basket full outer join tbl_product on tbl_basket.product_code = tbl_product.product_code where tbl_basket.id = ?";
 	
 	try(Connection con = this.getConnection();
@@ -69,13 +67,10 @@ public class BasketDAO {
 			list.add(new MyBasketDTO(img_system_name, product_code, product_name, price, quantity));
 		}
 		return list;
-	} catch (Exception e) {
-		e.printStackTrace();
 	}
-	return null;
 }
 	
-	public int countById(String id) {
+	public int countById(String id) throws Exception{
 		String sql = "select count(*) from tbl_basket where id = ?";
 		
 		try(Connection con = this.getConnection();
@@ -84,13 +79,11 @@ public class BasketDAO {
 			ResultSet rs = pstmt.executeQuery();
 			
 			if(rs.next()) return rs.getInt(1);
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return -1;
 	}
 	
-	public int modQuantity(String id, String product_code, String modification) {
+	public int modQuantity(String id, String product_code, String modification) throws Exception{
 		if(modification.equals("!")) {
 			String sql = "update tbl_basket set quantity = quantity + 1 where product_code = ? and id = ?";
 			
@@ -101,9 +94,7 @@ public class BasketDAO {
 				
 				int rs = pstmt.executeUpdate();
 				if(rs != -1) return rs;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			} 
 			return -1;
 		}else if(modification.equals("-")) {
 			String sql = "update tbl_basket set quantity = quantity - 1 where product_code = ? and id = ? and quantity >= 2";
@@ -115,16 +106,14 @@ public class BasketDAO {
 				
 				int rs = pstmt.executeUpdate();
 				if(rs != -1) return rs;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			} 
 			return -1;
 		} else {
 			return -1;
 		}
 	}
 	
-	public int deleteByCode(String product_code) {
+	public int deleteByCode(String product_code) throws Exception{
 		String sql = "delete from tbl_basket where product_code = ?";
 		
 		try(Connection con = this.getConnection();
@@ -133,23 +122,18 @@ public class BasketDAO {
 			int rs = pstmt.executeUpdate();
 			
 			if(rs != -1) return rs;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} 
 		return -1;
 	}
 	
-	public void deleteAllById(String id) {
+	public void deleteAllById(String id) throws Exception{
 		String sql = "delete from tbl_basket where id = ?";
 		
 		try(Connection con = this.getConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setString(1, id);
 			int rs = pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} 
 	}
 
 }

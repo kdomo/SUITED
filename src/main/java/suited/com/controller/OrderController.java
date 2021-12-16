@@ -85,6 +85,7 @@ public class OrderController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
 		} else if(cmd.equals("/order_productProc.order")) {
 //			-
@@ -110,6 +111,7 @@ public class OrderController extends HttpServlet {
 					int rs = order_productDAO.insert(product_code, quantity);
 				} catch (Exception e) {
 					e.printStackTrace();
+					response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 				}
 			}
 			try {
@@ -118,6 +120,7 @@ public class OrderController extends HttpServlet {
 				out.write(order_no);
 			} catch (Exception e) {
 				e.printStackTrace();
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
 				
 			
@@ -135,6 +138,7 @@ public class OrderController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
 			
 		} else if(cmd.equals("/payProc.order")) {
@@ -169,6 +173,7 @@ public class OrderController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
 		} else if(cmd.equals("/toPayResult.order")) {
 			String Result = request.getParameter("Result");

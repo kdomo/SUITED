@@ -272,9 +272,10 @@ a:hover {
 						<h2>제품 전체 목록</h2>
 					</div>
 				</div>
+				<div class="row">
 				<c:forEach items="${list}" var="dto">
-					<div class="row">
-						<div class="col">
+					
+						<div class="col-12 col-xl-4">
 							<a
 								href="${pageContext.request.contextPath}/toDetailView.pro?product_code=${dto.getProduct_code()}&currentPage=${naviMap.get('currentPage')}&currentPage_cmt=1">
 								<img alt=""
@@ -284,8 +285,9 @@ a:hover {
 							${dto.getPrice()}원<br>
 							     <button type="button" class="btn btn-dark insertCartBtn" value="${dto.getProduct_code()}">장바구니 추가</button>
 						</div>
-					</div>
+					
 				</c:forEach>
+				</div>
 				<div class="row">
 					<nav class="col" aria-label="Page navigation example">
 						<ul class="pagination justify-content-center">

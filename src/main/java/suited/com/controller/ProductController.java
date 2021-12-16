@@ -122,6 +122,7 @@ public class ProductController extends HttpServlet {
 					response.sendRedirect("/toAdminProduct.pro?currentPage=1");
 			} catch (Exception e) {
 				e.printStackTrace();
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
 		} else if (cmd.equals("/product_codeCheckPopup.pro")) { // 제품 코드 확인 팝업창 띄우기
 			response.sendRedirect("/product/product_codeCheckPopup.jsp");
@@ -129,26 +130,36 @@ public class ProductController extends HttpServlet {
 			String product_codeInput = request.getParameter("product_codeInput");
 			System.out.println("product_code : " + product_codeInput);
 			
-			boolean rs = dao.checkProduct_code(product_codeInput);
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/product/product_codeCheckPopup.jsp");
-			request.setAttribute("product_codeInput", product_codeInput);
-			if(rs) { // true라면 즉 중복된다면
-				request.setAttribute("rs", "unavailable");
-			}else { // false 라면 즉 중복되지 않는다면
-				request.setAttribute("rs", "available");
+			try {
+				boolean rs = dao.checkProduct_code(product_codeInput);
+				RequestDispatcher rd = request.getRequestDispatcher("/product/product_codeCheckPopup.jsp");
+				request.setAttribute("product_codeInput", product_codeInput);
+				if(rs) { // true라면 즉 중복된다면
+					request.setAttribute("rs", "unavailable");
+				}else { // false 라면 즉 중복되지 않는다면
+					request.setAttribute("rs", "available");
+				}
+				rd.forward(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
-			rd.forward(request, response);
 		} else if (cmd.equals("/detailView.pro")) { // 제품 상세 페이지로 이동
 			String product_code = request.getParameter("product_code");
 			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-			ProductDTO dto = dao.selectByCode(product_code);
-
-			if (dto != null) {
-				RequestDispatcher rd = request.getRequestDispatcher("/product/detailView.jsp");
-				request.setAttribute("dto", dto);
-				request.setAttribute("currentPage", currentPage);
-				rd.forward(request, response);
+			
+			try {
+				ProductDTO dto = dao.selectByCode(product_code);
+				if (dto != null) {
+					RequestDispatcher rd = request.getRequestDispatcher("/product/detailView.jsp");
+					request.setAttribute("dto", dto);
+					request.setAttribute("currentPage", currentPage);
+					rd.forward(request, response);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
 		} else if (cmd.equals("/toDetailView.pro")) { // 제품의 currentPage와 리뷰의 currentPage_cmt를 구별하여 전송
 			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -197,22 +208,27 @@ public class ProductController extends HttpServlet {
 					response.sendRedirect("/toAdminProduct.pro?currentPage=1");
 			} catch (Exception e) {
 				e.printStackTrace();
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
 		} else if (cmd.equals("/confirm.pro")) { // 수정 창에서 받은 코드의 정보를 보내줌
 			String product_code = request.getParameter("product_code");
-			ProductDTO dto = dao.selectByCode(product_code);
-
-			System.out.println("받은 코드 : " + product_code);
-			if (dto != null) {
-				RequestDispatcher rd = request.getRequestDispatcher("/product/modify.jsp");
-				request.setAttribute("dto", dto);
-				rd.forward(request, response);
-			} else {
-				RequestDispatcher rd = request.getRequestDispatcher("/product/modify.jsp");
-				request.setAttribute("product_code", "없음");
-				rd.forward(request, response);
+			
+			try {
+				ProductDTO dto = dao.selectByCode(product_code);
+				System.out.println("받은 코드 : " + product_code);
+				if (dto != null) {
+					RequestDispatcher rd = request.getRequestDispatcher("/product/modify.jsp");
+					request.setAttribute("dto", dto);
+					rd.forward(request, response);
+				} else {
+					RequestDispatcher rd = request.getRequestDispatcher("/product/modify.jsp");
+					request.setAttribute("product_code", "없음");
+					rd.forward(request, response);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
-			;
 		} else if (cmd.equals("/toDelete.pro")) { // 상품 삭제 페이지로 이동 요청
 			response.sendRedirect("/deleteProc.pro?currentPage=1");
 		} else if (cmd.equals("/deleteProc.pro")) { // 상품 삭제 처리 후 이동
@@ -227,24 +243,29 @@ public class ProductController extends HttpServlet {
 				request.setAttribute("list", list);
 
 				String product_code = request.getParameter("product_code");
-				ProductDTO dto = dao.selectByCode(product_code);
-//				System.out.println("받은 코드 : " + product_code);
-
-				if (product_code == null) {
-					RequestDispatcher rd = request.getRequestDispatcher("/product/delete.jsp");
-					request.setAttribute("product_code", "첫 페이지");
-					rd.forward(request, response);
-				} else {
-					if (dto != null) {
-						int rs = dao.deleteByCode(product_code);
-						if (rs != -1)
-							response.sendRedirect("/deleteProc.pro?currentPage=1");
-					} else {
+				
+				try {
+					ProductDTO dto = dao.selectByCode(product_code);
+					if (product_code == null) {
 						RequestDispatcher rd = request.getRequestDispatcher("/product/delete.jsp");
-						request.setAttribute("product_code", "없음");
+						request.setAttribute("product_code", "첫 페이지");
 						rd.forward(request, response);
+					} else {
+						if (dto != null) {
+							int rs = dao.deleteByCode(product_code);
+							if (rs != -1)
+								response.sendRedirect("/deleteProc.pro?currentPage=1");
+						} else {
+							RequestDispatcher rd = request.getRequestDispatcher("/product/delete.jsp");
+							request.setAttribute("product_code", "없음");
+							rd.forward(request, response);
+						}
 					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 				}
+				
 			}
 		}
 	}

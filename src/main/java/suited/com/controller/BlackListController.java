@@ -60,7 +60,7 @@ public class BlackListController extends HttpServlet {
 			
 			}catch(Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("/errorPage.jsp");
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
 		}else if(cmd.equals("/searchId.bl")) {
 			String id = request.getParameter("idInput");
@@ -76,7 +76,7 @@ public class BlackListController extends HttpServlet {
 				
 			}catch(Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("/errorPage.jsp");
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
 		}else if(cmd.equals("/updateList.bl")) {
 			String id = request.getParameter("id");
@@ -92,7 +92,7 @@ public class BlackListController extends HttpServlet {
 				}
 			}catch(Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("/errorPage.jsp");
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
 		}else if(cmd.equals("/plusBlacklist.bl")) {
 			String id = request.getParameter("id");
@@ -118,7 +118,7 @@ public class BlackListController extends HttpServlet {
 //					response.getWriter().write(plusDto);
 			}catch(Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("/errorPage.jsp");
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}	
 		}else if(cmd.equals("/searchIdName.bl")) {//아이디로 찾기
 			String id = request.getParameter("searchIdName");
@@ -130,7 +130,7 @@ public class BlackListController extends HttpServlet {
 				response.getWriter().write(blacklist);
 			}catch(Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("/errorPage.jsp");
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
 			
 			
@@ -150,7 +150,7 @@ public class BlackListController extends HttpServlet {
 					}
 			}catch(Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("/errorPage.jsp");
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
 			
 		}

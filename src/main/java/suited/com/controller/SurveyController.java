@@ -29,12 +29,10 @@ public class SurveyController extends HttpServlet {
       request.setCharacterEncoding("utf-8");
       HttpSession session = request.getSession();
       SurveyDAO surveyDAO = new SurveyDAO();
-      
       String uri = request.getRequestURI();
       String ctxPath = request.getContextPath();
       String cmd = uri.substring(ctxPath.length());
       
-      System.out.println("입력 url : " + cmd);
       
       if(cmd.equals("/toSurvey.srv")) {
          response.sendRedirect("/survey/Survey.jsp");
@@ -71,21 +69,28 @@ public class SurveyController extends HttpServlet {
          }
          response.sendRedirect("/toSurveyResult.srv");
       }else if(cmd.equals("/toSurveyResult.srv")) {
-         int seq_survey = surveyDAO.getSeq();
-         System.out.println("seq_survey : " + seq_survey);
-         SurveyDTO dto = surveyDAO.selectBySeq(seq_survey);
-         
-         RequestDispatcher rd = request.getRequestDispatcher("/survey/surveyResult.jsp");
-         request.setAttribute("dto", dto);
-         rd.forward(request, response);
+         int seq_survey;
+		try {
+			seq_survey = surveyDAO.getSeq();
+	         SurveyDTO dto = surveyDAO.selectBySeq(seq_survey);
+	         RequestDispatcher rd = request.getRequestDispatcher("/survey/surveyResult.jsp");
+	         request.setAttribute("dto", dto);
+	         rd.forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
       }else if(cmd.equals("/toSurveyList.srv")) { // 설문 목록 조회
-         ArrayList<SurveyDTO> list = surveyDAO.selectAll();
-         
-         if(list != null) {
-            RequestDispatcher rd = request.getRequestDispatcher("/survey/surveyList.jsp");
-            request.setAttribute("list", list);
-            rd.forward(request, response);
-         }
+		try {
+			ArrayList<SurveyDTO> list = surveyDAO.selectAll();
+			if(list != null) {
+	            RequestDispatcher rd = request.getRequestDispatcher("/survey/surveyList.jsp");
+	            request.setAttribute("list", list);
+	            rd.forward(request, response);
+	         }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
       }else if(cmd.equals("toPayment.srv")) {
          if(session.getAttribute("loginSession") != null) { // 결제창으로
             

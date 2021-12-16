@@ -33,6 +33,7 @@ public class HomeController extends HttpServlet {
 					response.sendRedirect("/index.jsp");
 				}
 			} catch (Exception e) {
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 				e.printStackTrace();
 			}
 		}else {

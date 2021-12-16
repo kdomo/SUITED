@@ -284,7 +284,6 @@ form>p {
 			<h1 style="color:red; margin-top:16vh; margin-bottom:16vh; transform:translate(0,-50%);">결제에 실패하였습니다.</h1>
 			<script>
 			$(function(){
-				setTimeout(3000);
 				location.href="/";
 			});
 			</script>

@@ -112,6 +112,23 @@ line-height:8px;
    width: 82.6vw;
    margin: auto;
 }
+#carouselExampleControlsNoTouching {
+   width: 500px;
+   height: 500px;
+   margin: auto;
+   background-color: gray;
+}
+.carousel-inner{
+width:50%;
+margin:auto;
+}
+#carouselExampleDark{
+margin-top:10%;
+margin-bottom:10%;
+}
+.carousel-item{
+text-alian:center;
+}
 
 /* footer 영역 */
 .footer {
@@ -161,12 +178,6 @@ line-height:8px;
 .footer-body-right>p {
    padding: 0px;
    margin: 0px;
-}
-#carouselExampleControlsNoTouching {
-   width: 500px;
-   height: 500px;
-   margin: auto;
-   background-color: gray;
 }
 </style>
 </head>
@@ -274,237 +285,176 @@ line-height:8px;
    <div class="main">
       <form action="${pageContext.request.contextPath}/surveyProc.srv"
          method="post" id="surveyForm" name="surveyForm">
-         <div id="carouselExampleControlsNoTouching" class="carousel slide"
+         <div id="carouselExampleDark" class="carousel carousel-dark slide"
             data-bs-touch="false" data-bs-interval="false">
             <div class="carousel-inner">
                <div class="carousel-item active">
                   <h2>1.고객님의 이름을 알려주세요.</h2>
-                  <input type="text" class="survey" id="name" name="name">
+                  <input type="text" class="form-control" id="name" name="name" placeholder="홍길동" value="${loginSession.name}">
                </div>
                <div class="carousel-item">
                   <h2>2.고객님의 성별을 알려주세요.</h2>
-                  <input type="radio" id="gender" name="gender" value="여" checked>여성<br>
-                  <input type="radio" id="gender" name="gender" value="남">남성
+                  <input type="radio" id="gender" class="form-check-input" name="gender" value="여" checked>여성<br>
+                  <input type="radio" id="gender" class="form-check-input" name="gender" value="남">남성
                </div>
                <div class="carousel-item">
                   <h2>3.고객님의 나이를 알려주세요.</h2>
-                  <input type="text" class="survey" id="age" name="age">세
+                  <input type="text" class="form-control" id="age" name="age" placeholder="ㅇㅇ세">
                </div>
                <div class="carousel-item">
                   <h2>4-1.다음 중 해당하는 사항을 골라주세요.</h2>
-                  <input type="radio" id="uncomfort1" name="uncomfort1" value="오메가3"
+                  <input type="radio" id="uncomfort1" name="uncomfort1" value="오메가3" class="form-check-input"
                      checked>상처가 생기면 잘 아물지 않아요.<br> <input type="radio"
-                     id="uncomfort1" name="uncomfort1" value="오메가3">손끝 또는 발끝이
-                  자주 저려요.<br> <input type="radio" id="uncomfort1"
+                     id="uncomfort1" name="uncomfort1" class="form-check-input" value="오메가3">손끝 또는 발끝이
+                  자주 저려요.<br>
+                  <input type="radio" id="uncomfort1" class="form-check-input"
                      name="uncomfort1" value="오메가3">충치가 생기고 잇몸이 자주 붓고 피가 나요.<br>
-                  <input type="radio" id="uncomfort1" name="uncomfort1" value="null">해당사항이
+                  <input type="radio" id="uncomfort1" class="form-check-input" name="uncomfort1" value="null">해당사항이
                   없어요.
                </div>
                <div class="carousel-item">
                   <h2>4-2.다음 중 해당하는 사항을 골라주세요.</h2>
-                  <input type="radio" id="uncomfort2" name="uncomfort2"
-                     value="프로바이오틱스" checked>복통이나 속쓰림이 자주 발생해요.<br> <input
+                  <input type="radio" id="uncomfort2" name="uncomfort2" class="form-check-input"
+                     value="프로바이오틱스" checked>복통이나 속쓰림이 자주 발생해요.<br> <input class="form-check-input"
                      type="radio" id="uncomfort2" name="uncomfort2" value="프로바이오틱스">변비가
-                  있어요.<br> <input type="radio" id="uncomfort2" name="uncomfort2"
-                     value="프로바이오틱스">설사와 같은 묽은 변을 자주 보는 편이에요.<br> <input
-                     type="radio" id="uncomfort2" name="uncomfort2" value="프로바이오틱스">술을
-                  마실 때 얼굴이나 몸이 붉어지고 소화가 안돼요.<br> <input type="radio"
+                  있어요.<br>
+                  <input type="radio" id="uncomfort2" name="uncomfort2"  class="form-check-input"
+                     value="프로바이오틱스">설사와 같은 묽은 변을 자주 보는 편이에요.<br>
+                  <input
+                     type="radio" id="uncomfort2" name="uncomfort2" value="프로바이오틱스" class="form-check-input">술을
+                  마실 때 얼굴이나 몸이 붉어지고 소화가 안돼요.<br> <input type="radio" class="form-check-input"
                      id="uncomfort2" name="uncomfort2" value="null">해당사항이 없어요.
                </div>
                <div class="carousel-item">
                   <h2>4-3.다음 중 해당하는 사항을 골라주세요.</h2>
-                  <input type="radio" id="uncomfort3" name="uncomfort3"
+                  <input type="radio" id="uncomfort3" name="uncomfort3" class="form-check-input"
                      value="히알루론산 스피루리나" checked>피부가 건조하여 벗겨지거나 머리에 비듬이 많이 생겨요.<br>
-                  <input type="radio" id="uncomfort3" name="uncomfort3"
+                  <input type="radio" id="uncomfort3" name="uncomfort3" class="form-check-input"
                      value="히알루론산 스피루리나">여드름이 많아 걱정이에요.<br> <input
-                     type="radio" id="uncomfort3" name="uncomfort3" value="히알루론산 스피루리나">피부에
-                  염증이 자주 생겨요.<br> <input type="radio" id="uncomfort3"
+                     type="radio" id="uncomfort3" name="uncomfort3" value="히알루론산 스피루리나" class="form-check-input">피부에
+                  염증이 자주 생겨요.<br> <input type="radio" id="uncomfort3" class="form-check-input"
                      name="uncomfort3" value="히알루론산 스피루리나">입안이 헐고 입술이 자주 갈라져요.<br>
-                  <input type="radio" id="uncomfort3" name="uncomfort3" value="null">해당사항이
+                  <input type="radio" id="uncomfort3" name="uncomfort3" class="form-check-input" value="null">해당사항이
                   없어요.
                </div>
                <div class="carousel-item">
                   <h2>5.고객님의 키를 알려주세요.</h2>
-                  <input type="text" class="survey" id="height" name="height">cm
+                  <input type="text" class="form-control" id="height" name="height" placeholder="000 Cm">
                </div>
                <div class="carousel-item">
                   <h2>6.고객님의 몸무게를 알려주세요.</h2>
-                  <input type="text" class="survey" id="weight" name="weight">kg
+                  <input type="text" class="form-control" id="weight" name="weight" placeholder="00 Kg">
                </div>
                <div class="carousel-item">
                   <h2>7.평소 운동을 얼마나 자주 하시나요?</h2>
-                  <input type="radio" id="exercise" name="exercise" value="null"
-                     checked>주 4회 이상 해요.<br> <input type="radio"
+                  <input type="radio" id="exercise" name="exercise" value="null" class="form-check-input"
+                     checked>주 4회 이상 해요.<br> <input type="radio" class="form-check-input"
                      id="exercise" name="exercise" value="홍삼 옥타코사놀">주 2-3회 정도
-                  해요.<br> <input type="radio" id="exercise" name="exercise"
+                  해요.<br> <input type="radio" id="exercise" name="exercise" class="form-check-input"
                      value="홍삼 옥타코사놀">주 1회 이하로 해요.
                </div>
                <div class="carousel-item">
                   <h2>8.평소 햇빛을 받는 야외활동을 얼마나 많이 하시나요?</h2>
-                  <input type="radio" id="activity" name="activity" value="null"
-                     checked>하루 4시간 이상 야외활동을 해요.<br> <input type="radio"
+                  <input type="radio" id="activity" name="activity" value="null" class="form-check-input"
+                     checked>하루 4시간 이상 야외활동을 해요.<br> <input type="radio" class="form-check-input"
                      id="activity" name="activity" value="비타민B">하루 1시간-4시간 사이로
-                  야외활동을 해요.<br> <input type="radio" id="activity"
+                  야외활동을 해요.<br> <input type="radio" id="activity" class="form-check-input"
                      name="activity" value="비타민B">하루 1시간 이내로 야외활동을 해요.
                </div>
                <div class="carousel-item">
                   <h2>9.평소 식습관은 어떠신가요?</h2>
-                  <input type="radio" id="eating_habits" name="eating_habits"
-                     value="프로폴리스" checked>생선을 일주일에 3번 이상 먹어요.<br> <input
+                  <input type="radio" id="eating_habits" name="eating_habits" class="form-check-input"
+                     value="프로폴리스" checked>생선을 일주일에 3번 이상 먹어요.<br> <input class="form-check-input"
                      type="radio" id="eating_habits" name="eating_habits" value="프로폴리스">녹황색
-                  채소(시금치,브로콜리 등)를 거의 매일 먹어요.<br> <input type="radio"
+                  채소(시금치,브로콜리 등)를 거의 매일 먹어요.<br> <input type="radio" class="form-check-input"
                      id="eating_habits" name="eating_habits" value="프로폴리스">일주일
-                  동안 과일(사과 1개나 귤 3개 정도)을 4일 이상 먹어요.<br> <input type="radio"
+                  동안 과일(사과 1개나 귤 3개 정도)을 4일 이상 먹어요.<br> <input type="radio" class="form-check-input"
                      id="eating_habits" name="eating_habits" value="비타민C">일주일
-                  동안 4일 이상 고기(삼겹살 등 메인 요리)를 먹어요.<br> <input type="radio"
+                  동안 4일 이상 고기(삼겹살 등 메인 요리)를 먹어요.<br> <input type="radio" class="form-check-input"
                      id="eating_habits" name="eating_habits" value="비타민C">단
-                  음식(빵/과자,초콜릿,탄산음료 등)을 자주 먹어요.<br> <input type="radio"
+                  음식(빵/과자,초콜릿,탄산음료 등)을 자주 먹어요.<br> <input type="radio" class="form-check-input"
                      id="eating_habits" name="eating_habits" value="비타민C">일주일
-                  동안 식사를 5회 이상 먹지 않아요.<br> <input type="radio"
+                  동안 식사를 5회 이상 먹지 않아요.<br> <input type="radio" class="form-check-input"
                      id="eating_habits" name="eating_habits" value="null">해당
                   사항이 없어요.
                </div>
                <div class="carousel-item">
                   <h2>10.기호 식품이 있으신가요?</h2>
-                  <input type="radio" id="favorite_food" name="favorite_food"
-                     value="루테인" checked>하루에 담배를 반 갑 이상 피워요.<br> <input
-                     type="radio" id="favorite_food" name="favorite_food" value="루테인">하루에
-                  커피를 3잔 이상 마셔요.<br> <input type="radio" id="favorite_food"
+                  <input type="radio" id="favorite_food" name="favorite_food" class="form-check-input"
+                     value="루테인" checked>하루에 담배를 반 갑 이상 피워요.<br> <input 
+                     type="radio" id="favorite_food" name="favorite_food" value="루테인" class="form-check-input">하루에
+                  커피를 3잔 이상 마셔요.<br> <input type="radio" id="favorite_food" class="form-check-input"
                      name="favorite_food" value="루테인">하루에 물을 2L 이하로 마셔요.<br>
-                  <input type="radio" id="favorite_food" name="favorite_food"
+                  <input type="radio" id="favorite_food" name="favorite_food" class="form-check-input"
                      value="루테인">일주일에 인스턴트 식품(라면,편의점 도시락 등)으로 3번 이상 식사를 해요.<br>
-                  <input type="radio" id="favorite_food" name="favorite_food"
+                  <input type="radio" id="favorite_food" name="favorite_food" class="form-check-input"
                      value="null">해당 사항이 없어요.
                </div>
                <div class="carousel-item">
                   <h2>11.가족이 앓고 있는 질환을 선택해주세요.</h2>
-                  <input type="radio" id="family_disease" name="family_disease"
-                     value="밀크씨슬" checked>간 질환<br> <input type="radio"
+                  <input type="radio" id="family_disease" name="family_disease" class="form-check-input"
+                     value="밀크씨슬" checked>간 질환<br> <input type="radio" class="form-check-input"
                      id="family_disease" name="family_disease" value="밀크씨슬">혈관
-                  질환(심근경색,뇌출혈 등)<br> <input type="radio" id="family_disease"
+                  질환(심근경색,뇌출혈 등)<br> <input type="radio" id="family_disease" class="form-check-input"
                      name="family_disease" value="밀크씨슬">뼈/관절 질환(골다공증,골감소증 등)<br>
-                  <input type="radio" id="family_disease" name="family_disease"
+                  <input type="radio" id="family_disease" name="family_disease" class="form-check-input"
                      value="null">해당 사항이 없어요.
                </div>
                <div class="carousel-item">
                   <h2>12.건강검진을 언제 마지막으로 하셨나요?</h2>
-                  <input type="radio" id="health_checkup" name="health_checkup"
+                  <input type="radio" id="health_checkup" name="health_checkup" class="form-check-input"
                      value="null" checked>1년 이내에 했어요.<br> <input
-                     type="radio" id="health_checkup" name="health_checkup"
-                     value="null">1-2년 사이에 했어요.<br> <input type="radio"
+                     type="radio" id="health_checkup" name="health_checkup" class="form-check-input"
+                     value="null">1-2년 사이에 했어요.<br> <input type="radio" class="form-check-input"
                      id="health_checkup" name="health_checkup" value="칼슘 마그네슘 비타민D">2년
-                  이상 하지 않았어요.<br> <input type="radio" id="health_checkup"
+                  이상 하지 않았어요.<br> <input type="radio" id="health_checkup" class="form-check-input"
                      name="health_checkup" value="칼슘 마그네슘 비타민D">건강검진을 해본 적이
                   없어요.
                </div>
                <div class="carousel-item">
                   <h2>13.평소 영양제를 얼마나 챙겨드시나요?</h2>
-                  <input type="radio" id="supplements" name="supplements"
-                     value="null" checked>조금이라도 필요한 성분은 모두 섭취해요.<br> <input
+                  <input type="radio" id="supplements" name="supplements" class="form-check-input"
+                     value="null" checked>조금이라도 필요한 성분은 모두 섭취해요.<br> <input class="form-check-input"
                      type="radio" id="supplements" name="supplements" value="발효효소">꼭
-                  필요한 성분만 섭취해요.<br> <input type="radio" id="supplements"
+                  필요한 성분만 섭취해요.<br> <input type="radio" id="supplements" class="form-check-input"
                      name="supplements" value="발효효소">영양제를 섭취하지 않아요.
                </div>
                <div class="carousel-item">
                   <h2>14.SUTIED를 어떻게 알게 되셨나요?</h2>
-                  <input type="radio" id="sources" name="sources" value="지인 추천"
-                     checked>지인 추천<br> <input type="radio" id="sources"
-                     name="sources" value="인플루언서 추천">인플루언서 추천<br> <input
+                  <input type="radio" id="sources" name="sources" value="지인 추천" class="form-check-input"
+                     checked>지인 추천<br> <input type="radio" id="sources" class="form-check-input"
+                     name="sources" value="인플루언서 추천">인플루언서 추천<br> <input class="form-check-input"
                      type="radio" id="sources" name="sources" value="SNS">SNS(페이스북/인스타그램
-                  등)<br> <input type="radio" id="sources" name="sources"
-                     value="인터넷">인터넷(블로그/기사 등)<br> <input type="radio"
-                     id="sources" name="sources" value="직접 검색">직접 검색<br> <input
+                  등)<br> <input type="radio" id="sources" name="sources" class="form-check-input"
+                     value="인터넷">인터넷(블로그/기사 등)<br> <input type="radio" class="form-check-input"
+                     id="sources" name="sources" value="직접 검색">직접 검색<br> <input class="form-check-input"
                      type="radio" id="sources" name="sources" value="기타">기타
                </div>
                <div class="carousel-item">
                   <h2>15.결과를 받아보기 위해 이메일을 알려주세요.</h2>
-                  <input type="text" class="survey" id="email" name="email">
+                  <input type="text" class="form-control" class="survey" id="email" name="email">
                </div>
                <div class="carousel-item">
-                  <h2>설문이 끝났어요! 아래 버튼을 눌러 결과를 확인해보세요!</h2>
-                  <input type="button" class="survey" id="btnSubmit" name="btnSubmit"
+                  <h2>설문이 끝났어요!<br>
+                  아래 버튼을 눌러 결과를 확인해보세요!</h2>
+                  <input type="button" class="btn btn-dark" id="btnSubmit" name="btnSubmit" style="margin:auto;"
                      value="결과 확인하기">
                </div>
             </div>
             <button class="carousel-control-prev" type="button"
-               data-bs-target="#carouselExampleControlsNoTouching"
+               data-bs-target="#carouselExampleDark"
                data-bs-slide="prev" id="prevBtn">
                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                <span class="visually-hidden">Previous</span>
             </button>
             <button class="carousel-control-next" type="button"
-               data-bs-target="#carouselExampleControlsNoTouching"
+               data-bs-target="#carouselExampleDark"
                data-bs-slide="next" id="nextBtn" value=1>
                <span class="carousel-control-next-icon" aria-hidden="true"></span>
                <span class="visually-hidden">Next</span>
             </button>
          </div>
       </form>
-   
-      <script>
-         console.log($(nextBtn).val());
-         if ($(nextBtn).val() == 1) {
-            $(prevBtn).css({
-               "display" : "none"
-            });
-   
-            $("#nextBtn").on("click", function() {
-               $(nextBtn).css({"display" : "none"});
-               setTimeout(function() {
-                  $(nextBtn).css({"display" : "block"});
-               }, 1000);
-   
-               let plus_val = Number($(nextBtn).val()) + 1;
-               $(nextBtn).attr('value', plus_val);
-               console.log($(nextBtn).val());
-   
-               
-            });
-   
-            $("#prevBtn").on("click", function() {
-               $(prevBtn).css({"display" : "none"});
-               setTimeout(function() {
-                  if ($(nextBtn).val() == 1) {
-                     $(prevBtn).css({
-                        "display" : "none"
-                     });
-                  }else{
-                     $(prevBtn).css({"display" : "block"});
-                  }
-               }, 1000);
-   
-               let minus_val = Number($(nextBtn).val()) - 1;
-               $(nextBtn).attr('value', minus_val);
-               console.log($(nextBtn).val());
-            });
-         }
-   
-         document.getElementById("btnSubmit").addEventListener("click",
-               function(e) {
-                  if (document.getElementById("name").value == "") {
-                     alert("이름을 입력하세요.");
-                     return;
-                  } else if (document.getElementById("gender").value == "") {
-                     alert("성별을 선택해주세요.");
-                     return;
-                  } else if (document.getElementById("age").value == "") {
-                     alert("나이를 입력해주세요.");
-                     return;
-                  } else if (document.getElementById("height").value == "") {
-                     alert("신장을 입력해주세요.");
-                     return;
-                  } else if (document.getElementById("weight").value == "") {
-                     alert("체중을 입력해주세요.");
-                     return;
-                  } else if (document.getElementById("email").value == "") {
-                     alert("이메일을 입력해주세요.");
-                     return;
-                  }
-   
-                  document.getElementById("surveyForm").submit();
-               });
-      </script>
-      
    </div>
    <div class="footer">
       <div class="row footer-top">
@@ -579,6 +529,72 @@ line-height:8px;
                console.log(e);
             })
          }
+         
+         console.log($(nextBtn).val());
+         if ($(nextBtn).val() == 1) {
+            $(prevBtn).css({
+               "display" : "none"
+            });
+
+            $("#nextBtn").on("click", function() {
+               $(nextBtn).css({"display" : "none"});
+               setTimeout(function() {
+                  $(nextBtn).css({"display" : "block"});
+                  if($(nextBtn).val() == 18){
+                     $(nextBtn).css({"display" : "none"});
+                  } else if($(nextBtn).val() != 1){
+                     $(prevBtn).css({"display" : "block"})
+                  }
+               }, 1000);
+               
+               let plus_val = Number($(nextBtn).val()) + 1;
+               $(nextBtn).attr('value', plus_val);
+               console.log($(nextBtn).val());
+            });
+
+            $("#prevBtn").on("click", function() {
+               $(prevBtn).css({"display" : "none"});
+               setTimeout(function() {
+                  if ($(nextBtn).val() == 1) {
+                     $(prevBtn).css({
+                        "display" : "none"
+                     });
+                  }else{
+                     $(prevBtn).css({"display" : "block"});
+                  }
+               }, 1000);
+
+               let minus_val = Number($(nextBtn).val()) - 1;
+               $(nextBtn).attr('value', minus_val);
+               console.log($(nextBtn).val());
+            });
+         }
+
+         document.getElementById("btnSubmit").addEventListener("click",
+               function(e) {
+                  if (document.getElementById("name").value == "") {
+                     alert("이름을 입력하세요.");
+                     return;
+                  } else if (document.getElementById("gender").value == "") {
+                     alert("성별을 선택해주세요.");
+                     return;
+                  } else if (document.getElementById("age").value == "") {
+                     alert("나이를 입력해주세요.");
+                     return;
+                  } else if (document.getElementById("height").value == "") {
+                     alert("신장을 입력해주세요.");
+                     return;
+                  } else if (document.getElementById("weight").value == "") {
+                     alert("체중을 입력해주세요.");
+                     return;
+                  } else if (document.getElementById("email").value == "") {
+                     alert("이메일을 입력해주세요.");
+                     return;
+                  }
+
+                  document.getElementById("surveyForm").submit();
+
+               });
       });
    </script>
 </body>

@@ -36,8 +36,8 @@ html {
 }
 
 body {
-	width: 1024pw;
-	height: 100%;
+	width: 100%;
+	height: auto;
 }
 
 a {
@@ -97,16 +97,40 @@ a:hover {
 	padding: 10px 0px;
 	text-align: center;
 }
-.badge{
-height:16px;
-line-height:8px;
+
+.badge {
+	height: 16px;
+	line-height: 8px;
+}
+
+/* header */
+.header {
+	padding-top: 92px;
+	margin: auto;
+	width: 82.6vw;
+	position: relative;
+}
+
+#btn_survey {
+	position: absolute;
+	top: 80%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 /* main 영역 */
 .main {
 	padding-top: 112px;
-	width: 82.6vw;
+	width: 40vw;
 	margin: auto;
+	text-align: center;
+}
+
+.card {
+	border-radius: 10%;
+	margin: auto;
+	margin-bottom: 20px;
+	border: 2px solid gray;
 }
 
 /* footer 영역 */
@@ -175,6 +199,7 @@ line-height:8px;
 					<div class="col-xl-2 col-5 navi-menu"></div>
 				</c:when>
 			</c:choose>
+			
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="#">영양제추천</a>
 			</div>
@@ -262,9 +287,15 @@ line-height:8px;
 	</div>
 
 	<div class="main">
-	<!-- 여기다가 -->
-	
+		<h1 style="color:red; margin-top:16vh; margin-bottom:16vh; transform:translate(0,-50%);">에러가 발생했습니다.</h1>
+			<script>
+			$(function(){
+				alert("잘못된 접근입니다.");
+				location.href="/";
+			});
+			</script>
 	</div>
+
 	<div class="footer">
 		<div class="row footer-top">
 			<ul>
@@ -292,7 +323,7 @@ line-height:8px;
 
 	<script>
 		$(function() {
-			getCartCount();
+			
 			let onNavbar = 0; // 네비 햄버거버튼 클릭했는지 아닌지 알기위한 변수
 			$('#btn_navi_menu').on('click', function() { //햄버거버튼 클릭 시
 				if (onNavbar == 0) {

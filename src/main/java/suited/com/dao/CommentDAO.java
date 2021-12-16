@@ -29,7 +29,7 @@ public class CommentDAO {
 		return bds.getConnection();
 	}
 	
-	public int countAll() {
+	public int countAll() throws Exception{
 		String sql = "select count(*) from tbl_comment";
 		
 		try(Connection con = this.getConnection();
@@ -37,13 +37,11 @@ public class CommentDAO {
 			ResultSet rs = pstmt.executeQuery();
 			
 			if(rs.next()) return rs.getInt(1);
-		}catch(Exception e) {
-			e.printStackTrace();
 		}
 		return -1;
 	}
 	
-	public int countByCode(String product_code) {
+	public int countByCode(String product_code) throws Exception{
 		String sql = "select count(*) from tbl_comment where product_code = ?";
 		
 		try(Connection con = this.getConnection();
@@ -52,14 +50,12 @@ public class CommentDAO {
 			ResultSet rs = pstmt.executeQuery();
             
 			if(rs.next()) return rs.getInt(1);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} 
 		return -1;
 	}
 	
 	// 제품 상세 페이지 내의 리뷰에서 사용되는 getCommentList
-	public ArrayList<CommentDTO> getCommentList(int startRange, int endRange, String product_code){
+	public ArrayList<CommentDTO> getCommentList(int startRange, int endRange, String product_code) throws Exception{
 		String sql = "select * from "
 				+ "(select row_number() over(order by seq_review desc) 순위,"
 				+ "a.* from tbl_comment a where product_code = ?) "
@@ -82,14 +78,11 @@ public class CommentDAO {
 				list.add(new CommentDTO(seq_review, nickname, content, written_comment_date, product_code, id));
 			}
 			return list;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		} 
 	}
 	
 	// 리뷰 모아보기에서 사용되는 getCommentList
-	public ArrayList<CommentDTO> getCommentList2(int startRange, int endRange){
+	public ArrayList<CommentDTO> getCommentList2(int startRange, int endRange) throws Exception{
 		String sql = "select * from "
 				+ "(select row_number() over(order by seq_review desc) 순위,"
 				+ "a.* from tbl_comment a)"
@@ -112,13 +105,10 @@ public class CommentDAO {
 				list.add(new CommentDTO(seq_review, nickname, content, written_comment_date, product_code, id));
 			}
 			return list;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		} 
 	}
 	
-	public ArrayList<CommentDTO> selectAll(String product_code){
+	public ArrayList<CommentDTO> selectAll(String product_code) throws Exception{
 		String sql = "select * from tbl_comment where product_code=?";
 		
 		try(Connection con = this.getConnection();
@@ -136,13 +126,10 @@ public class CommentDAO {
 				list.add(new CommentDTO(seq_review, nickname, content, written_comment_date, product_code, id));
 			}
 			return list;
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-		return null;
 	}
 	
-	public int insert(CommentDTO dto) {
+	public int insert(CommentDTO dto) throws Exception{
 		String sql = "insert into tbl_comment values(seq_review.nextval, ?, ?, ?, ?, ?)";
 		
 		try(Connection con = this.getConnection();
@@ -156,13 +143,11 @@ public class CommentDAO {
 			
 			int rs = pstmt.executeUpdate();
 			if(rs != -1) return rs;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} 
 		return -1;
 	}
 	
-	public int deleteBySeq(int seq_review) {
+	public int deleteBySeq(int seq_review) throws Exception{
 		String sql = "delete from tbl_comment where seq_review = ?";
 		
 		try(Connection con = this.getConnection();
@@ -171,13 +156,11 @@ public class CommentDAO {
 			
 			int rs = pstmt.executeUpdate();
 			if(rs != -1) return rs;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} 
 		return -1;
 	}
 	
-	public int deleteByCode(String product_code) {
+	public int deleteByCode(String product_code) throws Exception{
 		String sql = "delete from tbl_comment where product_code = ?";
 		
 		try(Connection con = this.getConnection();
@@ -186,8 +169,6 @@ public class CommentDAO {
 			
 			int rs = pstmt.executeUpdate();
 			if(rs != -1) return rs;
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return -1;
 	}

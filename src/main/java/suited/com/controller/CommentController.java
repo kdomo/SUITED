@@ -51,16 +51,18 @@ public class CommentController extends HttpServlet {
 			String nickname = loginSession.get("nickname");
 			String id = loginSession.get("id");
 			long sysdate = System.currentTimeMillis();
-
-			System.out.println("product_code : " + product_code);
-			System.out.println("comment : " + comment);
-
-			int rs = dao.insert(new CommentDTO(0, nickname, comment, sysdate, product_code, id));
-			if (rs == 1) {
-				response.getWriter().write("success");
-			} else {
-				response.getWriter().write("fail");
+			try {
+				int rs = dao.insert(new CommentDTO(0, nickname, comment, sysdate, product_code, id));
+				if (rs == 1) {
+					response.getWriter().write("success");
+				} else {
+					response.getWriter().write("fail");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
+			
 		} else if (cmd.equals("/getCommentProc.co")) {
 			int currentPage_cmt = Integer.parseInt(request.getParameter("currentPage_cmt"));
 			String product_code = request.getParameter("product_code");
@@ -70,11 +72,8 @@ public class CommentController extends HttpServlet {
 			HashMap<String, Object> naviMap_cmt = service.getPageNavi(currentPage_cmt, product_code);
 			ArrayList<CommentDTO> list = service.getCommentList((int) naviMap_cmt.get("currentPage_cmt"), product_code);
 
-//			ArrayList<CommentDTO> list = dao.selectAll(product_code);
 			Gson gson = new Gson();
 			String rs = gson.toJson(list);
-//			System.out.println(rs);
-
 			if (list != null) {
 				request.setAttribute("naviMap_cmt", naviMap_cmt);
 				response.getWriter().write(rs);
@@ -85,18 +84,29 @@ public class CommentController extends HttpServlet {
 			int seq_review = Integer.parseInt(request.getParameter("seq_review"));
 			System.out.println("삭제할 seq_review : " + seq_review);
 
-			int rs = dao.deleteBySeq(seq_review);
-			if (rs == 1) {
-				response.getWriter().write("success");
-			} else {
-				response.getWriter().write("fail");
+			
+			try {
+				int rs = dao.deleteBySeq(seq_review);
+				if (rs == 1) {
+					response.getWriter().write("success");
+				} else {
+					response.getWriter().write("fail");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
 			}
+			
 		} else if(cmd.equals("/deleteByManager.co")){
 			int seq_review = Integer.parseInt(request.getParameter("seq_review"));
 			System.out.println("삭제할 seq_review : " + seq_review);
-			
-			int rs = dao.deleteBySeq(seq_review);
-			if(rs != -1) response.sendRedirect("/toAllReview.co");
+			try {
+				int rs = dao.deleteBySeq(seq_review);
+				if(rs != -1) response.sendRedirect("/toAllReview.co");
+			} catch (Exception e) {
+				e.printStackTrace();
+				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+			}
 		} else if (cmd.equals("/toAllReview.co")) { // 모든 리뷰모아보기 페이질로 이동
 			response.sendRedirect("/allReviewProc.co?currentPage=1");
 		} else if (cmd.equals("/allReviewProc.co")) { // 모든 리뷰 내역 전송
