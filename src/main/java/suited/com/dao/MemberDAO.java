@@ -3,6 +3,7 @@ package suited.com.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -215,4 +216,55 @@ public class MemberDAO {
 		} 
 		return -1;
 	}
+	
+	public ArrayList<MemberDTO> selectAll() {
+	      String sql = "select * from tbl_member";
+	      
+	      try(Connection con = this.getConnection();
+	         PreparedStatement pstmt = con.prepareStatement(sql);) {
+	         
+	         ResultSet rs = pstmt.executeQuery();
+	         ArrayList<MemberDTO> list = new ArrayList<>();
+	         
+	         while(rs.next()) {
+	            String id = rs.getString("id");
+	            String password = rs.getString("password");
+	                String nickname = rs.getString("nickname");
+	                String name = rs.getString("name");
+	                String gender = rs.getString("gender");
+	                int age = rs.getInt("age");
+	                String address = rs.getString("address");
+	                String phone = rs.getString("phone");
+	                String kakao_login = rs.getString("kakao_login");
+	                long signup_date = rs.getLong("signup_date");
+	                String withdrawal_yn = rs.getString("withdrawal_yn");
+	                String admin_yn = rs.getString("admin_yn");
+	            list.add(new MemberDTO(id, password, nickname, name, gender, age, 
+	                  address, phone, kakao_login, signup_date, withdrawal_yn, admin_yn));
+	         }
+	         return list;
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	      return null;
+	   }
+	   
+	   public String isAdmin(String id) {
+	      String sql = "select admin_yn from tbl_member where id=?";
+	            
+	      try(Connection con = this.getConnection();
+	            PreparedStatement pstmt = con.prepareStatement(sql);) {
+	            
+	            pstmt.setString(1, id);
+	            ResultSet rs = pstmt.executeQuery();
+	      
+	            if(rs.next()) {
+	               String admin_yn = rs.getString("admin_yn");
+	               return admin_yn;
+	            }
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	      return null;
+	   }
 }

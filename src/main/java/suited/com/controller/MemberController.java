@@ -376,6 +376,14 @@ public class MemberController extends HttpServlet {
 			String password = request.getParameter("password");
 			password = EncryptionUtils.getSHA256(password);
 			out.write(password);
-		}
+		} else if(cmd.equals("/toMemberList.mem")) {
+	         ArrayList<MemberDTO> list = memberDAO.selectAll();
+	         
+	         if(list != null) {
+	            RequestDispatcher rd = request.getRequestDispatcher("/member/memberList.jsp");
+	            request.setAttribute("list", list);
+	            rd.forward(request, response);
+	         }
+	      }
 	}
 }

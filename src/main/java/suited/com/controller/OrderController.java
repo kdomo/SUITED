@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import com.google.gson.Gson;
 
+import suited.com.dao.MemberDAO;
 import suited.com.dao.OrderDAO;
 import suited.com.dao.OrderJoinDAO;
 import suited.com.dao.Order_productDAO;
@@ -59,6 +60,7 @@ public class OrderController extends HttpServlet {
 		Order_productDAO order_productDAO = new Order_productDAO();
 		OrderJoinDAO orderJoinDAO = new OrderJoinDAO();
 		PaymentDAO paymentDAO = new PaymentDAO();
+		MemberDAO memberDAO = new MemberDAO();
 		System.out.println(cmd);
 
 		if (cmd.equals("/toOrder.order")) {
@@ -179,8 +181,26 @@ public class OrderController extends HttpServlet {
 				request.setAttribute("Result", "payFail");
 				rd.forward(request, response);
 			}
-			
-		}
+		} else if(cmd.equals("/toOrderList.order")) {
+	         HashMap<String, String> loginSession = (HashMap) session.getAttribute("loginSession");
+	         String id = loginSession.get("id");
+	         String admin_yn = memberDAO.isAdmin(id);
+	         if(admin_yn.equals("1")) {
+	            ArrayList<OrderDTO> list = orderDAO.selectAll();
+	            if(list != null) {
+	               RequestDispatcher rd = request.getRequestDispatcher("/order/orderList.jsp");
+	               request.setAttribute("list", list);
+	               rd.forward(request, response);
+	            }
+	         }else {
+	            OrderDTO list = orderDAO.selectById("");
+	            if(list != null) {
+	               RequestDispatcher rd = request.getRequestDispatcher("/order/orderList.jsp");
+	               request.setAttribute("list", list);
+	               rd.forward(request, response);
+	            }
+	         }
+	      }
 	}
 
 }

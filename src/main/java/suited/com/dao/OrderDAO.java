@@ -101,4 +101,72 @@ public class OrderDAO {
 		} 
 		return -1;
 	}
+	
+	public ArrayList<OrderDTO> selectAll() {
+	      String sql = "select * from tbl_order";
+	      
+	      try(Connection con = this.getConnection();
+	         PreparedStatement pstmt = con.prepareStatement(sql);) {
+	         
+	         ResultSet rs = pstmt.executeQuery();
+	         
+	         ArrayList<OrderDTO> list = new ArrayList<>();
+	         
+	         while(rs.next()) {
+	            int order_no = rs.getInt("order_no");
+	            String id2 = rs.getString("id2");
+	            String order_date = rs.getString("order_date");
+	            int order_amount = rs.getInt("order_amount");
+	            String order_status = rs.getString("order_status");
+	            String pay_yn = rs.getString("pay_yn");
+	            String delivery_no = rs.getString("delivery_no");
+	            String order_address = rs.getString("order_address");
+	            String order_phone = rs.getString("order_phone");
+	            String order_name = rs.getString("order_name");
+	            String order_message = rs.getString("order_message");
+	            String delivery_message = rs.getString("delivery_message");
+	            int seq_pay = rs.getInt("seq_pay");
+	            list.add(new OrderDTO(order_date, id2, order_no, order_amount, 
+	                  order_status, pay_yn, delivery_no, order_address, order_phone,
+	                  order_name, order_message, delivery_message, seq_pay));
+	         }
+	         return list;
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	      return null;
+	   }
+	   
+	   public OrderDTO selectById(String id) {
+	      String sql = "select * from tbl_order where id=?";
+	      
+	      try(Connection con = this.getConnection();
+	         PreparedStatement pstmt = con.prepareStatement(sql);) {
+	         
+	         pstmt.setString(1, id);
+	         ResultSet rs = pstmt.executeQuery();
+	         
+	         OrderDTO dto = new OrderDTO();
+	         
+	         if(rs.next()) {
+	            dto.setOrder_no(rs.getString("order_no"));
+	            dto.setId(rs.getString("id2"));
+	            dto.setOrder_date(rs.getString("order_date"));
+	            dto.setOrder_amount(rs.getInt("order_amount"));
+	            dto.setOrder_status(rs.getString("order_status"));
+	            dto.setPay_yn(rs.getString("pay_yn"));
+	            dto.setDelivery_no(rs.getString("delivery_no"));
+	            dto.setOrder_address(rs.getString("order_address"));
+	            dto.setOrder_phone(rs.getString("order_phone"));
+	            dto.setOrder_name(rs.getString("order_name"));
+	            dto.setOrder_message(rs.getString("order_message"));
+	            dto.setDelivery_message(rs.getString("delivery_message"));
+	            dto.setSeq_pay(rs.getInt("seq_pay"));
+	         }
+	         return dto;
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	      return null;
+	   }
 }
