@@ -299,7 +299,7 @@ text-alian:center;
                </div>
                <div class="carousel-item">
                   <h2>3.고객님의 나이를 알려주세요.</h2>
-                  <input type="text" class="form-control" id="age" name="age" placeholder="ㅇㅇ세">
+                  <input type="text" class="form-control" id="age" name="age" placeholder="00 (세)">
                </div>
                <div class="carousel-item">
                   <h2>4-1.다음 중 해당하는 사항을 골라주세요.</h2>

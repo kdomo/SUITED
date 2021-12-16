@@ -278,9 +278,10 @@ a:hover {
 						<tr>
 							<th class="col-1">아이디</th>
 							<th class="col-1">닉네임</th>
-							<th class="col-7">내용</th>
+							<th class="col-6">내용</th>
 							<th class="col-2">작성일</th>
 							<th class="col-1">제품 코드</th>
+							<th class="col-1"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -291,6 +292,10 @@ a:hover {
 								<td>${dto.getContent()}</td>
 								<td>${dto.getWritten_comment_date()}</td>
 								<td>${dto.getProduct_code()}</td>
+								<td>
+									<button type="button" class="btn btn-deleteCmt"
+										value="${dto.getSeq_review()}">삭제</button>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -375,6 +380,10 @@ a:hover {
 					}
 				});
 				
+				// 관리자에 의한 리뷰 삭제
+				$(".btn-deleteCmt").on("click", function(e) {
+					$(location).attr("href", "${pageContext.request.contextPath}/deleteByManager.co?seq_review=" + $(e.target).val());
+				})
 				
 				function getCartCount(){
 					$.ajax({

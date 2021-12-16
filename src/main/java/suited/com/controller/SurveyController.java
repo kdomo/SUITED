@@ -35,7 +35,7 @@ public class SurveyController extends HttpServlet {
       
       
       if(cmd.equals("/toSurvey.srv")) {
-         response.sendRedirect("/survey/Survey.jsp");
+         response.sendRedirect("/survey/survey.jsp");
       }else if(cmd.equals("/surveyProc.srv")) { // 설문 제출
          try {
             String name = request.getParameter("name");

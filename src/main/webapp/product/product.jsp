@@ -109,6 +109,14 @@ a:hover {
 	width: 82.6vw;
 	margin: auto;
 }
+.card > a:hover{
+border:0px;
+color:black;
+}
+.product > div{
+margin:auto;
+}
+
 
 /* footer 영역 */
 .footer {
@@ -274,16 +282,23 @@ a:hover {
 				</div>
 				<div class="row">
 				<c:forEach items="${list}" var="dto">
-					
-						<div class="col-12 col-xl-4">
-							<a
-								href="${pageContext.request.contextPath}/toDetailView.pro?product_code=${dto.getProduct_code()}&currentPage=${naviMap.get('currentPage')}&currentPage_cmt=1">
-								<img alt=""
-								src="${pageContext.request.contextPath}/product_img/${dto.getImg_system_name()}"
-								width="300px" height="300px">
-							</a><br> 상품명 : ${dto.getProduct_name()}<br> 가격 :
-							${dto.getPrice()}원<br>
-							     <button type="button" class="btn btn-dark insertCartBtn" value="${dto.getProduct_code()}">장바구니 추가</button>
+						<div class="col-12 col-xl-4 product">
+							<div class="card" style="width: 18rem; border:0px;">
+							  <a
+									href="${pageContext.request.contextPath}/toDetailView.pro?product_code=${dto.getProduct_code()}&currentPage=${naviMap.get('currentPage')}&currentPage_cmt=1">
+									<img alt="" class="card-img-top"
+									src="${pageContext.request.contextPath}/product_img/${dto.getImg_system_name()}"
+									width="300px;" height="300px;">
+							</a>
+							  <div class="card-body">
+							    <h4 class="card-title">${dto.getProduct_name()}</h4>
+							    <p class="card-text">${dto.getPrice()}원</p>
+							    <p class="card-text">${dto.getSimple_content()}</p>
+							    <div class="row">
+							    <button type="button" class="btn btn-dark insertCartBtn" value="${dto.getProduct_code()}">장바구니 추가</button>
+							    </div>
+							  </div>
+							</div>
 						</div>
 					
 				</c:forEach>
@@ -297,7 +312,7 @@ a:hover {
 							</c:if>
 							<c:forEach var="i" begin="${naviMap.get('startNavi')}"
 								end="${naviMap.get('endNavi')}">
-								<li class="page-item"><a class="page-link"
+								<li class="page-item"><a class="page-link" style="color:black;"
 									href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${i}">${i}</a></li>
 							</c:forEach>
 							<c:if test="${naviMap.get('needNext') eq true}">
