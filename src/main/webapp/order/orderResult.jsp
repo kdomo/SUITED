@@ -22,9 +22,6 @@
 	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 	crossorigin="anonymous"></script>
 <!-- jquery CDN-->
-
-<script src="https://cdn.bootpay.co.kr/js/bootpay-3.3.2.min.js" type="application/javascript"></script>
-<!-- Bootpay CDN -->
 <style>
 @import
 	url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
@@ -115,9 +112,7 @@ a:hover {
 	margin: auto;
 	text-align: center;
 }
-table{
-margin:auto;
-}
+
 form>p {
 	text-align: left;
 }
@@ -279,82 +274,31 @@ form>p {
 	</div>
 
 	<!-- 메인부분 -->
-	
 	<div class="main">
-	<c:if test="${!empty orderJoinList}">
-	<div class="container">
-						<table class="table table-bordered">
-							<thead>
-								<tr>
-									<th>제품 이미지</th>
-									<th>제품명</th>
-									<th>제품 금액</th>
-									<th>수량</th>
-									<th>합계</th>
-								</tr>
-							</thead>
-							<tbody>
-							<c:forEach items="${orderJoinList }" var="dto">
-							<td><img src="${pageContext.request.contextPath}/product_img/${dto.getImg_system_name()}" alt="" width="150px" height="150px"></td>
-								<th>${dto.getProduct_name()}</th>
-								<td>${dto.getPrice()}</td>
-								<td>${dto.getOrder_quantity()}</td>
-								<td>${dto.getOrder_amount()}</td>
-							</c:forEach>
-								<tr>
-									<td>주문번호</td>
-									<td colspan="5">${orderJoinList.get(0).getOrder_no()}</td>
-								</tr>
-								<tr>
-									<td>주문자아이디</td>
-									<td colspan="4">${orderJoinList.get(0).getId()}</td>
-								</tr>
-								
-								<tr>
-									<td>수취인 주소</td>
-									<td colspan="4">${orderJoinList.get(0).getOrder_address()}</td>
-								</tr>
-								<tr>
-									<td>수취인 번호</td>
-									<td colspan="4">${orderJoinList.get(0).getOrder_phone()}</td>
-								</tr>
-								<tr>
-									<td>배송받는분</td>
-									<td colspan="4">${orderJoinList.get(0).getOrder_name()}</td>
-								</tr>
-								<tr>
-									<td>주문 메세지</td>
-									<td colspan="4">${orderJoinList.get(0).getOrder_message()} </td>
-								</tr>
-								<tr>
-									<td>배송 메세지</td>
-									<td colspan="4">${orderJoinList.get(0).getDelivery_message()}</td>
-								</tr>
-								<tr>
-									<td>주문총액</td>
-									<td colspan="4">${orderJoinList.get(0).getOrder_amount()}</td>
-								</tr>
-								
-<%-- 								${orderJoinList.get(0).getOrder_date()} --%>
-<%-- 								${orderJoinList.get(0).getOrder_status()} --%> 
-<%-- 								${orderJoinList.get(0).getPay_yn()} --%>
-<%-- 								${orderJoinList.get(0).getDelivery_no()} --%>
-								
-								
-								
-								
-								
-<%-- 								${orderJoinList.get(0).getSeq_pay()} --%>
-							</tbody>
-						</table>
-					</div>
-	</c:if>
-	<c:if test="${empty orderJoinList}">
-		<h2>주문서가 존재하지 않습니다.</h2>
-	</c:if>
-		
-		
-		<button type="button" class="btn btn-dark" id="btn_pay">결제하기</button>
+		<c:choose>
+			<c:when test="${Result eq 'paySuccess'}">
+				<h1 style="color:green; margin-top:16vh; margin-bottom:16vh; transform:translate(0,-50%);">결제 성공</h1>
+				<button type="button" class="btn btn-dark">주문내역 확인</button>
+			</c:when>
+			<c:when test="${Result eq 'payFail'}">
+			<h1 style="color:red; margin-top:16vh; margin-bottom:16vh; transform:translate(0,-50%);">결제에 실패하였습니다.</h1>
+			<script>
+			$(function(){
+				setTimeout(3000);
+				location.href="/";
+			});
+			</script>
+			</c:when>
+			<c:otherwise>
+			<h1 style="color:red; margin-top:16vh; margin-bottom:16vh; transform:translate(0,-50%);">잘못된 접근입니다.</h1>
+			<script>
+			$(function(){
+				alert("잘못된 접근입니다.");
+				location.href="/";
+			});
+			</script>
+			</c:otherwise>
+		</c:choose>
 	</div>
 	<div class="footer">
 		<div class="row footer-top">
@@ -382,6 +326,8 @@ form>p {
 	</div>
 
 
+	<script
+		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
 		$(function() {
 			function getCartCount(){
@@ -399,7 +345,11 @@ form>p {
 				})
 			}
 			getCartCount();
+			getCartList();
 			
+			$('#postcode').css({
+				"display" : "none"
+			});
 
 			let loginSession = "${loginSession}";
 			if (loginSession == null) {
@@ -441,106 +391,141 @@ form>p {
 				}
 			});
 			
-			$('#btn_pay').on('click',function(){
-				pay();
-			})
-			
-			function pay(){
-				//실제 복사하여 사용시에는 모든 주석을 지운 후 사용하세요
-				BootPay.request({
-					price: '${orderJoinList.get(0).getOrder_amount()}', //실제 결제되는 가격
-					application_id: "619d0331e38c30001ed2ba43",
-					name: 'SUITED 맞춤 영양제', //결제창에서 보여질 이름
-					pg: 'inicis',
-					method: 'card', //결제수단, 입력하지 않으면 결제수단 선택부터 화면이 시작합니다.
-					show_agree_window: 0, // 부트페이 정보 동의 창 보이기 여부
-					items: [{
-								item_name: '${orderJoinList.get(0).getProduct_name()}', //상품명 
-								qty: 1, //수량 
-								unique: '${orderJoinList.get(0).getProduct_code()}', //해당 상품을 구분짓는 primary key
-								price: 1000
-							}],
-					user_info: {
-						username: '${orderJoinList.get(0).getOrder_name()}', //
-						email: '${orderJoinList.get(0).getId()}',
-						addr: '${orderJoinList.get(0).getOrder_address()}',
-						phone: '${orderJoinList.get(0).getOrder_phone()}'
-					},
-					order_id: '${orderJoinList.get(0).getOrder_no()}', //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
-					params: {callback1: '그대로 콜백받을 변수 1', callback2: '그대로 콜백받을 변수 2', customvar1234: '변수명도 마음대로'},
-					account_expire_at: '2020-10-25', // 가상계좌 입금기간 제한 ( yyyy-mm-dd 포멧으로 입력해주세요. 가상계좌만 적용됩니다. )
-					extra: {
-					    start_at: '2019-05-10', // 정기 결제 시작일 - 시작일을 지정하지 않으면 그 날 당일로부터 결제가 가능한 Billing key 지급
-						end_at: '2022-05-10', // 정기결제 만료일 -  기간 없음 - 무제한
-				        vbank_result: 1, // 가상계좌 사용시 사용, 가상계좌 결과창을 볼지(1), 말지(0), 미설정시 봄(1)
-				        quota: '0,2,3', // 결제금액이 5만원 이상시 할부개월 허용범위를 설정할 수 있음, [0(일시불), 2개월, 3개월] 허용, 미설정시 12개월까지 허용,
-						theme: 'purple', // [ red, purple(기본), custom ]
-						custom_background: '#00a086', // [ theme가 custom 일 때 background 색상 지정 가능 ]
-						custom_font_color: '#ffffff' // [ theme가 custom 일 때 font color 색상 지정 가능 ]
-					}
-				}).error(function (data) {
-					//결제 진행시 에러가 발생하면 수행됩니다.
-					console.log(data);
-				}).cancel(function (data) {
-					//결제가 취소되면 수행됩니다.
-					console.log(data);
-					console.log(data.action);
-					if(data.action=="BootpayCancel"){
-						alert("취소하였습니다.");
-					}
-					
-				}).ready(function (data) {
-					// 가상계좌 입금 계좌번호가 발급되면 호출되는 함수입니다.
-					console.log(data);
-				}).confirm(function (data) {
-					//결제가 실행되기 전에 수행되며, 주로 재고를 확인하는 로직이 들어갑니다.
-					//주의 - 카드 수기결제일 경우 이 부분이 실행되지 않습니다.
-					console.log(data);
-					var enable = true; // 재고 수량 관리 로직 혹은 다른 처리
-					if (enable) {
-						BootPay.transactionConfirm(data); // 조건이 맞으면 승인 처리를 한다.
-					} else {
-						BootPay.removePaymentWindow(); // 조건이 맞지 않으면 결제 창을 닫고 결제를 승인하지 않는다.
-					}
-				}).close(function (data) {
-				    // 결제창이 닫힐때 수행됩니다. (성공,실패,취소에 상관없이 모두 수행됨)
-				    console.log(data);
-				}).done(function (data) {
-					//결제가 정상적으로 완료되면 수행됩니다
-					//비즈니스 로직을 수행하기 전에 결제 유효성 검증을 하시길 추천합니다.
-					
-					$.ajax({
-						type : "post",
-						url:"${pageContext.request.contextPath}/payProc.order",
-						data:{
-							"order_id":data.order_id,
-							"pay_price":data.price,
-							"pg":data.pg,
-							"method":data.method,
-							"card_name":data.card_name,
-							"card_code":data.card_code,
-							"purchased_at":data.purchased_at
-						},
-						dataType:"text"
-					}).done(function(value){
-						if(value == "paySuccess"){
-							$.ajax({
-								type:"get",
-								url:"${pageContext.request.contextPath}/cartAllDelete.cart"
-							})
-							location.href="${pageContext.request.contextPath}/toPayResult.order?Result=paySuccess";
-						} else if(value=="payFail"){
-							location.href="${pageContext.request.contextPath}/toPayResult.order?Result=payFail";
-						}
-					}).fail(function(){
-						
+			$('#btn_update').on('click',function(){
+				if($('#roadAddress').val() != "" &&
+						$('#detailAddress').val() != "" &&
+						$('#extraAddress').val() != ""
+				){
+					$('#order_address').val($('#roadAddress').val()
+							+ $('#extraAddress').val() + " "
+							+ $('#detailAddress').val() + " (우)"
+							+ $('#postcode').val());
+					$('#postcode').css({
+						"display" : "none"
 					});
-				
-					//여기서 pay테이블에 값넣고 pay_yn번호 order에 넣어주기
-					
+				}else{
+					alert("변경할 주소를 입력해주세요.")
+				}
+			});
+			
+			$('#btn_submit').on('click',function(){
+				$('#order_amount').attr("disabled",false);
+				$('#address').attr("disabled",false);
+				let orderForm = $('#orderForm').serialize();
+				$('#order_amount').attr("disabled",true);
+				$('#address').attr("disabled",true);
+				$.ajax({
+					type:"post",
+					url:"${pageContext.request.contextPath}/orderProc.order",
+					data:orderForm,
+					dataType:"text"
+				}).done(function(data){
+					if(data == 'orderSuccess'){
+						$.ajax({
+							type : "post"
+							, url : "${pageContext.request.contextPath}/getCartProc.cart"
+							, dataType : "json"
+						}).done(function(data){
+								$.ajax({
+									type:"post",
+									url:"${pageContext.request.contextPath}/order_productProc.order",
+									data:{data : JSON.stringify(data)},
+									traditional: true,
+									dataType:"text"
+								}).done(function(data){
+										let token = data;
+										location.href="${pageContext.request.contextPath}/orderComplete.order?token="+token;
+								}).fail(function(data){
+									
+								})
+							
+							
+						}).fail(function(e){
+							console.log(e);
+						})
+					}
+				}).fail(function(data){
+					console.log(data);
 				});
-			}
-		})
+			});
+		});
+		
+		function getCartList(){
+			$.ajax({
+				type : "post"
+				, url : "${pageContext.request.contextPath}/getCartProc.cart"
+				, dataType : "json"
+			}).done(function(data){
+				$('#listDiv').empty();
+				$('.totalPrice').empty();
+				let total = 0;
+				let count = 1;
+				for(let dto of data){
+						let list = "<tr>"
+					+ "<td><img alt=''"
+					+ "src='${pageContext.request.contextPath}/product_img/" + dto.img_system_name + "'"
+					+ "width='150px' height='150px'></td>"
+					+ "<td>" + dto.product_name + "</td>"
+					+ "<td>" + dto.price + "</td>"
+					+ "<td>" + dto.price * dto.quantity + "</td>"
+					+ "<td>"
+					+ "<span> " + dto.quantity + " </span>"
+					+ "</td>"
+					+ "<td class='d-none'><input type='text' value='"+ (count++) +"'></td>";
+					
+					total += dto.price * dto.quantity;
+					$("#listDiv").append(list);
+				}
+				$('#order_amount').val(total);
+			}).fail(function(e){
+				console.log(e);
+			})
+		}
+		
+		function Postcode() {
+			$('#postcode').css({
+				"display" : "block"
+			});
+			new daum.Postcode(
+					{
+						oncomplete : function(data) {
+							// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+							// 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+							// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+							var roadAddr = data.roadAddress; // 도로명 주소 변수
+							var extraRoadAddr = ''; // 참고 항목 변수
+
+							// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+							// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+							if (data.bname !== ''
+									&& /[동|로|가]$/g.test(data.bname)) {
+								extraRoadAddr += data.bname;
+							}
+							// 건물명이 있고, 공동주택일 경우 추가한다.
+							if (data.buildingName !== ''
+									&& data.apartment === 'Y') {
+								extraRoadAddr += (extraRoadAddr !== '' ? ', '
+										+ data.buildingName : data.buildingName);
+							}
+							// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+							if (extraRoadAddr !== '') {
+								extraRoadAddr = ' (' + extraRoadAddr + ')';
+							}
+
+							// 우편번호와 주소 정보를 해당 필드에 넣는다.
+							document.getElementById('postcode').value = data.zonecode;
+							document.getElementById("roadAddress").value = roadAddr;
+
+							// 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+							if (roadAddr !== '') {
+								document.getElementById("extraAddress").value = extraRoadAddr;
+							} else {
+								document.getElementById("extraAddress").value = '';
+							}
+						}
+					}).open();
+		}
 	</script>
 </body>
 </html>

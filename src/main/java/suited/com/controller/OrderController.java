@@ -168,6 +168,18 @@ public class OrderController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if(cmd.equals("/toPayResult.order")) {
+			String Result = request.getParameter("Result");
+			if(Result.equals("paySuccess")) {
+				RequestDispatcher rd = request.getRequestDispatcher("/order/orderResult.jsp");
+				request.setAttribute("Result", "paySuccess");
+				rd.forward(request, response);
+			}else if(Result.equals("payFail")) {
+				RequestDispatcher rd = request.getRequestDispatcher("/order/orderResult.jsp");
+				request.setAttribute("Result", "payFail");
+				rd.forward(request, response);
+			}
+			
 		}
 	}
 

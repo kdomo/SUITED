@@ -138,4 +138,18 @@ public class BasketDAO {
 		}
 		return -1;
 	}
+	
+	public void deleteAllById(String id) {
+		String sql = "delete from tbl_basket where id = ?";
+		
+		try(Connection con = this.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);) {
+			pstmt.setString(1, id);
+			int rs = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }

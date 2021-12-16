@@ -115,6 +115,9 @@ public class CartController extends HttpServlet {
 			} else {
 				response.getWriter().write("fail");
 			}
+		} else if(cmd.equals("/cartAllDelete.cart")) {
+			String id = loginSession.get("id");
+			basketDAO.deleteAllById(id);
 		}
 	}
 }
