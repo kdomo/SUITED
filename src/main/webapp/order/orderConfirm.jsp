@@ -395,7 +395,7 @@ form>p {
 					items: [{
 								item_name: '${orderJoinList.get(0).getProduct_name()}', //상품명 
 								qty: 1, //수량 
-								unique: '', //해당 상품을 구분짓는 primary key
+								unique: '${orderJoinList.get(0).getProduct_code()}', //해당 상품을 구분짓는 primary key
 								price: 1000
 							}],
 					user_info: {
@@ -448,6 +448,7 @@ form>p {
 					//비즈니스 로직을 수행하기 전에 결제 유효성 검증을 하시길 추천합니다.
 					console.log(data);
 					
+				
 					//여기서 pay테이블에 값넣고 pay_yn번호 order에 넣어주기
 				});
 			}

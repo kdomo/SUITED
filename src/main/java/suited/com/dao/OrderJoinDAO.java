@@ -36,7 +36,10 @@ public class OrderJoinDAO {
 	
 	
 	public ArrayList<OrderJoinDTO> getOrderList(String order_no_value,String id){
-		String sql = "select o.*,op.product_code,order_quantity,p.product_name,price,simple_content,main_content,written_product_date,img_origin_name,p.img_system_name from tbl_order o,tbl_order_product op,tbl_product p where o.order_no=op.order_no and op.product_code = p.product_code and order_no=? AND id=?";
+		String sql = "select o.*,op.*,p.*\r\n"
+				+ "from tbl_order o,tbl_order_product op,tbl_product p\r\n"
+				+ "where o.order_no = op.order_no \r\n"
+				+ "and op.product_code = p.product_code and o.order_no=? AND o.id=?";
 		try(Connection con = this.getConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setString(1, order_no_value);
