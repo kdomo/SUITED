@@ -116,9 +116,6 @@ public class InquiryController extends HttpServlet {
 			String content = request.getParameter("content");
 			String answer_yn = "0";
 			try{
-				if(product_code == null) {
-					product_code = "X";
-				}
 				int rs = dao.insert(new InquiryDTO(0, id, product_code, title, content, System.currentTimeMillis(), answer_yn, null));
 				if(rs != -1) {
 					response.sendRedirect("/toInquiry.in?currentPage=1");

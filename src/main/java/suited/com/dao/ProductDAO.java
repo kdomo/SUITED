@@ -47,7 +47,7 @@ public class ProductDAO {
 		String sql = "select * from "
 				+ "(select row_number() over(order by product_code desc) 순위,"
 				+ "a.* from tbl_product a) "
-				+ "where 순위 between ? and ?";
+				+ "where 순위 between ? and ? and product_code <> '000'";
 		try(Connection con = this.getConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setInt(1, startRange);

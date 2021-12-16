@@ -288,8 +288,7 @@ line-height:8px;
                     <th class="col-2">제품선택</th>
                     <td class="col-10" style="text-align: left;">
                         <select id="product_code" name="product_code" style="width: 40%;" disabled>
-                            <option value="X" selected>선택 안함</option>
-                            <!-- 여기에 추 -->
+                            <option value="000" selected>선택 안함</option>
                             <c:forEach items="${codeList}" var="dto">
                             <option value="${dto.getProduct_code()}">${dto.getProduct_name()}</option>
                             </c:forEach>
@@ -327,6 +326,7 @@ line-height:8px;
 				alert("내용을 입력하세요.");
 				return;
     		}
+	    	$('#product_code').attr("disabled",false);
 			$("#boardForm").submit();
 			alert("정상적으로 등록되었습니다.");
     	});
