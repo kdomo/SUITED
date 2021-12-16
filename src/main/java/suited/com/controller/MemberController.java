@@ -257,9 +257,9 @@ public class MemberController extends HttpServlet {
 			String name = request.getParameter("name");
 			String idHash = EncryptionUtils.getSHA256(id);
 
-//			String host = "http://3.37.55.164:8080/"; //aws
+			String host = "http://3.37.55.164:8080/"; //aws
 			
-			String host = "www.localhost:8080/";
+//			String host = "www.localhost:8080/";
 
 			String from = "khsuited@gmail.com";
 
