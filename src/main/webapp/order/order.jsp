@@ -353,7 +353,7 @@ form>p {
 			<div class="row">
 				<div class="col-12 input-group mb-3">
 					<span class="input-group-text">주문 메세지</span> <input type="text"
-						class="form-control" placeholder="" name="order_messege">
+						class="form-control" placeholder="" name="order_message">
 				</div>
 			</div>
 			<div class="row">
@@ -501,46 +501,20 @@ form>p {
 							, url : "${pageContext.request.contextPath}/getCartProc.cart"
 							, dataType : "json"
 						}).done(function(data){
-							let total = 0;
-							let order_no = 0;
-							$('#order_no').val(order_no);
-// 							for(let dto of data){
-								let product_code = new Array();
-								let quantity = new Array();
-								let count=0;
-								for(let dto of data){
-									product_code[count] = dto.product_code;
-									quantity[count] = dto.quantity;
-									count++;
-								}
-								console.log("product_code : " + product_code);
-								console.log("quantity : " + quantity);
 								$.ajax({
 									type:"post",
 									url:"${pageContext.request.contextPath}/order_productProc.order",
-// 									data:{quantity:dto.quantity,product_code:dto.product_code},
-// 									data:{temp:temp},
-//  									data:{jsondata : JSON.stringify(temp)},
-									data:{product_code:{product_code},quantity:{quantity}},
+									data:{data : JSON.stringify(data)},
+									traditional: true,
 									dataType:"text"
-								}).done(function(order_no){
-// 									console.log(order_no);
-									if(temp != null){
-										$('#order_no').val(order_no);
-										console.log("1번:"+$('#order_no').val());
-									}
+								}).done(function(data){
+										let token = data;
+										location.href="${pageContext.request.contextPath}/orderComplete.order?token="+token;
 								}).fail(function(data){
 									
 								})
-								//주문번호 , 제품코드 , 수량 을 order_product테이블에 넣어주어야함
-// 								total += dto.price * dto.quantity;
-								
-// 							}
-							let token = $('#order_no').val();
-							console.log(token);
-// 							location.href="${pageContext.request.contextPath}/orderComplete.order?token="+token;
 							
-							$('#order_amount').val(total);
+							
 						}).fail(function(e){
 							console.log(e);
 						})

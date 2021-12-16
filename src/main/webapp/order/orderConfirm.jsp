@@ -278,19 +278,19 @@ form>p {
 
 	<!-- 메인부분 -->
 	<div class="main">
-		${orderList.get(0).getOrder_no()}
-		${orderList.get(0).getId()}
-		${orderList.get(0).getOrder_date()}
-		${orderList.get(0).getOrder_amount()}
-		${orderList.get(0).getOrder_status()}
-		${orderList.get(0).getPay_yn()}
-		${orderList.get(0).getDelivery_no()}
-		${orderList.get(0).getOrder_address()}
-		${orderList.get(0).getOrder_phone()}
-		${orderList.get(0).getOrder_name()}
-		${orderList.get(0).getOrder_messege()}
-		${orderList.get(0).getDelivery_message()}
-		${orderList.get(0).getSeq_pay()}
+		${orderJoinList.get(0).getOrder_no()}
+		${orderJoinList.get(0).getId()}
+		${orderJoinList.get(0).getOrder_date()}
+		${orderJoinList.get(0).getOrder_amount()}
+		${orderJoinList.get(0).getOrder_status()}
+		${orderJoinList.get(0).getPay_yn()}
+		${orderJoinList.get(0).getDelivery_no()}
+		${orderJoinList.get(0).getOrder_address()}
+		${orderJoinList.get(0).getOrder_phone()}
+		${orderJoinList.get(0).getOrder_name()}
+		${orderJoinList.get(0).getOrder_message()}
+		${orderJoinList.get(0).getDelivery_message()}
+		${orderJoinList.get(0).getSeq_pay()}
 		
 		<button type="button" class="btn btn-dark" id="btn_pay">결제하기</button>
 	</div>
@@ -386,27 +386,25 @@ form>p {
 			function pay(){
 				//실제 복사하여 사용시에는 모든 주석을 지운 후 사용하세요
 				BootPay.request({
-					price: '${orderList.get(0).getOrder_amount()}', //실제 결제되는 가격
+					price: '${orderJoinList.get(0).getOrder_amount()}', //실제 결제되는 가격
 					application_id: "619d0331e38c30001ed2ba43",
 					name: 'SUITED 맞춤 영양제', //결제창에서 보여질 이름
 					pg: 'inicis',
 					method: 'card', //결제수단, 입력하지 않으면 결제수단 선택부터 화면이 시작합니다.
 					show_agree_window: 0, // 부트페이 정보 동의 창 보이기 여부
-					items: [
-						{
-							item_name: '나는 아이템', //상품명
-							qty: 1, //수량
-							unique: '123', //해당 상품을 구분짓는 primary key
-							price: 1000
-						}
-					],
+					items: [{
+								item_name: '${orderJoinList.get(0).getProduct_name()}', //상품명 
+								qty: 1, //수량 
+								unique: '', //해당 상품을 구분짓는 primary key
+								price: 1000
+							}],
 					user_info: {
-						username: '${orderList.get(0).getOrder_name()}',
-						email: '${orderList.get(0).getId()}',
-						addr: '${orderList.get(0).getOrder_address()}',
-						phone: '${orderList.get(0).getOrder_phone()}'
+						username: '${orderJoinList.get(0).getOrder_name()}', //
+						email: '${orderJoinList.get(0).getId()}',
+						addr: '${orderJoinList.get(0).getOrder_address()}',
+						phone: '${orderJoinList.get(0).getOrder_phone()}'
 					},
-					order_id: '${orderList.get(0).getOrder_no()}', //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
+					order_id: '${orderJoinList.get(0).getOrder_no()}', //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
 					params: {callback1: '그대로 콜백받을 변수 1', callback2: '그대로 콜백받을 변수 2', customvar1234: '변수명도 마음대로'},
 					account_expire_at: '2020-10-25', // 가상계좌 입금기간 제한 ( yyyy-mm-dd 포멧으로 입력해주세요. 가상계좌만 적용됩니다. )
 					extra: {

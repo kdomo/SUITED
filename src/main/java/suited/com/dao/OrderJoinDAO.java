@@ -12,12 +12,13 @@ import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 
 import com.sun.net.httpserver.Authenticator.Result;
 
-import suited.com.dto.OrderDTO;
+import suited.com.dto.OrderJoinDTO;
 
-public class OrderDAO {
+
+public class OrderJoinDAO {
 	private BasicDataSource bds;
 
-	public OrderDAO() {
+	public OrderJoinDAO() {
 		try {
 			Context iCtx = new InitialContext();
 			Context envCtx = (Context) iCtx.lookup("java:comp/env");
@@ -31,37 +32,17 @@ public class OrderDAO {
 		return bds.getConnection();
 	}
 
-	public int insert(OrderDTO dto) throws Exception {
-		String sql = "insert into tbl_order values(concat(to_char(sysdate,'YYYYMMDD'),ltrim(to_char((seq_order.nextval),'000000'))) ,?,?,?,?,'0',null,?,?,?,?,?,null)";
 
-		try (Connection con = this.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
-
-			pstmt.setString(1, dto.getId());
-			pstmt.setString(2, dto.getOrder_date());
-			pstmt.setInt(3, dto.getOrder_amount());
-			pstmt.setString(4, dto.getOrder_status());
-			pstmt.setString(5, dto.getOrder_address());
-			pstmt.setString(6, dto.getOrder_phone());
-			pstmt.setString(7, dto.getOrder_name());
-			pstmt.setString(8, dto.getOrder_message());
-			pstmt.setString(9, dto.getDelivery_message());
-	
-			int rs = pstmt.executeUpdate();
-			if (rs != 0)
-				return rs;
-		} 
-		return -1;
-	}
 	
 	
-	public ArrayList<OrderDTO> getOrderList(String order_no_value,String id){
-		String sql = "select * from tbl_order where order_no=? AND id=?";
+	public ArrayList<OrderJoinDTO> getOrderList(String order_no_value,String id){
+		String sql = "select o.*,op.product_code,order_quantity,p.product_name,price,simple_content,main_content,written_product_date,img_origin_name,p.img_system_name from tbl_order o,tbl_order_product op,tbl_product p where o.order_no=op.order_no and op.product_code = p.product_code and order_no=? AND id=?";
 		try(Connection con = this.getConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setString(1, order_no_value);
 			pstmt.setString(2, id);
 			ResultSet rs = pstmt.executeQuery();
-			ArrayList<OrderDTO> orderList = new ArrayList<>();
+			ArrayList<OrderJoinDTO> orderJoinList = new ArrayList<>();
 			if(rs.next()) {
 				String order_no = rs.getString("order_no");
 				String order_id = rs.getString("id");
@@ -75,12 +56,24 @@ public class OrderDAO {
 				String order_name = rs.getString("order_name");
 				String order_message = rs.getString("order_message");
 				String delivery_message = rs.getString("delivery_message");
-				int seq_pay = rs.getInt("seq_pay");
+				String seq_pay = rs.getString("seq_pay");
+				String product_code = rs.getString("product_code");
+				int order_quantity = rs.getInt("order_quantity");
+				String product_name = rs.getString("product_name");
+				int price = rs.getInt("price");
+				String simple_content = rs.getString("simple_content");
+				String main_content = rs.getString("main_content");
+				String written_product_date = rs.getString("written_product_date");
+				String img_origin_name = rs.getString("img_origin_name");
+				String img_system_name = rs.getString("img_system_name");
 				
-				
-				orderList.add(new OrderDTO(order_no,order_id,order_date,order_amount,order_status,pay_yn,delivery_no,order_address,order_phone,order_name,order_message,delivery_message,seq_pay));
+				orderJoinList.add(new OrderJoinDTO(order_no, order_id, order_date, order_amount, order_status,
+						pay_yn, delivery_no, order_address, order_phone, order_name,
+						order_message, delivery_message, seq_pay, product_code, order_quantity,
+						product_name, price, simple_content, main_content, written_product_date,
+						img_origin_name, img_system_name));
 			}
-			return orderList;
+			return orderJoinList;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

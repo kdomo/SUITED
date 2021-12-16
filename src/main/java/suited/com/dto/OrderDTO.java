@@ -14,14 +14,14 @@ public class OrderDTO {
 	private String order_address;
 	private String order_phone;
 	private String order_name;
-	private String order_messege;
+	private String order_message;
 	private String delivery_message;
 	private int seq_pay;
 	
 	public OrderDTO() {}
 
 	public OrderDTO(String id, long order_date, int order_amount, String order_status,
-			String order_address, String order_phone, String order_name, String order_messege,
+			String order_address, String order_phone, String order_name, String order_message,
 			String delivery_message) {
 		super();
 		this.id = id;
@@ -31,12 +31,12 @@ public class OrderDTO {
 		this.order_address = order_address;
 		this.order_phone = order_phone;
 		this.order_name = order_name;
-		this.order_messege = order_messege;
+		this.order_message = order_message;
 		this.delivery_message = delivery_message;
 	}
 	
 	public OrderDTO(String order_no, String id, long order_date, int order_amount, String order_status, String pay_yn,
-			String delivery_no, String order_address, String order_phone, String order_name, String order_messege,
+			String delivery_no, String order_address, String order_phone, String order_name, String order_message,
 			String delivery_message, int seq_pay) {
 		super();
 		this.order_no = order_no;
@@ -49,13 +49,13 @@ public class OrderDTO {
 		this.order_address = order_address;
 		this.order_phone = order_phone;
 		this.order_name = order_name;
-		this.order_messege = order_messege;
+		this.order_message = order_message;
 		this.delivery_message = delivery_message;
 		this.seq_pay = seq_pay;
 	}
 	
 	public OrderDTO(String order_no, String id, String order_date, int order_amount, String order_status, String pay_yn,
-			String delivery_no, String order_address, String order_phone, String order_name, String order_messege,
+			String delivery_no, String order_address, String order_phone, String order_name, String order_message,
 			String delivery_message, int seq_pay) {
 		super();
 		this.order_no = order_no;
@@ -68,7 +68,7 @@ public class OrderDTO {
 		this.order_address = order_address;
 		this.order_phone = order_phone;
 		this.order_name = order_name;
-		this.order_messege = order_messege;
+		this.order_message = order_message;
 		this.delivery_message = delivery_message;
 		this.seq_pay = seq_pay;
 	}
@@ -154,12 +154,12 @@ public class OrderDTO {
 		this.order_name = order_name;
 	}
 
-	public String getOrder_messege() {
-		return order_messege;
+	public String getOrder_message() {
+		return order_message;
 	}
 
-	public void setOrder_messege(String order_messege) {
-		this.order_messege = order_messege;
+	public void setOrder_message(String order_message) {
+		this.order_message = order_message;
 	}
 
 	public String getDelivery_message() {
