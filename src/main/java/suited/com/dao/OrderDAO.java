@@ -54,7 +54,7 @@ public class OrderDAO {
 	}
 	
 	
-	public ArrayList<OrderDTO> getOrderList(String order_no_value,String id){
+	public ArrayList<OrderDTO> getOrderList(String order_no_value,String id) throws Exception {
 		String sql = "select * from tbl_order where order_no=? AND id=?";
 		try(Connection con = this.getConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);) {
@@ -81,10 +81,7 @@ public class OrderDAO {
 				orderList.add(new OrderDTO(order_no,order_id,order_date,order_amount,order_status,pay_yn,delivery_no,order_address,order_phone,order_name,order_message,delivery_message,seq_pay));
 			}
 			return orderList;
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-		return null;
 	}
 	
 	public int pay(int seq_pay,String order_no) throws Exception {
@@ -102,7 +99,7 @@ public class OrderDAO {
 		return -1;
 	}
 	
-	public ArrayList<OrderDTO> selectAll() {
+	public ArrayList<OrderDTO> selectAll() throws Exception {
 	      String sql = "select * from tbl_order";
 	      
 	      try(Connection con = this.getConnection();
@@ -131,13 +128,10 @@ public class OrderDAO {
 	                  order_name, order_message, delivery_message, seq_pay));
 	         }
 	         return list;
-	      }catch(Exception e) {
-	         e.printStackTrace();
 	      }
-	      return null;
 	   }
 	   
-	   public OrderDTO selectById(String id) {
+	   public OrderDTO selectById(String id) throws Exception {
 	      String sql = "select * from tbl_order where id=?";
 	      
 	      try(Connection con = this.getConnection();
@@ -164,9 +158,6 @@ public class OrderDAO {
 	            dto.setSeq_pay(rs.getInt("seq_pay"));
 	         }
 	         return dto;
-	      }catch(Exception e) {
-	         e.printStackTrace();
 	      }
-	      return null;
 	   }
 }

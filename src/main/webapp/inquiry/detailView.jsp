@@ -220,10 +220,67 @@ line-height:8px;
 					height="24px"></a>
 			</div>
 		</div>
+	</nav><nav class="navber">
+		<div class="row nav-items d-flex justify-content-center">
+			<div class="col-2 col-xl-2 navi-logo">
+				<a href="${pageContext.request.contextPath }/"><img
+					src="../imgs/logo.png" width="80px"></a>
+			</div>
+			<c:choose>
+				<c:when test="${empty loginSession}">
+				<div class="col-xl-4 col-5 navi-menu"></div>
+				</c:when>
+				<c:when test="${!empty loginSession}">
+					<div class="col-xl-3 col-5 navi-menu"></div>
+				</c:when>
+			</c:choose>
+			
+			<div class="col-xl-1 d-none d-xl-block navi-menu">
+				<a href="${pageContext.request.contextPath }/toSurvey.srv">영양제추천</a>
+			</div>
+			<div class="col-xl-1 d-none d-xl-block navi-menu">
+				<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
+			</div>
+			<div class="col-xl-1 d-none d-xl-block navi-menu">
+				<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
+			</div>
+			<div class="col-xl-1 d-none d-xl-block navi-menu">
+				<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
+			</div>
+			<c:choose>
+				<c:when test="${empty loginSession}">
+				</c:when>
+				<c:when test="${!empty loginSession}">
+					<div class="col-xl-1 d-none d-xl-block navi-menu">
+						<a href="${pageContext.request.contextPath }/toMypageConfirm.mem">${loginSession.nickname} 님</a>
+					</div>
+				</c:when>
+			</c:choose>
+
+			<c:choose>
+				<c:when test="${empty loginSession}">
+					<div class="col-xl-1 d-none d-xl-block navi-menu">
+						<a href="${pageContext.request.contextPath }/toLogin.mem">로그인</a>
+					</div>
+				</c:when>
+				<c:when test="${!empty loginSession}">
+					<div class="col-xl-1 d-none d-xl-block navi-menu">
+						<a href="${pageContext.request.contextPath }/logoutProc.mem">로그아웃</a>
+					</div>
+				</c:when>
+			</c:choose>
+			<div class="col-xl-1 col-3 navi-cart">
+				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span id="cartCount" class="badge bg-dark rounded-pill"></span></a>
+			</div>
+			<div class="col-xl-0 col-2 d-xl-none navi-menu">
+				<a id="btn_navi_menu"><img src="../imgs/menu.png" width="20px"
+					height="24px"></a>
+			</div>
+		</div>
 	</nav>
 	<div class="row navi-onButtons">
 		<div class="col-12">
-			<a href="#">영양제추천</a>
+			<a href="${pageContext.request.contextPath }/toSurvey.srv">영양제추천</a>
 		</div>
 		<div class="col-12">
 			<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
@@ -239,7 +296,7 @@ line-height:8px;
 			</c:when>
 			<c:when test="${!empty loginSession}">
 				<div class="col-12">
-			<a href="#">${loginSession.nickname} 님</a>
+			<a href="${pageContext.request.contextPath }/toMypageConfirm.mem">${loginSession.nickname} 님</a>
 		</div>
 			</c:when>
 		</c:choose>
@@ -260,7 +317,6 @@ line-height:8px;
 			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 	</div>
-
 	<div class="main">
 	<!-- 여기다가 -->
 	<div class="title">

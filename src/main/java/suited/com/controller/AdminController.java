@@ -2,6 +2,7 @@ package suited.com.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -13,7 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import suited.com.dao.MemberDAO;
+import suited.com.dao.OrderDAO;
+import suited.com.dao.SurveyDAO;
+import suited.com.dto.CommentDTO;
 import suited.com.dto.MemberDTO;
+import suited.com.dto.OrderDTO;
+import suited.com.dto.SurveyDTO;
+import suited.com.service.CommentService;
 import suited.com.utils.EncryptionUtils;
 
 @WebServlet("*.admin")
@@ -39,10 +46,12 @@ public class AdminController extends HttpServlet {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		MemberDAO memberDAO = new MemberDAO();
+		SurveyDAO surveyDAO = new SurveyDAO();
+		OrderDAO orderDAO = new OrderDAO();
 		System.out.println("admin : " + cmd);
 		if (cmd.equals("/toLogin.admin")) {
 			response.sendRedirect("/admin/login.jsp");
-		}else if (cmd.equals("/toAdminIndex.admin")) {
+		} else if (cmd.equals("/toAdminIndex.admin")) {
 			response.sendRedirect("/admin/index.jsp");
 		} else if (cmd.equals("/loginProc.admin")) { // 로그인페이지에서 로그인버튼을 눌렀을때
 			String id = request.getParameter("id");
@@ -73,16 +82,76 @@ public class AdminController extends HttpServlet {
 					out.write("notAdmin");
 				}
 			} catch (Exception e) {
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 				e.printStackTrace();
 			}
-		} else if (cmd.equals("/logoutProc.admin"))
-
-		{ // 로그아웃 버튼을 눌렀을때
+		} else if (cmd.equals("/logoutProc.admin")) { // 로그아웃 버튼을 눌렀을때
 			System.out.println("로그아웃");
 			session.removeAttribute("loginSession");
 			response.sendRedirect("/admin/login.jsp");
-		}
+		} else if (cmd.equals("/toMemberList.admin")) {
+			ArrayList<MemberDTO> list = memberDAO.selectAll();
+
+			if (list != null) {
+				RequestDispatcher rd = request.getRequestDispatcher("/admin/memberList.jsp");
+				request.setAttribute("list", list);
+				rd.forward(request, response);
+			}
+		} else if (cmd.equals("/toAllReview.admin")) { // 모든 리뷰모아보기 페이지로 이동
+			response.sendRedirect("/allReviewProc.admin?currentPage=1");
+		} else if (cmd.equals("/allReviewProc.admin")) { // 모든 리뷰 내역 전송
+			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+			System.out.println("currentPage : " + currentPage);
+
+			CommentService service = new CommentService();
+			HashMap<String, Object> naviMap = service.getPageNavi2(currentPage);
+			ArrayList<CommentDTO> list = service.getCommentList2((int) naviMap.get("currentPage"));
+
+			if (list != null) {
+				RequestDispatcher rd = request.getRequestDispatcher("/admin/allReview.jsp");
+				request.setAttribute("naviMap", naviMap);
+				request.setAttribute("list", list);
+				rd.forward(request, response);
+			}
+		} else if (cmd.equals("/toOrderList.admin")) {
+			HashMap<String, String> loginSession = (HashMap) session.getAttribute("loginSession");
+			String id = loginSession.get("id");
+			String admin_yn = memberDAO.isAdmin(id);
+			if (admin_yn.equals("1")) {
+				try {
+					ArrayList<OrderDTO> list = orderDAO.selectAll();
+					if (list != null) {
+						RequestDispatcher rd = request.getRequestDispatcher("/admin/orderList.jsp");
+						request.setAttribute("list", list);
+						rd.forward(request, response);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				try {
+					OrderDTO list = orderDAO.selectById("");
+					if (list != null) {
+						RequestDispatcher rd = request.getRequestDispatcher("/admin/orderList.jsp");
+						request.setAttribute("list", list);
+						rd.forward(request, response);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		} else if(cmd.equals("/toSurveyList.admin")) { // 설문 목록 조회
+			try {
+				ArrayList<SurveyDTO> list = surveyDAO.selectAll();
+				if(list != null) {
+		            RequestDispatcher rd = request.getRequestDispatcher("/admin/surveyList.jsp");
+		            request.setAttribute("list", list);
+		            rd.forward(request, response);
+		         }
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	      }
 	}
 
 }

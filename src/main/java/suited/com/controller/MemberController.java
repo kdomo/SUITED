@@ -97,7 +97,7 @@ public class MemberController extends HttpServlet {
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
-							response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+							response.sendRedirect("/errorPage.jsp");
 						}
 					}
 				} else {
@@ -105,7 +105,7 @@ public class MemberController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 
 		}else if (cmd.equals("/kakaologinProc.mem")) { // 로그인페이지에서 로그인버튼을 눌렀을때
@@ -133,14 +133,14 @@ public class MemberController extends HttpServlet {
 							response.sendRedirect("/");
 					} catch (Exception e) {
 						e.printStackTrace();
-						response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+						response.sendRedirect("/errorPage.jsp");
 					}
 				} else {
 					out.write("loginFail");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 
 		} else if (cmd.equals("/logoutProc.mem")) { // 로그아웃 버튼을 눌렀을때
@@ -173,7 +173,7 @@ public class MemberController extends HttpServlet {
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
-					response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+					response.sendRedirect("/errorPage.jsp");
 				}
 
 			}else {
@@ -191,7 +191,7 @@ public class MemberController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 		} else if (cmd.equals("/nicknameCheckProc.mem")) {
 			String value = request.getParameter("value");
@@ -206,7 +206,7 @@ public class MemberController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 		} else if (cmd.equals("/signupProc.mem")) { // 회원가입하기 버튼을 눌렀을때
 			String id = request.getParameter("id");
@@ -248,7 +248,7 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("rs", "signFail");
 				rd.forward(request, response);
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 
 		} else if (cmd.equals("/sendEmail.mem")) {
@@ -299,7 +299,7 @@ public class MemberController extends HttpServlet {
 				rd.forward(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 		} else if (cmd.equals("/emailCheckProc.mem")) { // 사용자가 이메일에서 링크를 눌렀을때
 			String code = request.getParameter("code");
@@ -319,7 +319,7 @@ public class MemberController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 			System.out.println(code);
 		} else if(cmd.equals("/toMypageConfirm.mem")) {
@@ -363,7 +363,7 @@ public class MemberController extends HttpServlet {
 				}
 			}catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 		} else if(cmd.equals("/updateProc.mem")) {
 			HashMap<String, String> loginSession = (HashMap)session.getAttribute("loginSession");
@@ -382,20 +382,12 @@ public class MemberController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 		} else if(cmd.equals("/getHashPw.mem")) {
 			String password = request.getParameter("password");
 			password = EncryptionUtils.getSHA256(password);
 			out.write(password);
-		} else if(cmd.equals("/toMemberList.mem")) {
-	         ArrayList<MemberDTO> list = memberDAO.selectAll();
-	         
-	         if(list != null) {
-	            RequestDispatcher rd = request.getRequestDispatcher("/member/memberList.jsp");
-	            request.setAttribute("list", list);
-	            rd.forward(request, response);
-	         }
-	      }
+		}
 	}
 }

@@ -193,24 +193,21 @@ a:hover {
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
-				<div class="col-xl-3 col-5 navi-menu"></div>
+				<div class="col-xl-4 col-5 navi-menu"></div>
 				</c:when>
 				<c:when test="${!empty loginSession}">
-					<div class="col-xl-2 col-5 navi-menu"></div>
+					<div class="col-xl-3 col-5 navi-menu"></div>
 				</c:when>
 			</c:choose>
 			
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">영양제추천</a>
+				<a href="${pageContext.request.contextPath }/toSurvey.srv">영양제추천</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
-			</div>
-			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">스토리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
@@ -248,7 +245,7 @@ a:hover {
 	</nav>
 	<div class="row navi-onButtons">
 		<div class="col-12">
-			<a href="#">영양제추천</a>
+			<a href="${pageContext.request.contextPath }/toSurvey.srv">영양제추천</a>
 		</div>
 		<div class="col-12">
 			<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>

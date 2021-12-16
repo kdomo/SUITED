@@ -177,25 +177,21 @@ form>p {
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
-					<div class="col-xl-2 col-5 navi-menu"></div>
+				<div class="col-xl-4 col-5 navi-menu"></div>
 				</c:when>
 				<c:when test="${!empty loginSession}">
-					<div class="col-xl-2 col-5 navi-menu"></div>
+					<div class="col-xl-3 col-5 navi-menu"></div>
 				</c:when>
 			</c:choose>
-
+			
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">영양제추천</a>
+				<a href="${pageContext.request.contextPath }/toSurvey.srv">영양제추천</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a
-					href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
+				<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">고객리뷰</a>
-			</div>
-			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">스토리</a>
+				<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
@@ -205,7 +201,7 @@ form>p {
 				</c:when>
 				<c:when test="${!empty loginSession}">
 					<div class="col-xl-1 d-none d-xl-block navi-menu">
-						<a href="#">${loginSession.nickname} 님</a>
+						<a href="${pageContext.request.contextPath }/toMypageConfirm.mem">${loginSession.nickname} 님</a>
 					</div>
 				</c:when>
 			</c:choose>
@@ -223,8 +219,7 @@ form>p {
 				</c:when>
 			</c:choose>
 			<div class="col-xl-1 col-3 navi-cart">
-				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span
-					id="cartCount" class="badge bg-dark rounded-pill"></span></a>
+				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span id="cartCount" class="badge bg-dark rounded-pill"></span></a>
 			</div>
 			<div class="col-xl-0 col-2 d-xl-none navi-menu">
 				<a id="btn_navi_menu"><img src="../imgs/menu.png" width="20px"
@@ -234,11 +229,10 @@ form>p {
 	</nav>
 	<div class="row navi-onButtons">
 		<div class="col-12">
-			<a href="#">영양제추천</a>
+			<a href="${pageContext.request.contextPath }/toSurvey.srv">영양제추천</a>
 		</div>
 		<div class="col-12">
-			<a
-				href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
+			<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
 		</div>
 		<div class="col-12">
 			<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
@@ -251,11 +245,11 @@ form>p {
 			</c:when>
 			<c:when test="${!empty loginSession}">
 				<div class="col-12">
-					<a href="#">${loginSession.nickname} 님</a>
-				</div>
+			<a href="${pageContext.request.contextPath }/toMypageConfirm.mem">${loginSession.nickname} 님</a>
+		</div>
 			</c:when>
 		</c:choose>
-
+		
 		<c:choose>
 			<c:when test="${empty loginSession}">
 				<div class="col-12">

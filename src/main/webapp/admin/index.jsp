@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>관리자 페이지</title>
+<title>SUITED 관리자</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -106,9 +106,11 @@ a:hover {
 
 /* main 영역 */
 .main {
-	padding-top: 20px;
+	padding-top: 112px;
 	width: 82.6vw;
 	margin: auto;
+	height:400px;
+	text-align:center;
 }
 
 .card {
@@ -186,13 +188,13 @@ a:hover {
 			</c:choose>
 			
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">회원관리</a>
+				<a href="${pageContext.request.contextPath }/toMemberList.admin">회원조회</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="${pageContext.request.contextPath }/toBlacklist.bl?currentPage=1">블랙리스트</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">리뷰관리</a>
+				<a href="${pageContext.request.contextPath }/toAllReview.admin">리뷰관리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="${pageContext.request.contextPath }/toAdminProduct.pro?currentPage=1">상품관리</a>
@@ -201,17 +203,11 @@ a:hover {
 				<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">통계조회</a>
+				<a href="${pageContext.request.contextPath }/toOrderList.admin">주문조회</a>
 			</div>
-			<c:choose>
-				<c:when test="${empty loginSession}">
-				</c:when>
-				<c:when test="${!empty loginSession}">
-					<div class="col-xl-1 d-none d-xl-block navi-menu">
-						<a href="${pageContext.request.contextPath }/toMypage">${loginSession.nickname} 님</a>
-					</div>
-				</c:when>
-			</c:choose>
+			<div class="col-xl-1 d-none d-xl-block navi-menu">
+				<a href="${pageContext.request.contextPath }/toSurveyList.admin">통계조회</a>
+			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
 					<div class="col-xl-1 d-none d-xl-block navi-menu">
@@ -232,22 +228,22 @@ a:hover {
 	</nav>
 	<div class="row navi-onButtons">
 		<div class="col-12">
-			<a href="#">회원관리</a>
+			<a href="${pageContext.request.contextPath }/toMemberList.admin">회원조회</a>
 		</div>
 		<div class="col-12">
 			<a href="${pageContext.request.contextPath }/toBlacklist.bl?currentPage=1">블랙리스트</a>
 		</div>
 		<div class="col-12">
-			<a href="#">리뷰관리</a>
+			<a href="${pageContext.request.contextPath }/toAllReview.admin">리뷰관리</a>
 		</div>
 		<div class="col-12">
-			<a href="#">상품관리</a>
+			<a href="${pageContext.request.contextPath }/toAdminProduct.pro?currentPage=1">상품관리</a>
 		</div>
 		<div class="col-12">
 			<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 		<div class="col-12">
-			<a href="#">통계조회</a>
+			<a href="${pageContext.request.contextPath }/toSurveyList.admin">통계조회</a>
 		</div>
 		<c:choose>
 			<c:when test="${empty loginSession}">
@@ -272,7 +268,9 @@ a:hover {
 			</c:when>
 		</c:choose>
 	</div>
-	<div class="main"></div>
+	<div class="main">
+	<h1>관리자페이지</h1>
+	</div>
 
 	<div class="footer">
 		<div class="row footer-top">

@@ -85,7 +85,7 @@ public class OrderController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 		} else if(cmd.equals("/order_productProc.order")) {
 //			-
@@ -111,7 +111,7 @@ public class OrderController extends HttpServlet {
 					int rs = order_productDAO.insert(product_code, quantity);
 				} catch (Exception e) {
 					e.printStackTrace();
-					response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+					response.sendRedirect("/errorPage.jsp");
 				}
 			}
 			try {
@@ -120,7 +120,7 @@ public class OrderController extends HttpServlet {
 				out.write(order_no);
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 				
 			
@@ -138,7 +138,7 @@ public class OrderController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 			
 		} else if(cmd.equals("/payProc.order")) {
@@ -173,7 +173,7 @@ public class OrderController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 		} else if(cmd.equals("/toPayResult.order")) {
 			String Result = request.getParameter("Result");
@@ -186,26 +186,7 @@ public class OrderController extends HttpServlet {
 				request.setAttribute("Result", "payFail");
 				rd.forward(request, response);
 			}
-		} else if(cmd.equals("/toOrderList.order")) {
-	         HashMap<String, String> loginSession = (HashMap) session.getAttribute("loginSession");
-	         String id = loginSession.get("id");
-	         String admin_yn = memberDAO.isAdmin(id);
-	         if(admin_yn.equals("1")) {
-	            ArrayList<OrderDTO> list = orderDAO.selectAll();
-	            if(list != null) {
-	               RequestDispatcher rd = request.getRequestDispatcher("/order/orderList.jsp");
-	               request.setAttribute("list", list);
-	               rd.forward(request, response);
-	            }
-	         }else {
-	            OrderDTO list = orderDAO.selectById("");
-	            if(list != null) {
-	               RequestDispatcher rd = request.getRequestDispatcher("/order/orderList.jsp");
-	               request.setAttribute("list", list);
-	               rd.forward(request, response);
-	            }
-	         }
-	      }
+		}
 	}
 
 }

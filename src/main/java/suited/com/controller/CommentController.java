@@ -60,7 +60,7 @@ public class CommentController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 			
 		} else if (cmd.equals("/getCommentProc.co")) {
@@ -94,7 +94,7 @@ public class CommentController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 			
 		} else if(cmd.equals("/deleteByManager.co")){
@@ -105,9 +105,9 @@ public class CommentController extends HttpServlet {
 				if(rs != -1) response.sendRedirect("/toAllReview.co");
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
-		} else if (cmd.equals("/toAllReview.co")) { // 모든 리뷰모아보기 페이질로 이동
+		} else if (cmd.equals("/toAllReview.co")) { // 모든 리뷰모아보기 페이지로 이동
 			response.sendRedirect("/allReviewProc.co?currentPage=1");
 		} else if (cmd.equals("/allReviewProc.co")) { // 모든 리뷰 내역 전송
 			int currentPage = Integer.parseInt(request.getParameter("currentPage"));

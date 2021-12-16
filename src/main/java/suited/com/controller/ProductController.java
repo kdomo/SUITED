@@ -122,7 +122,7 @@ public class ProductController extends HttpServlet {
 					response.sendRedirect("/toAdminProduct.pro?currentPage=1");
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 		} else if (cmd.equals("/product_codeCheckPopup.pro")) { // 제품 코드 확인 팝업창 띄우기
 			response.sendRedirect("/product/product_codeCheckPopup.jsp");
@@ -143,7 +143,7 @@ public class ProductController extends HttpServlet {
 				rd.forward(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 		} else if (cmd.equals("/detailView.pro")) { // 제품 상세 페이지로 이동
 			String product_code = request.getParameter("product_code");
@@ -159,7 +159,7 @@ public class ProductController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 		} else if (cmd.equals("/toDetailView.pro")) { // 제품의 currentPage와 리뷰의 currentPage_cmt를 구별하여 전송
 			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -208,7 +208,7 @@ public class ProductController extends HttpServlet {
 					response.sendRedirect("/toAdminProduct.pro?currentPage=1");
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 		} else if (cmd.equals("/confirm.pro")) { // 수정 창에서 받은 코드의 정보를 보내줌
 			String product_code = request.getParameter("product_code");
@@ -227,7 +227,7 @@ public class ProductController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 		} else if (cmd.equals("/toDelete.pro")) { // 상품 삭제 페이지로 이동 요청
 			response.sendRedirect("/deleteProc.pro?currentPage=1");
@@ -263,7 +263,7 @@ public class ProductController extends HttpServlet {
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
-					response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+					response.sendRedirect("/errorPage.jsp");
 				}
 				
 			}

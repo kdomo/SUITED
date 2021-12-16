@@ -80,18 +80,7 @@ public class SurveyController extends HttpServlet {
 			e.printStackTrace();
 		}
         
-      }else if(cmd.equals("/toSurveyList.srv")) { // 설문 목록 조회
-		try {
-			ArrayList<SurveyDTO> list = surveyDAO.selectAll();
-			if(list != null) {
-	            RequestDispatcher rd = request.getRequestDispatcher("/survey/surveyList.jsp");
-	            request.setAttribute("list", list);
-	            rd.forward(request, response);
-	         }
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-      }else if(cmd.equals("toPayment.srv")) {
+      } else if(cmd.equals("toPayment.srv")) {
          if(session.getAttribute("loginSession") != null) { // 결제창으로
             
          }else { // 로그인 페이지로

@@ -65,7 +65,7 @@ public class CartController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 
 			
@@ -86,7 +86,7 @@ public class CartController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			} // 각 제품마다 초기 수량은 1로 지정
 			
 		} else if (cmd.equals("/countCartProc.cart")) {
@@ -102,7 +102,7 @@ public class CartController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 		
 		} else if (cmd.equals("/getQuantity.cart")) {
@@ -127,7 +127,7 @@ public class CartController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 			
 		} else if (cmd.equals("/deleteProc.cart")) {
@@ -145,7 +145,7 @@ public class CartController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 			
 		} else if(cmd.equals("/cartAllDelete.cart")) {
@@ -154,7 +154,7 @@ public class CartController extends HttpServlet {
 				basketDAO.deleteAllById(id);
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("${pageContext.request.contextPath}/errorPage.jsp");
+				response.sendRedirect("/errorPage.jsp");
 			}
 		}
 	}

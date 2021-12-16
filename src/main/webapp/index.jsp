@@ -192,10 +192,10 @@ a:hover {
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
-				<div class="col-xl-3 col-5 navi-menu"></div>
+				<div class="col-xl-4 col-5 navi-menu"></div>
 				</c:when>
 				<c:when test="${!empty loginSession}">
-					<div class="col-xl-2 col-5 navi-menu"></div>
+					<div class="col-xl-3 col-5 navi-menu"></div>
 				</c:when>
 			</c:choose>
 			
@@ -207,9 +207,6 @@ a:hover {
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
-			</div>
-			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">스토리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
@@ -321,8 +318,8 @@ a:hover {
 			if(admin_yn=='1'){
 				location.href="/toAdminIndex.admin";
 			}
-			let loginSession = "${loginSession}";
-			if(loginSession != ''){
+			
+			if("${loginSession}" != ''){
 				getCartCount();
 			}
 			

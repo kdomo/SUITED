@@ -30,7 +30,105 @@ textarea{
         alert("이미 존재하는 상품 코드입니다.");
     </script>
 </c:if>
-    <form action="${pageContext.request.contextPath}/registerProc.pro" method="post"
+<nav class="navber">
+		<div class="row nav-items d-flex justify-content-center">
+			<div class="col-2 col-xl-2 navi-logo">
+				<a href="${pageContext.request.contextPath }/"><img
+					src="../imgs/logo.png" width="80px"></a>
+			</div>
+			<c:choose>
+				<c:when test="${empty loginSession}">
+				<div class="col-xl-4 col-5 navi-menu"></div>
+				</c:when>
+				<c:when test="${!empty loginSession}">
+					<div class="col-xl-3 col-5 navi-menu"></div>
+				</c:when>
+			</c:choose>
+			
+			<div class="col-xl-1 d-none d-xl-block navi-menu">
+				<a href="${pageContext.request.contextPath }/toSurvey.srv">영양제추천</a>
+			</div>
+			<div class="col-xl-1 d-none d-xl-block navi-menu">
+				<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
+			</div>
+			<div class="col-xl-1 d-none d-xl-block navi-menu">
+				<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
+			</div>
+			<div class="col-xl-1 d-none d-xl-block navi-menu">
+				<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
+			</div>
+			<c:choose>
+				<c:when test="${empty loginSession}">
+				</c:when>
+				<c:when test="${!empty loginSession}">
+					<div class="col-xl-1 d-none d-xl-block navi-menu">
+						<a href="${pageContext.request.contextPath }/toMypageConfirm.mem">${loginSession.nickname} 님</a>
+					</div>
+				</c:when>
+			</c:choose>
+
+			<c:choose>
+				<c:when test="${empty loginSession}">
+					<div class="col-xl-1 d-none d-xl-block navi-menu">
+						<a href="${pageContext.request.contextPath }/toLogin.mem">로그인</a>
+					</div>
+				</c:when>
+				<c:when test="${!empty loginSession}">
+					<div class="col-xl-1 d-none d-xl-block navi-menu">
+						<a href="${pageContext.request.contextPath }/logoutProc.mem">로그아웃</a>
+					</div>
+				</c:when>
+			</c:choose>
+			<div class="col-xl-1 col-3 navi-cart">
+				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span id="cartCount" class="badge bg-dark rounded-pill"></span></a>
+			</div>
+			<div class="col-xl-0 col-2 d-xl-none navi-menu">
+				<a id="btn_navi_menu"><img src="../imgs/menu.png" width="20px"
+					height="24px"></a>
+			</div>
+		</div>
+	</nav>
+	<div class="row navi-onButtons">
+		<div class="col-12">
+			<a href="${pageContext.request.contextPath }/toSurvey.srv">영양제추천</a>
+		</div>
+		<div class="col-12">
+			<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
+		</div>
+		<div class="col-12">
+			<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
+		</div>
+		<div class="col-12">
+			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
+		</div>
+		<c:choose>
+			<c:when test="${empty loginSession}">
+			</c:when>
+			<c:when test="${!empty loginSession}">
+				<div class="col-12">
+			<a href="${pageContext.request.contextPath }/toMypageConfirm.mem">${loginSession.nickname} 님</a>
+		</div>
+			</c:when>
+		</c:choose>
+		
+		<c:choose>
+			<c:when test="${empty loginSession}">
+				<div class="col-12">
+					<a href="${pageContext.request.contextPath }/toLogin.mem">로그인</a>
+				</div>
+			</c:when>
+			<c:when test="${!empty loginSession}">
+				<div class="col-12">
+					<a href="${pageContext.request.contextPath }/logoutProc.mem">로그아웃</a>
+				</div>
+			</c:when>
+		</c:choose>
+		<div class="col-12">
+			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
+		</div>
+	</div>
+	<div class="main">
+	 <form action="${pageContext.request.contextPath}/registerProc.pro" method="post"
          id="productForm" name="productForm" enctype="multipart/form-data">
         <div class="container">
              <div class="row">
@@ -85,6 +183,31 @@ textarea{
              </div>
         </div>
     </form>
+	</div>
+   <div class="footer">
+		<div class="row footer-top">
+			<ul>
+				<li><a href="">이용약관</a></li>
+				<li><a href="">개인정보처리방침</a></li>
+				<li><a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a></li>
+			</ul>
+		</div>
+		<div class="row footer-body">
+			<div class="col-12 col-xl-6 footer-body-left">
+				<p>SUITED | 사업자번호: 000-00-00000 | 대표: ㅇㅇㅇ</p>
+				<p>개인정보취급담당자: ㅇㅇㅇ</p>
+				<p>통신판매업신고: 제 2021-서울강남-00000 호</p>
+				<p>유통판매업신고: 제 2021-0000000 호</p>
+			</div>
+			<div class="col-12 col-xl-6 footer-body-right">
+				<p>고객센터</p>
+				<p>고객문의: cs@suited.com | 전화: 02-0000-0000</p>
+				<p>상담시간: 평일 09:00~15:30 (점심시간 12:50~13:30)</p>
+				<p>제휴문의: marketing@suited.com | 전화: 02-0000-0000</p>
+			</div>
+		</div>
+		ⓒ SUITED Inc. All Rights Reserved.
+	</div>
     <script>
         var fileCheck = $("#productIMG").val();
         document.getElementById("registerBtn").addEventListener("click", function(){
