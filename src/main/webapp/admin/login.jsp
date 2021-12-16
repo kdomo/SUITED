@@ -210,7 +210,7 @@ line-height:8px;
 	<nav class="navber">
 		<div class="row nav-items d-flex justify-content-center">
 			<div class="col-2 col-xl-2 navi-logo">
-				<a href="${pageContext.request.contextPath }/"><img
+				<a href="${pageContext.request.contextPath }/toAdminIndex.admin"><img
 					src="../imgs/logo.png" width="80px"></a>
 			</div>
 			<c:choose>

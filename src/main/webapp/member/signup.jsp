@@ -952,7 +952,7 @@ form>p {
 							$('#address').val(
 									$('#roadAddress').val()
 											+ $('#extraAddress').val() + " "
-											+ $('#detailAddress').val() + " ()"
+											+ $('#detailAddress').val() + " (우)"
 											+ $('#postcode').val());
 							$('#id').attr("disabled", false);
 							$('#nickname').attr("disabled", false);

@@ -434,8 +434,9 @@ a:hover {
 						<div class="col-12 col-xl-8">
 							<input type="text" class="form-control" id="phone" name="phone"
 								placeholder="휴대폰번호"
-								value="${(loginSession.get('phone')).substring(0,3)}-${(loginSession.get('phone')).substring(3,7)}-${(loginSession.get('phone')).substring(7,11)}"
+								value="${(loginSession.get('phone')).substring(0,3)}-${(loginSession.get('phone')).substring(3,7)}"-${(loginSession.get('phone')).substring(7,11)}"
 								disabled>
+<!-- 								인풋태그에 담은다음에 그 값으로 다시 세팅해주기 -->
 						</div>
 						<div class="col-12 col-xl-4">
 							<input type="button" onclick="" value="휴대폰번호 변경"

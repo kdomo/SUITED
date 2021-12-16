@@ -60,6 +60,20 @@ public class ProductController extends HttpServlet {
 				request.setAttribute("list", list);
 				rd.forward(request, response);
 			}
+		}else if (cmd.equals("/toAdminProduct.pro")) { // 전체 상품 목록 이동 요청
+			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+			System.out.println("currentPage : " + currentPage);
+
+			ProductService service = new ProductService();
+			HashMap<String, Object> naviMap = service.getPageNavi(currentPage);
+			ArrayList<ProductDTO> list = service.getProductList((int) naviMap.get("currentPage"));
+
+			if (list != null) {
+				RequestDispatcher rd = request.getRequestDispatcher("/admin/product.jsp");
+				request.setAttribute("naviMap", naviMap);
+				request.setAttribute("list", list);
+				rd.forward(request, response);
+			}
 		} else if (cmd.equals("/toAdminProduct.pro")) { // 관리자 제품관리
 			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 			System.out.println("currentPage : " + currentPage);
@@ -105,7 +119,7 @@ public class ProductController extends HttpServlet {
 						written_product_date, img_origin_name, img_system_name));
 
 				if (rs != -1)
-					response.sendRedirect("/toProduct.pro?currentPage=1");
+					response.sendRedirect("/toAdminProduct.pro?currentPage=1");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -180,7 +194,7 @@ public class ProductController extends HttpServlet {
 						img_origin_name, img_system_name);
 
 				if (rs != -1)
-					response.sendRedirect("/toProduct.pro?currentPage=1");
+					response.sendRedirect("/toAdminProduct.pro?currentPage=1");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -222,10 +236,8 @@ public class ProductController extends HttpServlet {
 					rd.forward(request, response);
 				} else {
 					if (dto != null) {
-						CommentDAO commentDAO = new CommentDAO();
-						int rs1 = dao.deleteByCode(product_code);
-						int rs2 = commentDAO.deleteByCode(product_code);
-						if (rs1 != -1 && rs2 != -1)
+						int rs = dao.deleteByCode(product_code);
+						if (rs != -1)
 							response.sendRedirect("/deleteProc.pro?currentPage=1");
 					} else {
 						RequestDispatcher rd = request.getRequestDispatcher("/product/delete.jsp");

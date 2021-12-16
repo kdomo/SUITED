@@ -53,4 +53,37 @@ public class OrderDAO {
 		return -1;
 	}
 	
+	
+	public ArrayList<OrderDTO> getOrderList(String order_no_value,String id){
+		String sql = "select * from tbl_order where order_no=? AND id=?";
+		try(Connection con = this.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql);) {
+			pstmt.setString(1, order_no_value);
+			pstmt.setString(2, id);
+			ResultSet rs = pstmt.executeQuery();
+			ArrayList<OrderDTO> orderList = new ArrayList<>();
+			if(rs.next()) {
+				String order_no = rs.getString("order_no");
+				String order_id = rs.getString("id");
+				String order_date = rs.getString("order_date");
+				int order_amount = rs.getInt("order_amount");
+				String order_status = rs.getString("order_status");
+				String pay_yn = rs.getString("pay_yn");
+				String delivery_no = rs.getString("delivery_no");
+				String order_address = rs.getString("order_address");
+				String order_phone = rs.getString("order_phone");
+				String order_name = rs.getString("order_name");
+				String order_messege = rs.getString("order_messege");
+				String delivery_message = rs.getString("delivery_message");
+				int seq_pay = rs.getInt("seq_pay");
+				
+				
+				orderList.add(new OrderDTO(order_no,order_id,order_date,order_amount,order_status,pay_yn,delivery_no,order_address,order_phone,order_name,order_messege,delivery_message,seq_pay));
+			}
+			return orderList;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

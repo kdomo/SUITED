@@ -90,12 +90,13 @@ public class BlacklistDAO {
 			
 			pstmt.setString(1, id);
 			ResultSet rs = pstmt.executeQuery();
-			String name = "";
+			
 			if(rs.next()) {
-				name = rs.getString("name");
-				
-			}return name;
+				String name = rs.getString("name");
+				return name;
+			}
 		}
+		return null;
 	}
 	
 	public int countAll() {

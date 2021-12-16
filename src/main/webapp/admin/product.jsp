@@ -165,59 +165,57 @@ a:hover {
 	<nav class="navber">
 		<div class="row nav-items d-flex justify-content-center">
 			<div class="col-2 col-xl-2 navi-logo">
-				<a href="${pageContext.request.contextPath }/"><img
+				<a href="${pageContext.request.contextPath }/toAdminIndex.admin"><img
 					src="../imgs/logo.png" width="80px"></a>
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
-					<div class="col-xl-3 col-5 navi-menu"></div>
+				<div class="col-xl-3 col-5 navi-menu"></div>
 				</c:when>
 				<c:when test="${!empty loginSession}">
 					<div class="col-xl-2 col-5 navi-menu"></div>
 				</c:when>
 			</c:choose>
+			
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">영양제추천</a>
+				<a href="#">회원관리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a
-					href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
+				<a href="${pageContext.request.contextPath }/toBlacklist.bl?currentPage=1">블랙리스트</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
+				<a href="#">리뷰관리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">스토리</a>
+				<a href="${pageContext.request.contextPath }/toAdminProduct.pro?currentPage=1">상품관리</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="#">고객센터</a>
+				<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
+			</div>
+			<div class="col-xl-1 d-none d-xl-block navi-menu">
+				<a href="#">통계조회</a>
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
 				</c:when>
 				<c:when test="${!empty loginSession}">
 					<div class="col-xl-1 d-none d-xl-block navi-menu">
-						<a href="${pageContext.request.contextPath }/toMypageConfirm.mem">${loginSession.nickname} 님</a>
+						<a href="${pageContext.request.contextPath }/toMypage">${loginSession.nickname} 님</a>
 					</div>
 				</c:when>
 			</c:choose>
-
 			<c:choose>
 				<c:when test="${empty loginSession}">
 					<div class="col-xl-1 d-none d-xl-block navi-menu">
-						<a href="${pageContext.request.contextPath }/toLogin.mem">로그인</a>
+						<a href="${pageContext.request.contextPath }/toLogin.admin">로그인</a>
 					</div>
 				</c:when>
 				<c:when test="${!empty loginSession}">
 					<div class="col-xl-1 d-none d-xl-block navi-menu">
-						<a href="${pageContext.request.contextPath }/logoutProc.mem">로그아웃</a>
+						<a href="${pageContext.request.contextPath }/logoutProc.admin">로그아웃</a>
 					</div>
 				</c:when>
 			</c:choose>
-			<div class="col-xl-1 col-3 navi-cart">
-				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span
-					id="cartCount" class="badge bg-dark rounded-pill"></span></a>
-			</div>
 			<div class="col-xl-0 col-2 d-xl-none navi-menu">
 				<a id="btn_navi_menu"><img src="../imgs/menu.png" width="20px"
 					height="24px"></a>
@@ -226,32 +224,37 @@ a:hover {
 	</nav>
 	<div class="row navi-onButtons">
 		<div class="col-12">
-			<a href="#">영양제추천</a>
+			<a href="#">회원관리</a>
 		</div>
 		<div class="col-12">
-			<a
-				href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
+			<a href="${pageContext.request.contextPath }/toBlacklist.bl?currentPage=1">블랙리스트</a>
 		</div>
 		<div class="col-12">
-			<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
+			<a href="#">리뷰관리</a>
 		</div>
 		<div class="col-12">
-			<a href="#">고객센터</a>
+			<a href="#">상품관리</a>
+		</div>
+		<div class="col-12">
+			<a href="${pageContext.request.contextPath }/toInquiry.in?currentPage=1">고객센터</a>
+		</div>
+		<div class="col-12">
+			<a href="#">통계조회</a>
 		</div>
 		<c:choose>
 			<c:when test="${empty loginSession}">
 			</c:when>
 			<c:when test="${!empty loginSession}">
 				<div class="col-12">
-					<a href="${pageContext.request.contextPath }/toMypageConfirm.mem">${loginSession.nickname} 님</a>
-				</div>
+			<a href="#">${loginSession.nickname} 님</a>
+		</div>
 			</c:when>
 		</c:choose>
-
+		
 		<c:choose>
 			<c:when test="${empty loginSession}">
 				<div class="col-12">
-					<a href="${pageContext.request.contextPath }/toLogin.mem">로그인</a>
+					<a href="${pageContext.request.contextPath }/toLogin.admin">로그인</a>
 				</div>
 			</c:when>
 			<c:when test="${!empty loginSession}">
@@ -260,9 +263,6 @@ a:hover {
 				</div>
 			</c:when>
 		</c:choose>
-		<div class="col-12">
-			<a href="#">고객센터</a>
-		</div>
 	</div>
 
 	<div class="main">
@@ -302,16 +302,16 @@ a:hover {
 						<ul class="pagination justify-content-center">
 							<c:if test="${naviMap.get('needPrev') eq true}">
 								<li class="page-item"><a class="page-link"
-									href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${naviMap.get('startNavi')-1}">Previous</a>
+									href="${pageContext.request.contextPath}/toAdminProduct.pro?currentPage=${naviMap.get('startNavi')-1}">Previous</a>
 							</c:if>
 							<c:forEach var="i" begin="${naviMap.get('startNavi')}"
 								end="${naviMap.get('endNavi')}">
 								<li class="page-item"><a class="page-link"
-									href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${i}">${i}</a></li>
+									href="${pageContext.request.contextPath}/toAdminProduct.pro?currentPage=${i}">${i}</a></li>
 							</c:forEach>
 							<c:if test="${naviMap.get('needNext') eq true}">
 								<li class="page-item"><a class="page-link"
-									href="${pageContext.request.contextPath}/toProduct.pro?currentPage=${naviMap.get('endNavi')+1}">Next</a></li>
+									href="${pageContext.request.contextPath}/toAdminProduct.pro?currentPage=${naviMap.get('endNavi')+1}">Next</a></li>
 							</c:if>
 						</ul>
 					</nav>

@@ -53,6 +53,26 @@ public class OrderDTO {
 		this.delivery_message = delivery_message;
 		this.seq_pay = seq_pay;
 	}
+	
+	public OrderDTO(String order_no, String id, String order_date, int order_amount, String order_status, String pay_yn,
+			String delivery_no, String order_address, String order_phone, String order_name, String order_messege,
+			String delivery_message, int seq_pay) {
+		super();
+		this.order_no = order_no;
+		this.id = id;
+		this.order_date = order_date;
+		this.order_amount = order_amount;
+		this.order_status = order_status;
+		this.pay_yn = pay_yn;
+		this.delivery_no = delivery_no;
+		this.order_address = order_address;
+		this.order_phone = order_phone;
+		this.order_name = order_name;
+		this.order_messege = order_messege;
+		this.delivery_message = delivery_message;
+		this.seq_pay = seq_pay;
+	}
+
 
 	public String getOrder_no() {
 		return order_no;

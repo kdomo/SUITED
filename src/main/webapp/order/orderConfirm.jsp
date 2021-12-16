@@ -12,12 +12,19 @@
 	rel="stylesheet"
 	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+	crossorigin="anonymous"></script>
 <!-- 부트스트랩 CDN -->
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"
 	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 	crossorigin="anonymous"></script>
 <!-- jquery CDN-->
+
+<script src="https://cdn.bootpay.co.kr/js/bootpay-3.3.2.min.js" type="application/javascript"></script>
+<!-- Bootpay CDN -->
 <style>
 @import
 	url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
@@ -32,12 +39,10 @@
 
 html {
 	width: 100vw;
-	height: 100%;
 }
 
 body {
 	width: 100%;
-	height: auto;
 }
 
 a {
@@ -103,33 +108,16 @@ a:hover {
 	line-height: 8px;
 }
 
-/* header */
-.header {
-	padding-top: 92px;
-	margin: auto;
-	width: 82.6vw;
-	position: relative;
-}
-
-#btn_survey {
-	position: absolute;
-	top: 80%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-}
-
 /* main 영역 */
 .main {
-	padding-top: 20px;
-	width: 82.6vw;
+	padding-top: 92px;
+	width: 40vw;
 	margin: auto;
+	text-align: center;
 }
 
-.card {
-	border-radius: 10%;
-	margin: auto;
-	margin-bottom: 20px;
-	border: 2px solid gray;
+form>p {
+	text-align: left;
 }
 
 /* footer 영역 */
@@ -192,21 +180,22 @@ a:hover {
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
-				<div class="col-xl-3 col-5 navi-menu"></div>
+					<div class="col-xl-2 col-5 navi-menu"></div>
 				</c:when>
 				<c:when test="${!empty loginSession}">
 					<div class="col-xl-2 col-5 navi-menu"></div>
 				</c:when>
 			</c:choose>
-			
+
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="#">영양제추천</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
+				<a
+					href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
-				<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
+				<a href="#">고객리뷰</a>
 			</div>
 			<div class="col-xl-1 d-none d-xl-block navi-menu">
 				<a href="#">스토리</a>
@@ -219,7 +208,7 @@ a:hover {
 				</c:when>
 				<c:when test="${!empty loginSession}">
 					<div class="col-xl-1 d-none d-xl-block navi-menu">
-						<a href="${pageContext.request.contextPath }/toMypageConfirm.mem">${loginSession.nickname} 님</a>
+						<a href="#">${loginSession.nickname} 님</a>
 					</div>
 				</c:when>
 			</c:choose>
@@ -237,7 +226,8 @@ a:hover {
 				</c:when>
 			</c:choose>
 			<div class="col-xl-1 col-3 navi-cart">
-				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span id="cartCount" class="badge bg-dark rounded-pill"></span></a>
+				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span
+					id="cartCount" class="badge bg-dark rounded-pill"></span></a>
 			</div>
 			<div class="col-xl-0 col-2 d-xl-none navi-menu">
 				<a id="btn_navi_menu"><img src="../imgs/menu.png" width="20px"
@@ -250,7 +240,8 @@ a:hover {
 			<a href="#">영양제추천</a>
 		</div>
 		<div class="col-12">
-			<a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
+			<a
+				href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a>
 		</div>
 		<div class="col-12">
 			<a href="${pageContext.request.contextPath}/toAllReview.co">고객리뷰</a>
@@ -263,11 +254,11 @@ a:hover {
 			</c:when>
 			<c:when test="${!empty loginSession}">
 				<div class="col-12">
-			<a href="${pageContext.request.contextPath }/toMypageConfirm.mem">${loginSession.nickname} 님</a>
-		</div>
+					<a href="#">${loginSession.nickname} 님</a>
+				</div>
 			</c:when>
 		</c:choose>
-		
+
 		<c:choose>
 			<c:when test="${empty loginSession}">
 				<div class="col-12">
@@ -284,62 +275,25 @@ a:hover {
 			<a href="${pageContext.request.contextPath}/toInquiry.in?currentPage=1">고객센터</a>
 		</div>
 	</div>
-	<div class="header">
-		<div class="header-img">
-			<img src="imgs/header.jpeg" id="img_header" width="100%">
-		</div>
-		<button class="btn btn-dark btn-lg" id="btn_survey">영양제 추천받기</button>
-	</div>
-	<div class="main">
-		<h4><a href="${pageContext.request.contextPath }/toProduct.pro?currentPage=1">제품보기</a></h4>
-		<div class="row">
-			<div class="col-sm-12 col-xl-6">
-				<div class="card" style="width: 18rem;">
-					<img
-						src="https://img.pilly.kr/product/v20200519/probiotics/tablet.png?v=v202110121530"
-						class="card-img-top" alt="...">
-					<div class="card-body">
-						<p class="card-text">상품명:</p>
-						<p class="card-text">가격:</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-12 col-xl-6">
-				<div class="card" style="width: 18rem;">
-					<img
-						src="https://img.pilly.kr/product/v20200519/probiotics/tablet.png?v=v202110121530"
-						class="card-img-top" alt="...">
-					<div class="card-body">
-						<p class="card-text">상품명:</p>
-						<p class="card-text">가격:</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-12 col-xl-6">
-				<div class="card" style="width: 18rem;">
-					<img
-						src="https://img.pilly.kr/product/v20200519/probiotics/tablet.png?v=v202110121530"
-						class="card-img-top" alt="...">
-					<div class="card-body">
-						<p class="card-text">상품명: 히알구론산</p>
-						<p class="card-text">가격: 3,000원</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-12 col-xl-6">
-				<div class="card" style="width: 18rem;">
-					<img
-						src="https://img.pilly.kr/product/v20200519/probiotics/tablet.png?v=v202110121530"
-						class="card-img-top" alt="...">
-					<div class="card-body">
-						<p class="card-text">상품명:</p>
-						<p class="card-text">가격:</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
+	<!-- 메인부분 -->
+	<div class="main">
+		${orderList.get(0).getOrder_no()}
+		${orderList.get(0).getId()}
+		${orderList.get(0).getOrder_date()}
+		${orderList.get(0).getOrder_amount()}
+		${orderList.get(0).getOrder_status()}
+		${orderList.get(0).getPay_yn()}
+		${orderList.get(0).getDelivery_no()}
+		${orderList.get(0).getOrder_address()}
+		${orderList.get(0).getOrder_phone()}
+		${orderList.get(0).getOrder_name()}
+		${orderList.get(0).getOrder_messege()}
+		${orderList.get(0).getDelivery_message()}
+		${orderList.get(0).getSeq_pay()}
+		
+		<button type="button" class="btn btn-dark" id="btn_pay">결제하기</button>
+	</div>
 	<div class="footer">
 		<div class="row footer-top">
 			<ul>
@@ -365,17 +319,35 @@ a:hover {
 		ⓒ SUITED Inc. All Rights Reserved.
 	</div>
 
+
 	<script>
 		$(function() {
-			let admin_yn = "${loginSession.get('admin_yn')}";
-			if(admin_yn=='1'){
-				location.href="/toAdminIndex.admin";
+			function getCartCount(){
+				$.ajax({
+					type : "get"
+					, url : "${pageContext.request.contextPath}/countCartProc.cart"
+				}).done(function(rs){
+					if(rs != "fail"){
+						$('#cartCount').html(rs);
+					} else {
+						alert("오류");
+					}
+				}).fail(function(e){
+					console.log(e);
+				})
 			}
-			let loginSession = "${loginSession}";
-			if(loginSession != ''){
-				getCartCount();
-			}
+			getCartCount();
 			
+
+			let loginSession = "${loginSession}";
+			if (loginSession == null) {
+				alert("로그인 후 이용가능합니다.");
+				location.href = "/member/login.jsp";
+			} else if (loginSession == '') {
+				alert("로그인 후 이용가능합니다.");
+				location.href = "/member/login.jsp";
+			}
+
 			let onNavbar = 0; // 네비 햄버거버튼 클릭했는지 아닌지 알기위한 변수
 			$('#btn_navi_menu').on('click', function() { //햄버거버튼 클릭 시
 				if (onNavbar == 0) {
@@ -385,9 +357,9 @@ a:hover {
 					}); // 세로 네비영역 열기
 					onNavbar = 1;
 					$('html, body').animate({
-		                scrollTop : 0
-		            }, 100);
-		            return false;
+						scrollTop : 0
+					}, 100);
+					return false;
 				} else {
 					$('.navi-onButtons').css({
 						"height" : "0",
@@ -407,21 +379,81 @@ a:hover {
 				}
 			});
 			
-			function getCartCount(){
-				$.ajax({
-					type : "get"
-					, url : "${pageContext.request.contextPath}/countCartProc.cart"
-				}).done(function(rs){
-					if(rs != "fail"){
-						$('#cartCount').html(rs);
-					} else {
-						alert("오류");
+			$('#btn_pay').on('click',function(){
+				pay();
+			})
+			
+			function pay(){
+				//실제 복사하여 사용시에는 모든 주석을 지운 후 사용하세요
+				BootPay.request({
+					price: '${orderList.get(0).getOrder_amount()}', //실제 결제되는 가격
+					application_id: "619d0331e38c30001ed2ba43",
+					name: 'SUITED 맞춤 영양제', //결제창에서 보여질 이름
+					pg: 'inicis',
+					method: 'card', //결제수단, 입력하지 않으면 결제수단 선택부터 화면이 시작합니다.
+					show_agree_window: 0, // 부트페이 정보 동의 창 보이기 여부
+					items: [
+						{
+							item_name: '나는 아이템', //상품명
+							qty: 1, //수량
+							unique: '123', //해당 상품을 구분짓는 primary key
+							price: 1000
+						}
+					],
+					user_info: {
+						username: '${orderList.get(0).getOrder_name()}',
+						email: '${orderList.get(0).getId()}',
+						addr: '${orderList.get(0).getOrder_address()}',
+						phone: '${orderList.get(0).getOrder_phone()}'
+					},
+					order_id: '${orderList.get(0).getOrder_no()}', //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
+					params: {callback1: '그대로 콜백받을 변수 1', callback2: '그대로 콜백받을 변수 2', customvar1234: '변수명도 마음대로'},
+					account_expire_at: '2020-10-25', // 가상계좌 입금기간 제한 ( yyyy-mm-dd 포멧으로 입력해주세요. 가상계좌만 적용됩니다. )
+					extra: {
+					    start_at: '2019-05-10', // 정기 결제 시작일 - 시작일을 지정하지 않으면 그 날 당일로부터 결제가 가능한 Billing key 지급
+						end_at: '2022-05-10', // 정기결제 만료일 -  기간 없음 - 무제한
+				        vbank_result: 1, // 가상계좌 사용시 사용, 가상계좌 결과창을 볼지(1), 말지(0), 미설정시 봄(1)
+				        quota: '0,2,3', // 결제금액이 5만원 이상시 할부개월 허용범위를 설정할 수 있음, [0(일시불), 2개월, 3개월] 허용, 미설정시 12개월까지 허용,
+						theme: 'purple', // [ red, purple(기본), custom ]
+						custom_background: '#00a086', // [ theme가 custom 일 때 background 색상 지정 가능 ]
+						custom_font_color: '#ffffff' // [ theme가 custom 일 때 font color 색상 지정 가능 ]
 					}
-				}).fail(function(e){
-					console.log(e);
-				})
+				}).error(function (data) {
+					//결제 진행시 에러가 발생하면 수행됩니다.
+					console.log(data);
+				}).cancel(function (data) {
+					//결제가 취소되면 수행됩니다.
+					console.log(data);
+					console.log(data.action);
+					if(data.action=="BootpayCancel"){
+						alert("취소하였습니다.");
+					}
+					
+				}).ready(function (data) {
+					// 가상계좌 입금 계좌번호가 발급되면 호출되는 함수입니다.
+					console.log(data);
+				}).confirm(function (data) {
+					//결제가 실행되기 전에 수행되며, 주로 재고를 확인하는 로직이 들어갑니다.
+					//주의 - 카드 수기결제일 경우 이 부분이 실행되지 않습니다.
+					console.log(data);
+					var enable = true; // 재고 수량 관리 로직 혹은 다른 처리
+					if (enable) {
+						BootPay.transactionConfirm(data); // 조건이 맞으면 승인 처리를 한다.
+					} else {
+						BootPay.removePaymentWindow(); // 조건이 맞지 않으면 결제 창을 닫고 결제를 승인하지 않는다.
+					}
+				}).close(function (data) {
+				    // 결제창이 닫힐때 수행됩니다. (성공,실패,취소에 상관없이 모두 수행됨)
+				    console.log(data);
+				}).done(function (data) {
+					//결제가 정상적으로 완료되면 수행됩니다
+					//비즈니스 로직을 수행하기 전에 결제 유효성 검증을 하시길 추천합니다.
+					console.log(data);
+					
+					//여기서 pay테이블에 값넣고 pay_yn번호 order에 넣어주기
+				});
 			}
-		});
+		})
 	</script>
 </body>
 </html>

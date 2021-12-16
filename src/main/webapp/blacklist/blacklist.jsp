@@ -470,7 +470,7 @@ a:hover {
 					$("#plusBlacklist").empty();
 					//$(".firstList").attr("hidden", true);
 					for(let blacklist of data){
-			            let list = "<tr style='text-align: center;'><td style='text-align: center;''><input type='checkbox' name='solcheck' id='solcheck' value='${dto.getId()}'></td>"
+			            let list = "<tr style='text-align: center;'><td style='text-align: center;'><input type='checkbox' name='solcheck' id='solcheck' value='"+blacklist.id+"'></td>"
 			            + "<td>" + blacklist.id + "</td>"
 			            + "<td>" + blacklist.name + "</td>"
 			            + "<td>" + blacklist.black_update + "</td>"

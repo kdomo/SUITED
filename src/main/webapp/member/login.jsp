@@ -260,7 +260,7 @@ line-height:8px;
 				</c:when>
 			</c:choose>
 			<div class="col-xl-1 col-3 navi-cart">
-				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span class="badge bg-dark rounded-pill">0</span></a>
+				<a href="${pageContext.request.contextPath}/tocart.cart">cart <span class="badge bg-dark rounded-pill"></span></a>
 			</div>
 			<div class="col-xl-0 col-2 d-xl-none navi-menu">
 				<a id="btn_navi_menu"><img src="../imgs/menu.png" width="20px"
@@ -396,6 +396,11 @@ line-height:8px;
 	<script src = "https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 	<script>
 		$(function() {
+			let loginSession = "${loginSession}";
+			if(loginSession != ''){
+				location.href="${pageContext.request.contextPath}/logoutProc.mem";
+			}
+			
 			let rs = "${rs}";
 			if(rs!=null){
 				if(rs=='signSuccess'){

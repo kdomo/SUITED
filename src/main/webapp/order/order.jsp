@@ -298,8 +298,20 @@ form>p {
 				</div>
 			</div>
 			<div class="row mb-3">
+				<div class="col-12">
+					<input type="text" class="form-control" id="order_name" name="order_name"
+						placeholder="수취인 이름" value="${loginSession.get('name') }">
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-12">
+					<input type="text" class="form-control" id="order_phone" name="order_phone"
+						placeholder="수취인 번호" value="${loginSession.get('phone') }">
+				</div>
+			</div>
+			<div class="row mb-3">
 				<div class="col-12 col-xl-8">
-					<input type="text" class="form-control" id="address" name="address"
+					<input type="text" class="form-control" id="order_address" name="order_address"
 						placeholder="주소" value="${loginSession.get('address') }" disabled>
 				</div>
 				<div class="col-12 col-xl-4">
@@ -353,6 +365,12 @@ form>p {
 			<div class="row foot">
 				<div class="col-12 mb-3">
 					<button type="button" class="btn btn-dark col-12" id="btn_submit">주문</button>
+				</div>
+			</div>
+			<div class="row d-none">
+				<div class="col-12 mb-3">
+					<input type="text"
+						class="form-control" placeholder="" name="order_no" id="order_no" value="0">
 				</div>
 			</div>
 		</form>
@@ -453,7 +471,7 @@ form>p {
 						$('#detailAddress').val() != "" &&
 						$('#extraAddress').val() != ""
 				){
-					$('#address').val($('#roadAddress').val()
+					$('#order_address').val($('#roadAddress').val()
 							+ $('#extraAddress').val() + " "
 							+ $('#detailAddress').val() + " (우)"
 							+ $('#postcode').val());
@@ -477,9 +495,55 @@ form>p {
 					data:orderForm,
 					dataType:"text"
 				}).done(function(data){
-					console.log(data);
 					if(data == 'orderSuccess'){
-						condole.log(data);
+						$.ajax({
+							type : "post"
+							, url : "${pageContext.request.contextPath}/getCartProc.cart"
+							, dataType : "json"
+						}).done(function(data){
+							let total = 0;
+							let order_no = 0;
+							$('#order_no').val(order_no);
+// 							for(let dto of data){
+								let product_code = new Array();
+								let quantity = new Array();
+								let count=0;
+								for(let dto of data){
+									product_code[count] = dto.product_code;
+									quantity[count] = dto.quantity;
+									count++;
+								}
+								console.log("product_code : " + product_code);
+								console.log("quantity : " + quantity);
+								$.ajax({
+									type:"post",
+									url:"${pageContext.request.contextPath}/order_productProc.order",
+// 									data:{quantity:dto.quantity,product_code:dto.product_code},
+// 									data:{temp:temp},
+//  									data:{jsondata : JSON.stringify(temp)},
+									data:{product_code:{product_code},quantity:{quantity}},
+									dataType:"text"
+								}).done(function(order_no){
+// 									console.log(order_no);
+									if(temp != null){
+										$('#order_no').val(order_no);
+										console.log("1번:"+$('#order_no').val());
+									}
+								}).fail(function(data){
+									
+								})
+								//주문번호 , 제품코드 , 수량 을 order_product테이블에 넣어주어야함
+// 								total += dto.price * dto.quantity;
+								
+// 							}
+							let token = $('#order_no').val();
+							console.log(token);
+// 							location.href="${pageContext.request.contextPath}/orderComplete.order?token="+token;
+							
+							$('#order_amount').val(total);
+						}).fail(function(e){
+							console.log(e);
+						})
 					}
 				}).fail(function(data){
 					console.log(data);
@@ -496,7 +560,7 @@ form>p {
 				$('#listDiv').empty();
 				$('.totalPrice').empty();
 				let total = 0;
-				
+				let count = 1;
 				for(let dto of data){
 						let list = "<tr>"
 					+ "<td><img alt=''"
@@ -506,10 +570,9 @@ form>p {
 					+ "<td>" + dto.price + "</td>"
 					+ "<td>" + dto.price * dto.quantity + "</td>"
 					+ "<td>"
-					+ "<button type='button' class='quantityBtn' value='" + dto.quantity + "'id='" + dto.product_code + "-'>-</button>"
 					+ "<span> " + dto.quantity + " </span>"
-					+ "<button type='button' class='quantityBtn' value='" + dto.quantity + "'id='" + dto.product_code + "!'>+</button>"
-					+ "</td>";
+					+ "</td>"
+					+ "<td class='d-none'><input type='text' value='"+ (count++) +"'></td>";
 					
 					total += dto.price * dto.quantity;
 					$("#listDiv").append(list);

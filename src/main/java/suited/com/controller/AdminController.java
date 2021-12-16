@@ -42,6 +42,8 @@ public class AdminController extends HttpServlet {
 		System.out.println("admin : " + cmd);
 		if (cmd.equals("/toLogin.admin")) {
 			response.sendRedirect("/admin/login.jsp");
+		}else if (cmd.equals("/toAdminIndex.admin")) {
+			response.sendRedirect("/admin/index.jsp");
 		} else if (cmd.equals("/loginProc.admin")) { // 로그인페이지에서 로그인버튼을 눌렀을때
 			String id = request.getParameter("id");
 			String password = EncryptionUtils.getSHA256(request.getParameter("password"));
