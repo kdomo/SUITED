@@ -23,9 +23,11 @@ import com.google.gson.Gson;
 import suited.com.dao.OrderDAO;
 import suited.com.dao.OrderJoinDAO;
 import suited.com.dao.Order_productDAO;
+import suited.com.dao.PaymentDAO;
 import suited.com.dto.BasketDTO;
 import suited.com.dto.OrderDTO;
 import suited.com.dto.OrderJoinDTO;
+import suited.com.dto.PaymentDTO;
 
 /**
  * Servlet implementation class OrderController
@@ -56,6 +58,7 @@ public class OrderController extends HttpServlet {
 		OrderDAO orderDAO = new OrderDAO();
 		Order_productDAO order_productDAO = new Order_productDAO();
 		OrderJoinDAO orderJoinDAO = new OrderJoinDAO();
+		PaymentDAO paymentDAO = new PaymentDAO();
 		System.out.println(cmd);
 
 		if (cmd.equals("/toOrder.order")) {
@@ -132,6 +135,39 @@ public class OrderController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
+		} else if(cmd.equals("/payProc.order")) {
+			
+			String order_id = request.getParameter("order_id");
+			int pay_price = Integer.parseInt(request.getParameter("pay_price"));
+			String pg = request.getParameter("pg");
+			String method = request.getParameter("method");
+			String card_name = request.getParameter("card_name");
+			String card_code = request.getParameter("card_code");
+			String purchased_at = request.getParameter("purchased_at");
+			
+			System.out.println("order_id : " + order_id);
+			System.out.println("pay_price : " + pay_price);
+			System.out.println("pg : " + pg);
+			System.out.println("method : " + method);
+			System.out.println("card_name : " + card_name);
+			System.out.println("card_code : " + card_code);
+			System.out.println("purchased_at : " + purchased_at);
+			try {
+				int rs = paymentDAO.insert(new PaymentDTO(order_id, pay_price, pg, method, card_name, card_code, purchased_at));
+				int seq = paymentDAO.getseq();
+				if(rs != -1) {
+					int payRs = orderDAO.pay(seq,order_id);
+					if(payRs != -1) {
+						out.write("paySuccess");
+					}else {
+						out.write("payFail");
+					}
+				}else {
+					out.write("payFail");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

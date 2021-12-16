@@ -30,7 +30,7 @@ public class OrderDAO {
 	public Connection getConnection() throws Exception {
 		return bds.getConnection();
 	}
-
+	
 	public int insert(OrderDTO dto) throws Exception {
 		String sql = "insert into tbl_order values(concat(to_char(sysdate,'YYYYMMDD'),ltrim(to_char((seq_order.nextval),'000000'))) ,?,?,?,?,'0',null,?,?,?,?,?,null)";
 
@@ -85,5 +85,20 @@ public class OrderDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public int pay(int seq_pay,String order_no) throws Exception {
+		String sql = "update tbl_order set seq_pay=?,pay_yn='1' where order_no=?"; 
+				
+		try (Connection con = this.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
+
+			pstmt.setInt(1, seq_pay);
+			pstmt.setString(2, order_no);
+	
+			int rs = pstmt.executeUpdate();
+			if (rs != 0)
+				return rs;
+		} 
+		return -1;
 	}
 }

@@ -2,6 +2,7 @@ package suited.com.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.Random;
@@ -24,7 +25,9 @@ import javax.servlet.http.HttpSession;
 import suited.com.dao.CertifiedDAO;
 import suited.com.dao.MemberDAO;
 import suited.com.dto.CertifiedDTO;
+import suited.com.dto.CommentDTO;
 import suited.com.dto.MemberDTO;
+import suited.com.service.CommentService;
 import suited.com.utils.EncryptionUtils;
 import suited.com.utils.Gmail;
 
@@ -312,13 +315,30 @@ public class MemberController extends HttpServlet {
 		} else if(cmd.equals("/toMypageConfirm.mem")) {
 			response.sendRedirect("/member/mypageConfirm.jsp");
 		} else if(cmd.equals("/toMypage.mem")) {
+			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 			String token = request.getParameter("token");
 			String page = request.getParameter("page");
 			System.out.println(token + " : " + page);
-			RequestDispatcher rd = request.getRequestDispatcher("/member/mypage.jsp");
+//			RequestDispatcher rd = request.getRequestDispatcher("/member/mypage.jsp");
 			request.setAttribute("token", token);
 			request.setAttribute("page", page);
-			rd.forward(request, response);
+//			rd.forward(request, response);
+			
+//			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+//			System.out.println("currentPage : " + currentPage);
+//			
+			CommentService service = new CommentService();
+			HashMap<String, Object> naviMap = service.getPageNavi2(currentPage);
+			ArrayList<CommentDTO> list = service.getCommentList2((int) naviMap.get("currentPage"));
+//			
+			if(list != null) {
+				RequestDispatcher rd = request.getRequestDispatcher("/member/mypage.jsp");
+				request.setAttribute("naviMap", naviMap);
+				request.setAttribute("list", list);
+				rd.forward(request, response);
+			}
+			
+			
 		} else if(cmd.equals("/passwordConfirm.mem")) {
 			HashMap<String, String> loginSession = (HashMap)session.getAttribute("loginSession");
 			String id = loginSession.get("id");

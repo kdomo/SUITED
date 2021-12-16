@@ -110,12 +110,14 @@ a:hover {
 
 /* main 영역 */
 .main {
-	padding-top: 92px;
+	padding-top: 112px;
 	width: 40vw;
 	margin: auto;
 	text-align: center;
 }
-
+table{
+margin:auto;
+}
 form>p {
 	text-align: left;
 }
@@ -277,20 +279,80 @@ form>p {
 	</div>
 
 	<!-- 메인부분 -->
+	
 	<div class="main">
-		${orderJoinList.get(0).getOrder_no()}
-		${orderJoinList.get(0).getId()}
-		${orderJoinList.get(0).getOrder_date()}
-		${orderJoinList.get(0).getOrder_amount()}
-		${orderJoinList.get(0).getOrder_status()}
-		${orderJoinList.get(0).getPay_yn()}
-		${orderJoinList.get(0).getDelivery_no()}
-		${orderJoinList.get(0).getOrder_address()}
-		${orderJoinList.get(0).getOrder_phone()}
-		${orderJoinList.get(0).getOrder_name()}
-		${orderJoinList.get(0).getOrder_message()}
-		${orderJoinList.get(0).getDelivery_message()}
-		${orderJoinList.get(0).getSeq_pay()}
+	<c:if test="${!empty orderJoinList}">
+	<div class="container">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>제품 이미지</th>
+									<th>제품명</th>
+									<th>제품 금액</th>
+									<th>수량</th>
+									<th>합계</th>
+								</tr>
+							</thead>
+							<tbody>
+							<c:forEach items="${orderJoinList }" var="dto">
+							<td><img src="${pageContext.request.contextPath}/product_img/${dto.getImg_system_name()}" alt="" width="150px" height="150px"></td>
+								<th>${dto.getProduct_name()}</th>
+								<td>${dto.getPrice()}</td>
+								<td>${dto.getOrder_quantity()}</td>
+								<td>${dto.getOrder_amount()}</td>
+							</c:forEach>
+								<tr>
+									<td>주문번호</td>
+									<td colspan="5">${orderJoinList.get(0).getOrder_no()}</td>
+								</tr>
+								<tr>
+									<td>주문자아이디</td>
+									<td colspan="4">${orderJoinList.get(0).getId()}</td>
+								</tr>
+								
+								<tr>
+									<td>수취인 주소</td>
+									<td colspan="4">${orderJoinList.get(0).getOrder_address()}</td>
+								</tr>
+								<tr>
+									<td>수취인 번호</td>
+									<td colspan="4">${orderJoinList.get(0).getOrder_phone()}</td>
+								</tr>
+								<tr>
+									<td>배송받는분</td>
+									<td colspan="4">${orderJoinList.get(0).getOrder_name()}</td>
+								</tr>
+								<tr>
+									<td>주문 메세지</td>
+									<td colspan="4">${orderJoinList.get(0).getOrder_message()} </td>
+								</tr>
+								<tr>
+									<td>배송 메세지</td>
+									<td colspan="4">${orderJoinList.get(0).getDelivery_message()}</td>
+								</tr>
+								<tr>
+									<td>주문총액</td>
+									<td colspan="4">${orderJoinList.get(0).getOrder_amount()}</td>
+								</tr>
+								
+<%-- 								${orderJoinList.get(0).getOrder_date()} --%>
+<%-- 								${orderJoinList.get(0).getOrder_status()} --%> 
+<%-- 								${orderJoinList.get(0).getPay_yn()} --%>
+<%-- 								${orderJoinList.get(0).getDelivery_no()} --%>
+								
+								
+								
+								
+								
+<%-- 								${orderJoinList.get(0).getSeq_pay()} --%>
+							</tbody>
+						</table>
+					</div>
+	</c:if>
+	<c:if test="${empty orderJoinList}">
+		<h2>주문서가 존재하지 않습니다.</h2>
+	</c:if>
+		
 		
 		<button type="button" class="btn btn-dark" id="btn_pay">결제하기</button>
 	</div>
@@ -447,9 +509,39 @@ form>p {
 					//결제가 정상적으로 완료되면 수행됩니다
 					//비즈니스 로직을 수행하기 전에 결제 유효성 검증을 하시길 추천합니다.
 					console.log(data);
+					console.log("order_id"+data.order_id);
+					console.log("price"+data.price);
+					console.log("pg"+data.pg);
+					console.log("method"+data.method);
+					console.log("card_name"+data.card_name);
+					console.log("card_code"+data.card_code);
+					console.log("purchased_at"+data.purchased_at);
 					
+					$.ajax({
+						type : "post",
+						url:"${pageContext.request.contextPath}/payProc.order",
+						data:{
+							"order_id":data.order_id,
+							"pay_price":data.price,
+							"pg":data.pg,
+							"method":data.method,
+							"card_name":data.card_name,
+							"card_code":data.card_code,
+							"purchased_at":data.purchased_at
+						},
+						dataType:"text"
+					}).done(function(value){
+						if(value == "paySuccess"){
+// 							location.href="${pageContext.request.contextPath}/toPay"
+						} else if(value=="payFail"){
+// 							location.href="${pageContext.request.contextPath}/toPayComplete"
+						}
+					}).fail(function(){
+						
+					});
 				
 					//여기서 pay테이블에 값넣고 pay_yn번호 order에 넣어주기
+					
 				});
 			}
 		})

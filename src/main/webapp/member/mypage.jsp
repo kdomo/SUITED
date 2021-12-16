@@ -286,12 +286,12 @@ a:hover {
 				<div class="row mb-3">
 					<div class="col">
 						<a
-							href="${pageContext.request.contextPath}/toMypage.mem?token=ConfirmSuccess&page=1"
+							href="${pageContext.request.contextPath}/toMypage.mem?token=ConfirmSuccess&page=1&currentPage=1"
 							style="color: black;">내정보조회</a>
 					</div>
 					<div class="col">
 						<a
-							href="${pageContext.request.contextPath}/toMypage.mem?token=ConfirmSuccess&page=2"
+							href="${pageContext.request.contextPath}/toMypage.mem?token=ConfirmSuccess&page=2&currentPage=1"
 							style="color: gray;">내가 쓴 리뷰</a>
 					</div>
 				</div>
@@ -434,8 +434,7 @@ a:hover {
 						<div class="col-12 col-xl-8">
 							<input type="text" class="form-control" id="phone" name="phone"
 								placeholder="휴대폰번호"
-								value="${(loginSession.get('phone')).substring(0,3)}-${(loginSession.get('phone')).substring(3,7)}"-${(loginSession.get('phone')).substring(7,11)}"
-								disabled>
+								value="" disabled>
 <!-- 								인풋태그에 담은다음에 그 값으로 다시 세팅해주기 -->
 						</div>
 						<div class="col-12 col-xl-4">
@@ -478,7 +477,7 @@ a:hover {
 						<div class="col-12 mb-3">
 							<input type="text" class="form-control d-none" id="phoneDnone"
 								name="phoneDnone" placeholder="휴대폰번호"
-								value="${loginSession.get('phone') }" disabled>
+								value="${loginSession.get('phone')}" disabled>
 						</div>
 					</div>
 					<div class="col-12">
@@ -490,15 +489,65 @@ a:hover {
 				<div class="row mb-5">
 					<div class="col">
 						<a
-							href="${pageContext.request.contextPath}/toMypage.mem?token=ConfirmSuccess&page=1"
-							style="color: black;">내정보조회</a>
+							href="${pageContext.request.contextPath}/toMypage.mem?token=ConfirmSuccess&page=1&currentPage=1"
+							style="color: gray;">내정보조회</a>
 					</div>
 					<div class="col">
 						<a
-							href="${pageContext.request.contextPath}/toMypage.mem?token=ConfirmSuccess&page=2"
-							style="color: gray;">내가 쓴 리뷰</a>
+							href="${pageContext.request.contextPath}/toMypage.mem?token=ConfirmSuccess&page=2&currentPage=1"
+							style="color: black;">내가 쓴 리뷰</a>
 					</div>
 				</div>
+				<div class="row">
+			<div class="col">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th class="col-1">아이디</th>
+							<th class="col-1">닉네임</th>
+							<th class="col-6">내용</th>
+							<th class="col-2">작성일</th>
+							<th class="col-1">제품 코드</th>
+							<th class="col-1"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${list}" var="dto">
+							<tr>
+								<td>${dto.getId()}</td>
+								<td>${dto.getNickname()}</td>
+								<td>${dto.getContent()}</td>
+								<td>${dto.getWritten_comment_date()}</td>
+								<td>${dto.getProduct_code()}</td>
+								<td>
+									<button type="button" class="btn btn-deleteCmt"
+										value="${dto.getSeq_review()}">삭제</button>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<nav class="col" aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<c:if test="${naviMap.get('needPrev') eq true}">
+						<li class="page-item"><a class="page-link"
+							href="${pageContext.request.contextPath}/allReviewProc.co?currentPage=${naviMap.get('startNavi')-1}">Previous</a>
+					</c:if>
+					<c:forEach var="i" begin="${naviMap.get('startNavi')}"
+						end="${naviMap.get('endNavi')}">
+						<li class="page-item"><a class="page-link"
+							href="${pageContext.request.contextPath}/allReviewProc.co?currentPage=${i}">${i}</a></li>
+					</c:forEach>
+					<c:if test="${naviMap.get('needNext') eq true}">
+						<li class="page-item"><a class="page-link"
+							href="${pageContext.request.contextPath}/allReviewProc.co?currentPage=${naviMap.get('endNavi')+1}">Next</a></li>
+					</c:if>
+				</ul>
+			</nav>
+		</div>
 			</c:when>
 			<c:when test="${token eq null}">
 				<form>
@@ -550,6 +599,8 @@ a:hover {
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
 		$(function() {
+			$('#phone').val($('#phoneDnone').val().substring(0,3)+"-"+$('#phoneDnone').val().substring(3,7)+"-"+$('#phoneDnone').val().substring(7,11));//여기
+			
 			function getCartCount(){
 				$.ajax({
 					type : "get"

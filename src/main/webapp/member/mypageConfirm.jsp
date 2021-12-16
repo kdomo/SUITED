@@ -392,7 +392,7 @@ a:hover {
 						}).done(function(data){
 						console.log(data);
 						if(data == 'ConfirmSuccess'){
-							location.href="${pageContext.request.contextPath}/toMypage.mem?token="+data+"&page=1";
+							location.href="${pageContext.request.contextPath}/toMypage.mem?token="+data+"&page=1&currentPage=1";
 						}else if(data == 'ConfirmFail'){
 							alert("비밀번호가 일치하지 않습니다.");
 							location.href="${pageContext.request.contextPath}/logoutProc.mem";
