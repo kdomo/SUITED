@@ -178,7 +178,7 @@ a:hover {
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
-				<div class="col-xl-3 col-5 navi-menu"></div>
+				<div class="col-xl-2 col-5 navi-menu"></div>
 				</c:when>
 				<c:when test="${!empty loginSession}">
 					<div class="col-xl-2 col-5 navi-menu"></div>

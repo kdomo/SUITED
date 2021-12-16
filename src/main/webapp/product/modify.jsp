@@ -189,7 +189,7 @@ textarea{
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
-				<div class="col-xl-3 col-5 navi-menu"></div>
+				<div class="col-xl-2 col-5 navi-menu"></div>
 				</c:when>
 				<c:when test="${!empty loginSession}">
 					<div class="col-xl-2 col-5 navi-menu"></div>
@@ -409,10 +409,10 @@ textarea{
 		$(function() {
 			let admin_yn = "${loginSession.get('admin_yn')}";
 			if(admin_yn=='0'){
-				alert("일반회원은 접근할 수 없습니다.");
+				alert("접근할 수 없습니다.");
 				location.href="/index.jsp";
 			}else if(admin_yn==''){
-				alert("일반회원은 접근할 수 없습니다.");
+				alert("접근할 수 없습니다.");
 				location.href="/index.jsp";
 			}
 			let onNavbar = 0; // 네비 햄버거버튼 클릭했는지 아닌지 알기위한 변수

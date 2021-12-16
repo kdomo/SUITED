@@ -175,7 +175,7 @@ line-height:8px;
 			</div>
 			<c:choose>
 				<c:when test="${empty loginSession}">
-				<div class="col-xl-3 col-5 navi-menu"></div>
+				<div class="col-xl-2 col-5 navi-menu"></div>
 				</c:when>
 				<c:when test="${!empty loginSession}">
 					<div class="col-xl-2 col-5 navi-menu"></div>
@@ -340,7 +340,15 @@ line-height:8px;
 
    <script>
       $(function() {
-         getCartCount();
+    	  let admin_yn = "${loginSession.get('admin_yn')}";
+			if(admin_yn=='0'){
+				alert("접근할 수 없습니다.");
+				location.href="/index.jsp";
+			}else if(admin_yn==''){
+				alert("접근할 수 없습니다.");
+				location.href="/index.jsp";
+			}
+			
          let onNavbar = 0; // 네비 햄버거버튼 클릭했는지 아닌지 알기위한 변수
          $('#btn_navi_menu').on('click', function() { //햄버거버튼 클릭 시
             if (onNavbar == 0) {
@@ -372,20 +380,7 @@ line-height:8px;
             }
          });
          
-         function getCartCount(){
-            $.ajax({
-               type : "get"
-               , url : "${pageContext.request.contextPath}/countCartProc.cart"
-            }).done(function(rs){
-               if(rs != "fail"){
-                  $('#cartCount').html(rs);
-               } else {
-                  alert("오류");
-               }
-            }).fail(function(e){
-               console.log(e);
-            })
-         }
+       
       });
    </script>
 </body>
